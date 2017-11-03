@@ -1,0 +1,42 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>阿法迪图书馆文献管理平台2.0</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <link rel="stylesheet" type="text/css" href="/css/page.css">
+    <script type="text/javascript" src="/js/BookBorrowed.js"></script>
+    <script type="text/javascript" src="/js/vue.min.js"></script>
+</head>
+<body>
+<div class="div_panel" id="GetuserBorrowed" style="width:96%; height: 100px; margin: 20px auto;">
+    <table class="table_panel" style="margin:auto; width: 100%; font-size:21px;">
+        <caption>读者已借图书查询</caption>
+    </table>
+    <div id="getuser" style="width:100%; height: auto; margin: 20px auto;">
+        <table>
+            <tr>
+                <td>
+                    借书证号<input id="bookbarcode" type="text">
+                    <input type="button" value="查询" @click="GetUser">
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="searchlist" style="margin:auto; width: 100%; position:relative; top:20px;border:solid 0px cadetblue;">
+        <table id="booklist" cellspacing='0' border='1px;' style="border:solid 0px cadetblue; width: 100%; border-collapse:collapse; text-align: center;">
+            <thead>
+            <tr>
+                <th>条码号</th><th>借书日期</th><th>应还日期</th><th>文献名称</th><th>超期</th><th>续借</th>
+            </tr>
+            </thead>
+            <tbody id="searchlistbody" style="background-color: white;"></tbody>
+        </table>
+    </div>
+</div>
+</body>
+<script>
+    $("#bookbarcode").focus();
+    BookBorrowed.Bookborrowed;
+</script>
+</html>

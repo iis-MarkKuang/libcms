@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <link rel="stylesheet" type="text/css" href="/css/mainpagec.css">
+    <link rel="stylesheet" type="text/css" href="/css/ui-dialog.css">
+    <link rel="stylesheet" type="text/css" href="/css/menu.css?ver=1" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/css/icon.css">
+    <link rel="stylesheet" type="text/css" href="/css/easyui.css">
+    <!--<script type="text/javascript" src="/js/jquery-2.2.0.js"></script>-->
+    <script type="text/javascript" src="/js/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/excellentexport.js"></script>
+    <script type="text/javascript" src="/js/dialog.js"></script>
+    <script type="text/javascript" src="/js/Base64.js"></script>
+    <!--<script type="text/javascript" src="/js/jquery.min.js"></script>-->
+    <!--<script tyep="text/javascript" src="/js/jquery.easyui.min.js"></script>-->
+    <!--<script type="text/javascript" src="/js/easyui-lang-zh_CN.js" ></script>-->
+    <script type="text/javascript" src="/js/SkipPage.js"></script>
+    <script type="text/javascript" src="/js/jsdate.js"></script>
+    <script type="text/javascript" src="/js/pub.js"></script>
+    <script type="text/javascript" src="/js/vue.min.js"></script>
+    <script type="text/javascript" src="/js/SystemSetting.js"></script>
+    <title>阿法迪图书馆文献管理平台2.0</title>
+</head>
+<body>
+<script src="/js/highcharts.js"></script>
+<script src="/js/highcharts-3d.js"></script>
+<script src="/js/data.js"></script>
+<script src="/js/exporting.js"></script>
+<script type="text/javascript" language="javascript">
+    $.ajaxSetup ({
+        cache: false //close AJAX cache
+    });
+</script>
+<div id="title" align="center">阿法迪图书馆文献管理平台 <p style="display:inline; font-size: 12px;">2.0 Build0925</p></div>
+<div id="logininfo"><div id="pagename"></div><div id="userinfo"></div><div id="exitdiv"><input type="button" value="退出" onclick="UserExit()" />&nbsp;</div></div>
+<div id="local">
+    <ul id="menucss3">
+    </ul>
+</div>
+<!--<div id="menuctrl" onclick="MenuToggle()" title="收起或打开列表"></div>-->
+<!--<div id="content"><div id="listtype" style="float: right; height: 20px;"><img id="waiticon" style="background-color: transparent; height: 20px; width: 20px;" src="/images/waitting.gif">&nbsp;<input id="listtable" type="button" title="列表方式" onclick="ChangeListMode('list')" style="background-image: url('/images/tablelist.png'); background-size: 18px 18px;"/>&nbsp;<input id="listbigimg" type="button" title="大图方式" onclick="ChangeListMode('bigimg')" style="background-image: url('/images/bigimg.png');background-size: 18px 18px;"/></div></div>-->
+<div id="content">
+    <table class="icotab">
+        <tr>
+            <td>
+                <div>
+                    <button type="button" onclick="SkipPage('Page4_3','文献流通')" id="btnicon1" style="background-image:url(../images/lt.png)" value=""></button>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <button type="button" onclick="SkipPage('Page4_1','文献检索')" id="btnicon2" style="background-image:url(../images/js.png)"></button>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <button type="button" onclick="SkipPage('Page3_4','文献采编')" id="btnicon3" style="background-image:url(../images/cb.png)"></button>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div>
+                    <button type="button" onclick="SkipPage('Page2_3','读者管理')" id="btnicon4" style="background-image:url(../images/gl.png)"></button>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <button type="button" onclick="SkipPage('Page5_1','借阅情况')" id="btnicon5" style="background-image:url(../images/jy.png)"></button>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <button type="button" onclick="SkipPage('Page5_2','数据交流')"  id="btnicon6" style="background-image:url(../images/jl.png)"></button>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="footer" align="center">上海阿法迪智能标签系统技术有限公司&nbsp;&nbsp;&copy; 2016</div>
+<script type="text/javascript">
+    var height = document.documentElement.clientHeight||document.body.clientHeight;
+    var width = document.documentElement.clientWidth||document.body.clientWidth;
+
+    document.onmousemove = mouseMove;
+
+    window.onresize = function(){
+        ProcessResize();
+    };
+
+    Highcharts.setOptions({
+        global: {
+            useUTC: false
+        },
+        lang: {
+            printChart: '打印图表',
+            downloadPNG: '下载JPEG 图片',
+            downloadJPEG: '下载JPEG 图片',
+            downloadPDF: '下载PDF 文档',
+            downloadSVG: '下载SVG 矢量图',
+            contextButtonTitle: '打印或下载图片',
+            months:['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月','九月',  '十月','十一月', '十二月'],
+            weekdays:['星期日',  '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+        }
+    });
+
+    function ProcessResize() {
+        height = document.documentElement.clientHeight || document.body.clientHeight;
+        width = document.documentElement.clientWidth || document.body.clientWidth;
+        var contentHeight = height - 42 - 30 - 26;  //浏览器宽度变小时，高度值有时会差12个像素
+        $("#content").css("height", contentHeight + "px");
+    }
+    ProcessResize();
+
+
+    GetSystemDefaultSetting();
+    GetUserInfo();
+</script>
+</body>
+</html>
+

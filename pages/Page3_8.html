@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>阿法迪图书馆文献管理平台2.0</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <link rel="stylesheet" type="text/css" href="/css/page.css">
+    <script type="text/javascript" src="/js/BookState.js"></script>
+    <script type="text/javascript" src="/js/vue.min.js"></script>
+</head>
+<body>
+    <div class="div_panel" style="width:96%; height: 125px; margin: 20px auto;">
+        <table class="table_panel" style="margin:auto; width: 100%; font-size:21px;">
+            <caption>文献在架清点</caption>
+        </table>
+        <div id="getbookstate" style="width:100%; height: auto; margin: 20px auto;">
+            <table>
+                <tr>
+                    <td>文献类型<select><option>普通图书</option><option>期刊</option><option>古籍</option><option>非书资料</option></select></td>
+                    <td>文献条码<input id="bookbarcode" type="text"></td><td>书架号<input id="shelfnum" type="text">
+                        &nbsp&nbsp<input @click="init" type="button" value="在架定位初始化">
+                        &nbsp&nbsp<input @click="SearchState" type="button" value="查询在架状态">
+                        <!--&nbsp&nbsp<input @click="ClearTable" type="button" value="清空列表">-->
+                    </td>
+                </tr>
+                <tr>
+                    <td>FTP绝对路径<input id="ftpurl" v-model="ftpurl" type="text" value="192.168.0.186/kuang/check"></td>
+                    <td>FTP账号<input id="ftpadmin" v-model="ftpadmin" type="text" value="ubuntu">
+                    <td>FTP密码<input id="ftppsw" v-model="ftppsw" type="password" value="ubuntu">
+                        &nbsp&nbsp<input @click="GetState" type="button" value="查询盘点结果">
+                        &nbsp&nbsp<input @click="ClearTable" type="button" value="清空列表">
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="searchlist" style="margin:auto; width: 100%; position:relative; top:20px;border:solid 0px cadetblue;">
+            <table id="booklist" cellspacing='0' border='1px;' style="border:solid 0px cadetblue; width: 100%; border-collapse:collapse; text-align: center;">
+                <thead>
+                <tr>
+                    <th>序号</th><th>盘点文件名</th><th>盘点结果</th><th>条码号</th><th>文献名称</th><th>图书状态</th><th>当前书架号</th><th>初始书架号</th><th>定位时间</th>
+                </tr>
+                </thead>
+                <tbody id="searchlistbody" title="点击查看详细信息" style="background-color: white;"></tbody>
+            </table>
+        </div>
+    </div>
+</body>
+<script>
+    $("#bookbarcode").focus();
+</script>
+</html>

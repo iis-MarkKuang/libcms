@@ -1,0 +1,156 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>阿法迪图书馆文献管理平台2.0</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <script type="text/javascript" src="/js/jquery-2.2.0.js" ></script>
+    <script type="text/javascript" src="/js/jquery.easyui.min.js" ></script>
+    <script type="text/javascript" src="/js/vue.min.js"></script>
+    <script type="text/javascript" src="/js/SkipPage.js"></script>
+    <script type="text/javascript" src="/js/easyui-lang-zh_CN.js"></script>
+    <!--<meta http-equiv="Access-Control-Allow-Methods" content="POST">-->
+    <!--<meta http-equiv="Access-Control-Allow-Headers" content="x-requested-with,content-type">-->
+    <!--<meta http-equiv="content-type" content="text/css" />-->
+    <link rel="stylesheet" type="text/css" href="/css/page.css">
+    <link rel="stylesheet" type="text/css" href="/css/easyui.css">
+</head>
+<body>
+<div style="width: 810px; height: 567px; z-index: 1; position: absolute; left: 40%; top: 0">
+    <table style="width: 810px; font-size:21px;">
+        <caption style=' font-size: 25px;color:white; background-color: cadetblue'> 基本信息</caption>
+        <tbody>
+        <tr>
+            <td rowspan="3" align="center" style="width: 200px;">
+                <input type="text" title="照片" class="easyui-tooltip"  readonly="readonly" style="margin: 10px; border: 1px solid black;width: 150px;height: 190px;">
+            </td>
+            <td style="color:darkgray;width: 300px;">读者姓名
+                <input type="text" id="readername" class="form_wrapper easyui-tooltip"title="此项必须选择" name="readername" style="width:200px;">
+            </td>
+            <td style="color:darkgray;">性别
+                <select id="readersex" class="form_wrapper easyui-tooltip"title="此项必须选择" editable="false" style="width: 195px;">
+                    <option>男</option>
+                    <option>女</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td style="color:darkgray;">年级组别
+                <input type="text" id="readergrade" class="form_wrapper easyui-tooltip"title="如G16为高中2016级，C15为初中2015级" name="readername"></td>
+            <td style="color:darkgray;">班级
+                <input type="text" id="readerclass" class="form_wrapper easyui-tooltip"title="此项必须选择" name="readername" style="width: 195px;"></td>
+        </tr>
+        <tr>
+            <td style="color:darkgray;">出生年月
+                <input type="text" class="easyui-datebox" value="true" editable="false" style="width: 160px; height: 30px; margin: 10px; display: none;" textboxname="readername" comboname="readername">
+            </td>
+            <td style="color:darkgray;width: 260px;">联系电话
+                <input type="text" maxlength="13" class="form_wrapper easyui-tooltip"title="联系电话最长13位" name="readername" style="width: 153px;">
+            </td></tr>
+        <tr>
+            <td colspan="3" style="color:darkgray;">家庭住址
+                <input type="text" class="form_wrapper easyui-tooltip"title="此项必须选择" name="readername" style="width: 685px;"></td>
+        </tr>
+        <tr>
+            <td style="color:darkgray;">邮编
+                <input type="text" maxlength="6" class="form_wrapper easyui-tooltip"title="邮编为6位数字" name="readername" style="width:120px;"></td>
+            <td style="color:darkgray;">办证日期
+                <input type="text" id="registerdate" class="easyui-datebox" value="true" editable="false" style="width: 160px; height: 30px; margin: 10px; ">
+            </td>
+            <td style="color:darkgray;width: 100px;">读者职别
+                <select id="readerjob" class="form_wrapper easyui-tooltip" onchange="slcjob(this)" title="此项必须选择" editable="false" style="width: 155px;">
+                    <option>请选择</option>
+                    <option value="员工">员工</option>
+                    <option value="教师">教师</option>
+                    <option value="学生">学生</option>
+                    <option value="其他">其他</option>
+                </select>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <table style="width: 810px;font-size: 21px;margin-top: 30px;">
+        <tr>
+            <td style="color:darkgray;width: 400px;">借书证号
+                <input type="text" id="readerborrowno" class="form_wrapper easyui-tooltip"title="此项自动生成，不能编辑" name="borrownum"style="width: 280px;">
+            </td>
+            <td style="color:lightgray;">机读卡号
+                <input type="text" class="form_wrapper" readonly="readonly" name="readername"style="width: 280px;">
+            </td></tr>
+        <tr>
+            <td style="color:lightgray;width: 400px;">身份证号
+                <input type="text" class="form_wrapper" readonly="readonly" name="readername"style="width: 280px;">
+            </td>
+            <td style="color:lightgray;">自定编号
+                <input type="text" class="form_wrapper" readonly="readonly" name="readername"style="width: 280px;">
+            </td></tr>
+    </table>
+    <table style="width: 810px; font-size:21px;" >
+        <caption style=' font-size: 25px;color:white; background-color: cadetblue'>借阅权限</caption>
+        <tr>
+            <td style="color:darkgray;">图书册数
+                <input type="text"  class="form_wrapper" name="readername" style="width: 80px;margin: 5px;"/></td>
+            <td style="color:darkgray;">图书期限
+                <input type="text"  class="form_wrapper" name="readername" style="width: 80px;margin: 5px;"/></td>
+            <td style="color:darkgray;">期刊册数
+                <input type="text"  class="form_wrapper" name="readername" style="width: 80px;margin: 5px;"/></td>
+            <td style="color:darkgray;">期刊期限
+                <input type="text"  class="form_wrapper" name="readername" style="width: 80px;margin: 5px;"/></td>
+        </tr>
+        <tr>
+            <td style="color:darkgray;">古籍册数
+                <input type="text"  class="form_wrapper" name="readername" style="width: 80px;margin: 5px;"/></td>
+            <td style="color:darkgray;">古籍期限
+                <input type="text"  class="form_wrapper" name="readername" style="width: 80px;margin: 5px;"/></td>
+            <td style="color:darkgray;">非书册数
+                <input type="text"  class="form_wrapper" name="readername" style="width: 80px;margin: 5px;"/></td>
+            <td style="color:darkgray;">非书期限
+                <input type="text"  class="form_wrapper" name="readername" style="width: 80px;margin: 5px;"/></td>
+        </tr>
+        <tr>
+            <td style="color:darkgray;">预约权限
+                <input type="text"  class="form_wrapper" name="readername" style="width: 80px;margin: 5px;"/></td>
+            <td style="color:darkgray;">续借权限
+                <input type="text"  class="form_wrapper" name="readername" style="width: 80px;margin: 5px;"/></td>
+            <td style="color:darkgray;">查询密码
+                <input type="text"  class="form_wrapper" name="readername" style="width: 80px;margin: 5px;"/></td>
+        </tr>
+        <tr>
+            <td style="color:darkgray;">特殊权限
+                <input type="text"  class="form_wrapper" name="readername" style="width: 80px;margin: 5px;"/></td>
+        </tr>
+        <tr>
+            <td colspan="2"><button type="button" class="btnsize1" title="继续下条信息" style="position:relative; left: 250px;background-image: url(../images/Continue.png)" onclick="Page2_1_continue()"/>
+            </td>
+            <td colspan="2"><button type="button" class="btnsize1" title="保存该条信息" style="position:relative; left: 50px;background-image: url(../images/Save_no-op.png)" onclick="Page2_1_save()"/>
+            </td>
+        </tr>
+    </table>
+</div>
+<div style="width: 540px; height: 567px; z-index: 1; position: absolute; left:0px; top: 0">
+    <table id="pg21_tb1" title="职工列表">
+        <thead>
+        <th width="180px;" style='text-align: center; font-size: 25px;color:white; background-color: cadetblue'>借书证号</th>
+        <th width="180px;" style='text-align: center; font-size: 25px;color:white; background-color: cadetblue'>读者姓名</th>
+        <th width="180px;" style='text-align: center; font-size: 25px;color:white; background-color: cadetblue'>年级组别</th>
+        </thead>
+        <tr>
+            <td>10111937</td>
+            <td>王勤</td>
+            <td>G011</td>
+        </tr>
+        <tr>
+            <td>10111938</td>
+            <td>刘欣然</td>
+            <td>C011</td>
+        </tr>
+        <tr>
+            <td>10111935</td>
+            <td>于晨哲</td>
+            <td>T011</td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
+

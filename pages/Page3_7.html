@@ -1,0 +1,66 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>阿法迪图书馆文献管理平台2.0</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <link rel="stylesheet" type="text/css" href="/css/page.css?ver=1.16">
+    <link rel="stylesheet" type="text/css" href="/css/easyui.css">
+    <script type="text/javascript" src="/js/jquery-2.2.0.js" ></script>
+    <script type="text/javascript" src="/js/jquery.easyui.min.js" ></script>
+    <script type="text/javascript" src="/js/BookPrint.js"></script>
+    <script type="text/javascript" src="/js/jquery.PrintArea.js"></script>
+    <script type="text/javascript" src="/js/vue.min.js"></script>
+    <script type="text/javascript" src="/js/JsBarcode.js"></script>
+</head>
+<body>
+    <div class="div_panel" style="width:1200px; height: 700px; margin: 20px auto;">
+        <table class="table_panel" style="margin:auto; width: 100%; font-size:21px;">
+            <caption>文献打印</caption>
+            <tbody>
+            </tbody>
+        </table>
+        <div style="width:1200px; margin: 30px auto;">
+            <div class="div_panel" style="width: 300px; height: 610px; z-index: 1; float:left; margin-left:30px; top: 150px;">
+                <table class="table_panel" style="text-align:left; margin:auto; width: 100%; height: auto; font-size:21px;">
+                    <caption>打印类型</caption>
+                    <tbody>
+                        <tr><td style="height: 50px; text-align: center;"><label><input type="radio" name="printtype" value="1">书目清单</label></td></tr>
+                        <tr><td style="height: 50px; text-align: center;"><label><input type="radio" name="printtype" value="2">个别登录</label></td></tr>
+                        <tr><td style="height: 50px; text-align: center;"><label><input type="radio" name="printtype" value="3">总括登录</label></td></tr>
+                        <tr><td style="height: 50px; text-align: center;"><label><input type="radio" name="printtype" value="4">入库清单</label></td></tr>
+                        <tr><td style="height: 50px; text-align: center;"><label><input type="radio" name="printtype" value="5">书目卡片</label></td></tr>
+                        <tr><td style="height: 50px; text-align: center;"><label><input type="radio" name="printtype" value="6">流水号条码</label></td></tr>
+                        <tr><td style="height: 50px; text-align: center;"><label><input type="radio" name="printtype" value="7">连续书标</label></td></tr>
+                        <tr><td style="height: 50px; text-align: center;"><label><input type="radio" name="printtype" value="8">随机书标</label></td></tr>
+                        <tr><td style="height: 50px; text-align: center;"><label><input type="radio" name="printtype" value="9">注销清单</label></td></tr>
+                        <tr><td style="height: 50px; text-align: center;"><label><input type="radio" name="printtype" value="10">期刊标签</label></td></tr>
+                        <tr><td style="height: 50px; text-align: center;"><label><input type="radio" name="printtype" value="11">随机标签</label></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="bookbarcodeprint" class="div_panel" style="width: 800px; height: 610px; z-index: 1; float:left; left:980px; top: 150px; margin-left: 30px;">
+                <table class="table_panel" style="text-align:left ; margin:auto; width: 100%; height: auto; font-size:21px;">
+                    <caption>打印范围</caption>
+                    <tbody>
+                        <tr><td style="height: 50px; text-align: center;"><label><input type="radio" name="printmode">按典藏打印</label></td></tr>
+                        <tr><td style="height: 50px; text-align: center;"><select><option>综合库</option></select></td></tr>
+                        <tr><td style="height: 50px; text-align: center;"><label><input type="radio" name="printmode">按号码打印</label></td></tr>
+                        <tr><td style="height: 50px; text-align: center;">起始流水号<input type="text" id="codestart" style="width: 100px;" value=""></td></tr>
+                        <tr><td style="height: 50px; text-align: center;">终止流水号<input type="text" id="codeend" style="width: 100px;" value=""></td></tr>
+                        <!--<tr><td style="height: 50px; text-align: center;">随机流水号<input type="text" style="width: 100px;" value=""></td></tr>-->
+                        <!--<tr><td style="height: 50px; text-align: center;">随机号码数<input type="text" style="width: 100px;" value=""></td></tr>-->
+                        <tr><td style="height: 50px; text-align: center;"><input type="button" value="查询"></td></tr>
+                        <tr><td style="height: 50px; text-align: center;">请选择纸张<label><input type="radio" name="selectpaper" value="1">A4纸</label><label><input type="radio" name="selectpaper" value="2">套打</label></td></tr>
+                        <tr><td style="height: 50px; text-align: center;"><input type="button" id="previewbtn" v-on:click="preview" value="预览"><input type="button" id="bookprintbtn" v-on:click="bookprint" value="打印"></td></tr>
+                    </tbody>
+                </table>
+                <div>
+                    <table id="QRcodeTB">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

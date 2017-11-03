@@ -1,0 +1,49 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>阿法迪图书馆文献管理平台2.0</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <link rel="stylesheet" type="text/css" href="/css/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/css/page.css">
+    <script type="text/javascript" src="/js/jquery.easyui.min.js" ></script>
+    <script type="text/javascript" src="/js/easyui-lang-zh_CN.js" ></script>
+    <script type="text/javascript" src="/js/vue.min.js"></script>
+    <script type="text/javascript" src="/js/DocumentManagement.js"></script>
+</head>
+<body>
+    <div class="div_panel1" style="width:96%; height: 660px; margin: 20px auto;">
+        <table class="table_panel1" style="margin:auto; width: 100%; font-size:21px;">
+            <!--<caption>文献采编-填充式</caption>-->
+            <tbody>
+            <tr>
+                <td style="width: 100%; height: 60px; vertical-align: middle;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;ISBN<input id="isbnfs" type="text" value="">
+                    书名/著者/拼音<input id="keywordsfs" type="text" value=""><input type="button" value="查找" onclick="GetCollectEditData()" style="margin-left: 50px;"><label><input type="checkbox">启用联机服务</label>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div style="width:100%; height: 500px; margin: 20px auto; overflow:scroll;">
+            <table id="edittable" style="width: 96%;">
+                <tr><td style="text-align: right;">题名</td><td colspan="9"><input id="bookname" v-model="bookname" type="text" style="width: 100%;"></td></tr>
+                <tr><td style="text-align: right;">题名拼音</td><td colspan="9"><input id="booknamepy" v-model="booknamepy" type="text" style="width: 100%;"></td></tr>
+                <tr><td style="text-align: right;">著者一</td><td colspan="2"><input id="author1" v-model="author1" type="text" style="width: 100%;"></td><td style="text-align: right;">著作方式</td><td><select id="writemode1" v-model="writemode1" style="width: 100%;"><option>原著</option><option>著</option><option>编著</option><option>主编</option><option>编</option><option>改编</option><option>口述</option><option>整理</option><option>绘</option><option>记录</option><option>缩写</option><option>译</option></select></td><td style="text-align: right;">著者拼音</td><td colspan="3"><input id="authorpy" v-model="authorpy1" type="text" style="width: 100%;"></td></tr>
+                <tr><td style="text-align: right;">著者二</td><td colspan="2"><input id="author2" v-model="author2" type="text" style="width: 100%;"></td><td style="text-align: right;">著作方式</td><td><select id="writemode2" v-model="writemode2" style="width: 100%;"><option>原著</option><option>著</option><option>编著</option><option>主编</option><option>编</option><option>改编</option><option>口述</option><option>整理</option><option>绘</option><option>记录</option><option>缩写</option><option>译</option></select></td><td style="text-align: right;">著者三</td><td><input id="author3" type="text" style="width: 100%;"></td><td style="text-align: right;">著作方式</td><td><select id="writemode3" style="width: 100%;"><option>原著</option><option>著</option><option>编著</option><option>主编</option><option>编</option><option>改编</option><option>口述</option><option>整理</option><option>绘</option><option>记录</option><option>缩写</option><option>译</option></select></tr>
+                <tr><td style="text-align: right;">ISBN号</td><td colspan="4"><input id="bookisbn" v-model="bookisbn" type="text" style="width: 100%;"></td><td style="text-align: right;">出版社</td><td colspan="3"><input id="publisher" v-model="publisher" type="text" style="width: 100%;"></tr>
+                <tr><td style="text-align: right;">出版期</td><td><input type="checkbox"><input type="text" id="startdate" class="easyui-datebox" value="true" v-model="startdate" editable="true" style="width: 110px; height: 30px; margin: 10px; "><input type="checkbox"><input type="text" class="easyui-datebox" value="true" editable="false" style="width: 110px; height: 30px; margin: 10px; "></td><td style="text-align: right;">版次</td><td colspan="2"><input id="vercount" v-model="vercount" type="text" style="width: 100%;"></td><td style="text-align: right;">开本</td><td colspan="1"><input id="booksize" v-model="booksize" type="text" style="width: 100%;"></td><td style="text-align: right;">页数</td><td colspan="1"><input id="pages" v-model="pages" type="text" style="width: 100%;"></td></tr>
+                <tr><td style="text-align: right;">装订</td><td colspan="1"><input id="bookbind" v-model="bookbind" type="text" style="width: 100%;"></td><td style="text-align: right;">定价</td><td colspan="2"><input id="price" v-model="price" type="text" style="width: 100%;"></td><td style="text-align: right;">语种</td><td colspan="1"><input id="language" v-model="language" type="text" style="width: 100%;"></td><td style="text-align: right;">获得方式</td><td colspan="1"><input id="getmethod" v-model="getmethod" type="text" style="width: 100%;"></td></tr>
+                <tr><td style="text-align: right;">丛书名</td><td colspan="9"><input id="seriesname" v-model="seriesname" type="text" style="width: 100%;"></td></tr>
+                <tr><td style="text-align: right;">丛编者</td><td colspan="4"><input id="seriesauthor" v-model="seriesauthor" type="text" style="width: 100%;"></td><td style="text-align: right;">丛编方式</td><td colspan="3"><input id="seriesmode" v-model="seriesmode" type="text" style="width: 100%;"></td></tr>
+                <tr><td style="text-align: right;">丛编号</td><td colspan="1"><input id="seriesnumber" v-model="seriesnumber" type="text" style="width: 100%;"></td><td style="text-align: right;">卷册号</td><td colspan="2"><input id="volumenumber" v-model="volumenumber" type="text" style="width: 100%;"></td><td style="text-align: right;">图片</td><td colspan="1"><input id="picture" v-model="picture" type="text" style="width: 100%;"></td><td style="text-align: right;">附件</td><td colspan="1"><input id="attachment" v-model="attachment" type="text" style="width: 100%;"></td></tr>
+                <tr><td style="text-align: right;">排检</td><td colspan="9"><input id="bookindex" v-model="bookindex" type="text" style="width: 100%;"></td></tr>
+                <tr><td style="text-align: right;">附注</td><td colspan="9"><input id="note" v-model="note" type="text" style="width: 100%;"></td></tr>
+                <tr><td colspan="10" style="border-bottom: solid 1px cadetblue;"></td></tr>
+                <tr><td style="height: 20px;">&nbsp;</td></tr>
+                <tr><td style="text-align: right;">分类号</td><td colspan="1"><input id="classnumber" v-model="classnumber" type="text" style="width: 100%;"></td><td style="text-align: right;">典藏</td><td colspan="2"><select style="width: 100%;" id="booklib" v-mode="booklib"><option>综合库</option></select></td><td style="text-align: right;">书次号</td><td colspan="1"><input id="booknumber" v-model="booknumber" type="text" style="width: 100%;"></td><td style="text-align: right;">流水号</td><td colspan="1"><input id="recordnumber" v-model="recordnumber" type="text" style="width: 100%;"></td></tr>
+                <tr><td colspan="9" style="text-align: center; height: 36px;"><input type="button" value="保存" onclick=""><input type="button" value="机读" onclick=""><input type="button" value="卡片" onclick=""></td></tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

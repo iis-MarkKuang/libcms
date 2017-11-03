@@ -1,0 +1,27 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>阿法迪图书馆文献管理平台2.0</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <link rel="stylesheet" type="text/css" href="/css/page.css">
+    <link rel="stylesheet" type="text/css" href="/css/dialog.css">
+    <link rel="stylesheet" type="text/css" href="/css/easyui.css">
+    <script type="text/javascript" src="/js/vue.min.js"></script>
+    <script type="text/javascript" src="/js/countchart.js"></script>
+    <!--<script type="text/javascript" src="/js/main.js"></script>-->
+</head>
+<body>
+
+<div id="content">
+    <div id="CollectionSort" style="text-align: center">
+        文献种类：<input type="text" id="bookcategory">
+        藏书量统计：<input type="text" id="booknum">
+        <button v-on:click="CollectionSearch">搜索</button>
+    </div>
+</div>
+</body>
+<script>
+    //Statistics.CollectionsCount(0);//藏书量统计
+</script>
+</html>

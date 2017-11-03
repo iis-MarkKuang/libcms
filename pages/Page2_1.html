@@ -1,0 +1,244 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>阿法迪图书馆文献管理平台2.0</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <link rel="stylesheet" type="text/css" href="/css/page.css">
+    <link rel="stylesheet" type="text/css" href="/css/dialog.css">
+    <link rel="stylesheet" type="text/css" href="/css/easyui.css">
+    <!--<script type="text/javascript" src="/js/jquery-2.2.0.js" ></script>-->
+    <!--<script type="text/javascript" src="/js/jquery.min.js"></script>-->
+    <!--<script type="text/javascript" src="/js/jquery-levelSelect-ajax.js"></script>-->
+    <!--<script type="text/javascript" src="/js/bootstrap.min.js"></script>-->
+    <!--<script type="text/javascript" src="/js/jquery.easyui.min.js" ></script>-->
+    <script type="text/javascript" src="/js/UserRegister.js"></script>
+    <!--<script type="text/javascript" src="/js/easyui-lang-zh_CN.js"></script>-->
+    <script type="text/javascript" src="/js/vue.min.js"></script>
+</head>
+<body>
+<div id="registertable" style="height: 567px; z-index: 1;">
+    <table id="pg21_tb1" class="table_panel2" style="position: absolute; left: 40%; top: 0;width: 800px;">
+        <caption style=' font-size: 25px;color:white; background-color: cadetblue'>新增读者</caption>
+        <tbody>
+        <tr>
+            <td rowspan="3">
+                <!--<input type="text" title="照片" readonly="readonly" style="margin: 10px; border: 1px solid black;width: 150px;height: 190px;">-->
+                <img src="" id="userimage" style="background-color: white;margin: 10px; border: 1px solid black;width: 150px;height: 190px;">
+                <br>
+                <input id="userImageFile" type="file" style="width: 170px;">
+            </td>
+            <td style="text-align: left;width: 350px;"><span style="color: red">*</span>读者姓名
+                <input type="text" id="readername" title="此项必须选择" class="inputcss1" style="width:180px;">
+            </td>
+            <td style="text-align: right;width: 300px;"><span style="color: red">*</span>性别
+                <select id="readersex" title="此项必须选择" editable="false" style="width: 195px;height:28px;">
+                    <option value="请选择">请选择</option>
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td id="clsinfo" colspan="2" style="text-align: left;">
+                <span style="color: red">*</span>年级组别班级 <input id="clainput" readonly type="text" data-toggle="modal" data-target="#clamodal" data-backdrop="static" style="width: 400px;">
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">出生年月
+                <!--<input type="text" data-options="onSelect:onSelect" id="borndate" class="easyui-datebox" value="true" editable="false" style="width: 160px; height: 30px; margin: 10px; display: none;">-->
+                <input id='borndate' oninput="onSelect()" type='text' style='font-size: 20px; width:110px;' onfocus='setday(this,"yyyy-MM-dd","2016-1-1","2017-01-01",1)' readonly='readonly' />
+            </td>
+            <td style="width: 100px;text-align: right;"><span style="color: red">*</span>读者职别
+                <select id="readerjob" onchange="GetUserLevel_2()" title="此项必须选择" editable="false" style="width: 155px;height:30px;">
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="padding: 20px;">&nbsp;家庭住址
+                <input type="text" id="address" title="此项必须选择" class="inputcss1" style="width: 680px;"></td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">邮编
+                <input type="text" id="PostCode" maxlength="6" title="邮编为6位数字" class="inputcss1" style="width:120px;"></td>
+            <td> 办证日期
+                <!--<input type="text" id="registerdate" class="easyui-datebox" value="true" editable="false" style="width: 160px; height: 30px; margin: 10px; ">-->
+                <input id='registerdate'  type='text' style='font-size: 20px; width:110px;' onfocus='setday(this,"yyyy-MM-dd","2016-1-1","2017-01-01",1)' readonly='readonly' />
+            </td>
+            <td style="text-align: right;width: 260px;">联系电话
+                <input type="text" id="contactno" maxlength="13" title="联系电话最长13位" class="inputcss1" style="width: 153px;">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table id="pg21_tb2" class="table_panel2" style="position: absolute; left: 40%; top:400px;width: 810px;margin-top: 30px;">
+        <tr>
+            <td style="text-align: left;padding-left: 20px;width: 400px;"><span style="color: red">*</span>借书证号
+                <input type="text" id="readerbarcode" class="inputcss1" name="borrownum" style="width: 280px;">
+            </td>
+            <td><span style="text-align: right;color: red">*</span>身份证号
+                <input type="text" id="identityno" class="inputcss1" style="width: 280px;">
+            </td></tr>
+        <!--<tr>-->
+        <!--<td style="width: 400px;color:darkgray;">机读卡号-->
+        <!--<input type="text"  id="rfidno" class="inputcss1" readonly="readonly" style="width: 280px;">-->
+        <!--</td>-->
+        <!--<td style="color: darkgrey;">自定编号-->
+        <!--<input type="text" readonly="readonly" class="inputcss1" style="width: 280px;">-->
+        <!--</td></tr>-->
+
+    </table>
+
+    <table style="position: absolute; left: 40%; top:450px;width: 810px;margin-top: 30px;text-align: center;">
+        <tr>
+            <td><button type="button" class="btnsize1" title="继续下条信息" style="background-image: url(../images/Continue.png)" onclick="Continue_User()"/>
+            </td>
+            <td><button id="Saveuser" type="button" class="btnsize1" title="请填好读者姓名、性别、年级组别班级、出生年月、读者职别、借书证号和身份证号！" style="background-image: url(../images/Save_no-op.png)" disabled="disabled" onclick="Checkduplicate()" />
+            </td>
+            <td><button id="ModifyUser" hidden="hidden" type="button" style="width: 86px;height:30px;border:none" onclick="ModifyorUser()">保存修改</button>
+            </td>
+            <!--<td><button id="modifyornew" class="btn-lg"  data-toggle="modal" data-target="#dialog-modify" type="button"  value="修改读者信息" style=" width: 86px;height:30px;border:none;" onclick="ModifyorNew()">查找读者</button>-->
+            <td><button id="modifyornew" class="btn-lg"  type="button"  value="修改读者信息" style=" width: 86px;height:30px;border:none;" onclick="ModifyorNew();$('#dialog-modify').modal('show');$('#modify_barcode')[0].focus();">查找读者</button>
+            </td>
+        </tr>
+    </table>
+
+    <table id="pg21_tb3"  title="借阅权限" style="text-align: center;width: 540px;">
+        <caption style=' font-size: 25px;color:white; background-color: cadetblue'>借阅权限</caption>
+        <tr>
+            <td>图书册数
+                <input id="generalbookno" type="text" class="inputcss2"/></td>
+            <td>图书期限
+                <input id="generalbookdeadline" type="text" class="inputcss2"/></td>
+        </tr>
+        <!--<tr>-->
+            <!--<td>期刊册数-->
+                <!--<input id="journalno" type="text" class="inputcss2"/></td>-->
+            <!--<td>期刊期限-->
+                <!--<input id="journaldeadline" type="text" class="inputcss2"/></td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td>古籍册数-->
+                <!--<input id="ancientno" type="text"  class="inputcss2"/></td>-->
+            <!--<td>古籍期限-->
+                <!--<input id="ancientdeadline" type="text" class="inputcss2"/></td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td>非书册数-->
+                <!--<input id="otherbookno" type="text"  class="inputcss2"/></td>-->
+            <!--<td>非书期限-->
+                <!--<input id="otherbookdeadline" type="text"  class="inputcss2"/></td>-->
+        <!--</tr>-->
+        <tr>
+            <td>预约权限
+                <input id="bookright" type="text" class="inputcss2"/></td>
+            <td>续借权限
+                <input id="renewright" type="text"  class="inputcss2"/></td>
+        </tr>
+    </table>
+</div>
+
+<div class="div_panel" id="groupact" style="margin: 10px;position: absolute;top:300px;width:500px;height:200px;">
+    <table id="pg21_tb4" class="table_panel" style="width: 100%;">
+        <caption>年级组别班级管理</caption>
+        <tr>
+            <td>
+                年级组别班级 <input id="newlevel" class="inputcss1" type="text" style="width: 200px;">
+            </td>
+            <td style="text-align: right;">
+                <button type="button" @click="AddReadergroup">添加</button>
+            </td>
+        </tr>
+        <tr>
+            <td id="delcla">
+                <span style="color: red">*</span>年级组别班级 <input id="delclainput" class="inputcss1" readonly type="text" data-toggle="modal" data-target="#delclamodal">
+            </td>
+            <td style="text-align: right">
+                <button type="button" @click="DelReadergroup">集体注销</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="modal fade" id="dialog-modify" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color: white">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">按条件搜索</h4>
+            </div>
+            <div class="modal-body">
+                <label>借书证号</label><input id="modify_barcode" type="text" style="width: 200px;"/>
+            </div>
+            <div class="modal-footer">
+                <button type="button"  onclick="GetUserID()" data-dismiss="modal">确定</button>
+                <button type="button"  onclick="Modify_cancel()"  data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<div class="modal fade" id="clamodal" tabindex="-1" role="dialog" aria-labelledby="claLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color: white">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="claLabel">选择读者班级</h4>
+            </div>
+            <div class="modal-body" id="selarea">
+                <div>
+                    <div>已选择的班级：<button id="checkedclear" style="float: right;">一键清空</button></div>
+                </div>
+            </div>
+            <div style="border-top: 1px solid #e5e5e5;padding: 15px;">
+                <div id="classcheckbox"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button"  id="level_confirm" data-dismiss="modal">确定</button>
+                <button type="button"  onclick="Modify_cancel()"  data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<div class="modal fade" id="delclamodal" tabindex="-1" role="dialog" aria-labelledby="delclaLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color: white">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="delclaLabel">选择读者班级</h4>
+            </div>
+            <div class="modal-body" id="delselarea">
+                <div>
+                    <div>已选择的班级：<button id="delcheckedclear" style="float: right;">一键清空</button></div>
+                </div>
+            </div>
+            <div style="border-top: 1px solid #e5e5e5;padding: 15px;">
+                <div id="delclasscheckbox"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button"  id="dellevel_confirm" data-dismiss="modal">确定</button>
+                <button type="button"  onclick="Modify_cancel()"  data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<script type="text/javascript">
+    $('#dialog-modify').on('shown.bs.modal', function () {
+        $('#modify_barcode').focus();
+    });
+    var now = new Date();
+    now.setYear(now.getYear() - 7 + 1900);
+    var snow = now.format("yyyy-MM-dd");
+
+    $("#borndate").val(snow);
+    $("#registerdate").val(new Date().format("yyyy-MM-dd"));
+    GetUserLevel_1("register");
+    GetClassInfo1();
+</script>
+</body>
+</html>
+
+

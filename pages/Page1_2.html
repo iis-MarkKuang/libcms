@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>阿法迪图书馆文献管理平台2.0</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <script type="text/javascript" src="/js/vue.min.js"></script>
+    <script type="text/javascript" src="/js/SystemSetting.js"></script>
+    <script type="text/javascript" src="/js/UserGroupManagement.js"></script>
+    <script type="text/javascript" src="/js/UserAuthority.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/page.css?ver=1">
+    <style>
+        [v-cloak]{
+            display:none;
+        }
+    </style>
+</head>
+<body>
+    <div class="div_panel1" style="width:1260px; height: 600px; margin: 20px auto;">
+        <table class="" style="margin:auto; width: 100%; font-size:21px;">
+            <!--<caption>设置操作权限</caption>-->
+            <tbody id="usermanage">
+            <tr>
+                <td colspan="9" style="width: auto; height: 60px; vertical-align: middle; border: solid 0px blue;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;用户名称&nbsp;&nbsp;<input id="usernamelist" type="text" list="userlist" ondblclick="$('#usernamelist').val('').blur();$('#usernamelist').val('').focus();" title="双击鼠标清空输入框数据"><datalist id="userlist" v-cloak><option v-for="user in users" v-bind:value="user.username"/></datalist>&nbsp;&nbsp;
+                    <input type="button" value="保存用户权限修改" onclick="userAuthority.SaveUserAuthority()" style="margin-right: 10px;">
+                </td>
+                <td style="width: 130px;"><input id="toggleuserinfo" type="button" value="显示用户信息" onclick="userAuthority.ToggleUserInfo()" style="margin-right: 0px;"></td>
+            </tr>
+            <tr id="setuserinfo"  style="display: none; height:120px;">
+                <td colspan="10" style=" vertical-align: middle;">
+                    <table style="width: 1260px; margin-left: 26px; margin-bottom: 30px; border: solid 1px cadetblue;border-spacing: 0px;">
+                        <thead style="background-color: rgba(151, 217, 219, 0.22); border-bottom: 1px solid cadetblue;">
+                            <tr><td colspan="10" style="text-align: right; background-color: rgba(151, 217, 219, 0.22); border-bottom: 1px solid cadetblue; vertical-align: middle;"><button v-on:click="createuser" >创建用户</button>&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="重置当前用户密码" onclick="userAuthority.SetUserPass();">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="保存用户信息" onclick="userAuthority.SaveUserInfo();">&nbsp;&nbsp;&nbsp;</td></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>全名</td><td><input id="full_name" type="text"></td><td>性别</td><td><select id="gender"><option value="男" selected>男</option><option value="女">女</option></select></td><td>住址</td><td><input id="address" size="39" type="text"></td><td><label><input id="is_active" type="checkbox">未注销</label></td></tr>
+                            <tr><td>身份证号</td><td><input id="identity" type="text"></td><td>手机</td><td><input id="mobile" type="text"></td><td>电子邮件</td><td><input id="email" type="text"></td><td><label><input id="is_staff" type="checkbox">员工</label></td><td></td></tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="10" style=" vertical-align: middle;">
+                    <table id="usergrouplist" style="width: 1260px; height: 100px; margin-left: 26px; margin-bottom: 30px; border: solid 1px cadetblue; border-collapse: collapse;">
+                        <thead style="background-color: rgba(151, 217, 219, 0.22); border-bottom: 1px solid cadetblue;">
+                            <tr>
+                                <td style="width:auto; text-align: left; height: 28px;">权限组</td>
+                                <td style="width:100px; vertical-align: initial;"><button @click="deleteusergroup" title="1. 选择一个权限组 &#10;2. 点击 '删除权限组' 按钮">删除权限组</button></td>
+                                <td style="width:100px; vertical-align: initial;"><button @click="createusergroup" title="1. 选择功能列表项 &#10;2. 点击 '创建权限组' 按钮&#10;3. 在对话框中输入新的权限组名称">创建权限组</button></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="3"><label v-for="group in usergroups" v-cloak><input v-bind:id="'usergroup' + group.id" type="checkbox" v-bind:value="group.id" v-bind:onclick="'userAuthority.SetFunctionCheckbox(' + group.id + ');'">{{group.name}}</label></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div id="functionlist" style="width:1500px; margin: 0px auto;" v-cloak>
+            <div v-for="fl in flist" class="div_panel" style="width: auto; height: 380px;  z-index: 1; float:left; margin-left:30px; top: 100px;">
+                <table class="table_panel" style="text-align:left; margin:auto; width: 100%; height: auto; font-size:21px;">
+                    <caption>{{fl.app_label}}</caption>
+                    <tbody>
+                    <tr v-for="s in flist[$index].permissions" style=""><td><label><input v-bind:id="'authoritycheckbox' + s.id" type="checkbox" v-bind:value="s.id" v-bind:onclick="'userAuthority.SetFunctionAR(' + s.id + ')'">{{s.name}}&nbsp;&nbsp;&nbsp;&nbsp;</label></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    userAuthority.InitPage();
+//    userGroupManagement.InitPage();
+</script>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>阿法迪图书馆文献管理平台2.0</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <link rel="stylesheet" type="text/css" href="/css/page.css">
+    <script type="text/javascript" src="/js/vue.min.js"></script>
+    <script type="text/javascript" src="/js/catalogue.js"></script>
+    <script type="text/javascript" src="/js/DocumentManagement.js"></script>
+    <script type="text/javascript" src="/js/pub.js"></script>
+    <script type="text/javascript" src="/js/jquery-levelSelect-ajax.js"></script>
+</head>
+<body>
+    <div id="catalogue" class="div_panel1" style="width:96%; height: 660px; margin: 20px auto;">
+        <table class="table_panel1" style="margin:auto; width: 100%; font-size:21px;">
+            <!--<caption>文献采编-填充式</caption>-->
+            <tbody>
+            <tr>
+                <td style="width: 100%; height: 60px; vertical-align: middle;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;ISBN<input id="isbnfs" type="text" value="" size="15" style="margin-right: 10px;">
+                    书名<input id="booknamefs" type="text" value="" style="margin-right: 10px;">著者<input id="authorfs" type="text" value="" size="10" style="margin-right: 10px;">拼音<input id="authorpyfs" type="text" value="" style="margin-right: 10px;"><button id="searchbutton" v-on:click="searchbook"  style="margin-left: 20px;">查找</button><label style="margin-left: 20px;"><input id="isonline" type="checkbox" checked>启用联机服务</label>
+                    <!--书名<input id="booknamefs" type="text" value="" style="margin-right: 10px;">著者<input id="authorfs" type="text" value="" size="10" style="margin-right: 10px;">拼音<input id="authorpyfs" type="text" value="" style="margin-right: 10px;"><button id="searchbutton" v-on:click="searchbook"  style="margin-left: 20px;">查找</button>-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div style="width:100%; height: 500px; margin: 20px auto; overflow:auto;">
+            <table id="edittable" style="width: 96%;">
+                <tr><td style="text-align: right;">题名</td><td colspan="9"><input id="bookname" v-model="bookname" type="text" style="width: 100%;"></td></tr>
+                <tr><td style="text-align: right;">题名拼音</td><td colspan="9"><input id="booknamepy" v-model="booknamepy" type="text" style="width: 100%;"></td></tr>
+                <tr><td style="text-align: right;">著者</td><td colspan="2"><input id="author1" v-model="author1" type="text" style="width: 100%;"></td><td style="text-align: right;">著作方式</td><td><input type="text" id="writemode1" v-model="writemode1" style="width: 100%;"><datalist id="writemodelist"><option><label><input type="checkbox">原著</label></option><option><input type="checkbox">著</option><option><input type="checkbox">编著</option><option>主编</option><option>编</option><option>改编</option><option>口述</option><option>整理</option><option>绘</option><option>记录</option><option>缩写</option><option>译</option></datalist></td><td style="text-align: right;">著者拼音</td><td colspan="3"><input id="authorpy" v-model="authorpy1" type="text" style="width: 100%;"></td></tr>
+                <tr><td style="text-align: right;">ISBN号</td><td colspan="4"><input id="bookisbn" v-model="bookisbn" v-on:change="GetPublish" type="text" style="width: 100%;"></td><td style="text-align: right;">出版社</td><td colspan="3"><input id="publisher" v-model="publisher" type="text" style="width: 100%;"></tr>
+                <tr><td style="text-align: right;">出版日期</td><td><input id="publishdate" v-model="publishdate" type="text"></td><td style="text-align: right;"></td><td colspan="2"></td><td style="text-align: right;">开本</td><td colspan="1"><input id="booksize" v-model="booksize" type="text" style="width: 100%;"></td><td style="text-align: right;">页数</td><td colspan="1"><input id="pages" v-model="pages" type="text" style="width: 100%;"></td></tr>
+                <tr><td style="text-align: right;">装订</td><td colspan="1"><select id="bookbind" v-model="bookbind" type="text" style="height: 21px;width: 100%;"><option value="精装本">精装本</option><option value="平装本">平装本</option><option value="软精本">软精本</option><option value="压膜本">压膜本</option></select></td><td colspan="2" style="text-align: right;">定价/获取方式</td><td colspan="1"><input id="price" v-model="price" type="text"><select id="currency" style="height: 22px;"><option value="元">元</option><option value="美元">美元</option><option value="英镑">英镑</option><option value="日元">日元</option><option value="欧元">欧元</option></select></td><td style="text-align: right;">语种</td><td colspan="1"><input id="language" v-model="language" type="text" style="width: 100%;" list="languagelist"><datalist id="languagelist"></datalist></td><td style="text-align: right;"></td><td colspan="1"></td></tr>
+                <tr><td style="text-align: right;">丛书名</td><td colspan="9"><input id="seriesname" v-model="seriesname" type="text" style="width: 100%;"></td></tr>
+                <tr><td style="text-align: right;">丛编者</td><td colspan="4"><input id="seriesauthor" v-model="seriesauthor" type="text" style="width: 100%;"></td><td style="text-align: right;"></td><td colspan="3"></td></tr>
+                <tr><td style="text-align: right;">丛编号</td><td colspan="1"><input id="bookissn" v-model="bookissn" type="text" style="width: 100%;"></td><td style="text-align: right;">卷册号</td><td colspan="2"><input id="seriesnumber" v-model="seriesnumber" type="text" style="width: 100%;"></td><td style="text-align: right;">图片</td><td colspan="1"><input id="picture" v-model="picture" type="text" style="width: 100%;"></td><td style="text-align: right;">附件</td><td colspan="1"><input id="attachment" v-model="attachment" type="text" style="width: 100%;"></td></tr>
+                <tr><td style="text-align: right;">主标目</td><td colspan="4"><input id="maintarget" v-model="maintarget" type="text" style="width: 100%;"></td><td style="text-align: right;">主题复分</td><td colspan="4"><input id="maintargetsplit" v-model="maintargetsplit" type="text" style="width: 100%;"></td></tr>
+                <tr><td style="text-align: right;">附注</td><td colspan="9"><input id="note" v-model="note" type="text" style="width: 100%;"></td></tr>
+                <tr><td colspan="10" style="border-bottom: solid 1px cadetblue;"></td></tr>
+                <tr><td style="height: 20px;">&nbsp;</td></tr>
+                <tr><td style="text-align: right;">分类号</td><td colspan="1"><input id="classnumber" v-model="classnumber" type="text" style="width: 100%;"></td><td style="text-align: right;"><span style="color: red">*</span>典藏</td><td colspan="2"><select style="width: 100%;" id="stacks" v-mode="stacks"></select></td><td style="text-align: right;">书次号</td><td colspan="1"><input id="booknumber" v-model="booknumber" type="text" style="width: 100%;"></td><td style="text-align: right;"><span style="color: red">*</span>起始条码号</td><td colspan="1"><input id="recordnumber" v-model="recordnumber" type="text" style="width: auto;">&nbsp;&nbsp;&nbsp;副本数<input id="copycount" type="text" value="1" style="width: 30px; text-align: right;"></td></tr>
+                <tr><td colspan="8" style="text-align: center; height: 36px;"><input type="button" value="保存编目" onclick="catalogueRW.SaveCatalogueData()">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="新建编目" onclick="if(confirm('确定新建编目数据?')) {catalogueRW.ResetCatalogueData()}"></td><td><input type="button" value="查看当前书库最大条码号" onclick="catalogueRW.GetMaxFlow()"></td></tr>
+            </table>
+        </div>
+    </div>
+    <div id="searchlist" style="display:none; margin:auto; width: 80%; height:auto; position:fixed; top:160px; left: 20px; border:solid 1px cadetblue; background-color: cadetblue;">
+        <table id="booklist" cellspacing='0' border='1px;' style="border:solid 1px cadetblue; width: 100%; border-collapse:collapse; text-align: center;"><thead><tr><th style="width: 40px;">序号</th><th style="width: 50px;">ISBN</th><th style="width: auto;">文献名称</th><th style="width: auto;">著者</th><th style="width: 200px;">出版社</th><th style="width: 60px;">出版期</th><th style="width: 40px;">操作</th></tr></thead>
+            <tbody id="searchlistbody" style="background-color: white;"></tbody>
+        </table>
+    </div>
+</body>
+</html>
+<script>
+    catalogueRW.InitPage();
+</script>

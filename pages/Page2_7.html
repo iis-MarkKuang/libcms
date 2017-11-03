@@ -1,0 +1,48 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>阿法迪图书馆文献管理平台2.0</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <link rel="stylesheet" type="text/css" href="/css/page.css">
+    <script type="text/javascript" src="/js/BookFine.js"></script>
+    <script type="text/javascript" src="/js/vue.min.js"></script>
+</head>
+<body>
+<div id="PayTime" style="width: 100%; height: 567px; z-index: 1; top: 0">
+    <table id="pg27_tb1" class="table_panel2">
+        <tr>
+            <!--<td>-->
+                <!--<select style="width:150px;height: 25px;" name="" id="finetype">-->
+                    <!--<option value="delayed">逾期赔罚</option>-->
+                    <!--<option value="lost">丢失赔罚</option>-->
+                <!--</select>-->
+            <!--</td>-->
+
+            <td style="text-align: center">
+                借书证号
+                <input id="readerbarcode" name="" type="text" value="">
+            </td>
+            <td>
+                <button v-on:click="search">查找</button>
+                <button @click="deal">处理罚款</button>
+            </td>
+            <td colspan="2" style="text-align: center">
+                赔罚金额
+                <input id="finenum" type="text" readonly value="">
+        </tr>
+    </table>
+    <table id="pg27_tb2" class="table_panel2" >
+        <thead style="background-color:cadetblue;text-align: center;color: white; ">
+        <th>借书日期</th>
+        <th>应还日期</th>
+        <th>条码号</th>
+        <th>文献名称</th>
+        <th>超期</th>
+        <th>丢失赔罚</th>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+</body>
+</html>

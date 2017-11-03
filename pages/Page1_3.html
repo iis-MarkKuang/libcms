@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>阿法迪图书馆文献管理平台2.0</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <script type="text/javascript" src="/js/vue.min.js"></script>
+    <script type="text/javascript" src="/js/BorrowAuthority.js"></script>
+    <style>
+        [v-cloak]{
+            display:none;
+        }
+    </style>
+</head>
+<body>
+<div id="borrowauth" class="div_panel1" style="width:900px; height: 600px; margin: 20px auto; text-align:center;">
+        <table class="table_panel1" style="margin:auto; width: 100%; font-size:21px;">
+            <!--<caption>设置借阅权限</caption>-->
+            <tbody>
+            <tr>
+                <td style="width: 500px; height: 60px; vertical-align: middle;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;职别选择<select id="userlevel" v-model="selected"></select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button v-on:click="deletelevel">删除当前的职别</button>
+                </td>
+                <td id="command"><button v-on:click="createnewlevel" title="新职别的相关属性以当前的职别为模板创建">添加新职别</button></td>
+            </tr>
+            </tbody>
+        </table>
+        <div style="width:100%; margin: 20px auto; text-align: center;">
+            <div class="div_panel1" style="width: 700px; height: 230px; z-index: 1; margin: auto;  top: 150px; text-align: center;">
+                <table class="table_panel1" style="text-align:left; margin:auto; width: 100%; height: 300px; font-size:21px;">
+                    <!--<caption>系统功能</caption>-->
+                    <tbody  v-cloak>
+                        <tr  v-cloak><td style="text-align: right;">普通图书借阅册数</td><td><input type="text" v-model="levelinfo.borrow_rule.quantity" value="{{levelinfo.borrow_rule.quantity}}"></td><td style="text-align: right;">普通图书借阅天数</td><td><input type="text" v-model="levelinfo.borrow_rule.day" value="{{levelinfo.borrow_rule.day}}"></td></tr>
+                        <!--<tr  v-cloak><td style="text-align: right;">期刊借阅册数</td><td><input type="text" readonly ></td><td style="text-align: right;">期刊借阅天数</td><td><input type="text" readonly></td></tr>-->
+                        <!--<tr  v-cloak><td style="text-align: right;">古籍借阅册数</td><td><input type="text" readonly></td><td style="text-align: right;">古籍借阅天数</td><td><input type="text" readonly></td></tr>-->
+                        <!--<tr  v-cloak><td style="text-align: right;">非书册数借阅册数</td><td><input type="text" readonly></td><td style="text-align: right;">非书册数借阅天数</td><td><input type="text" readonly></td></tr>-->
+                        <tr><td colspan="2" style="text-align: right;"><label><input type="checkbox" v-model="levelinfo.borrow_rule.can_renew">续借权限</label></td><td colspan="2"><label><input type="checkbox" v-model="levelinfo.borrow_rule.can_book">预约权限</label></td></tr>
+                        <tr><td colspan="2" style="text-align: right;">过期处理方式</td><td colspan="2"><select v-model="levelinfo.penalty_rule.method"><option>警告</option><option>罚款</option><option>其他</option></select></td></tr>
+                        <tr><td colspan="2" style="text-align: right;">过期罚款规则</td><td colspan="2"><input type="text" v-model="levelinfo.penalty_rule.expire_factor" value="{{levelinfo.penalty_rule.expire_factor}}">元/天</tr>
+                        <tr><td colspan="2" style="text-align: right;">丢书赔款规则</td><td colspan="2"><input type="text" v-model="levelinfo.penalty_rule.lost_factor" value="{{levelinfo.penalty_rule.lost_factor}}">倍</td></tr>
+                        <tr><td colspan="4" style="text-align: center;"><button v-on:click="savelevel">保存参数</button></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+//    GetUserLevel(0,"");
+    borrowAutority.InitPage();
+</script>

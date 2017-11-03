@@ -1,0 +1,118 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>阿法迪图书馆文献管理平台2.0</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <link rel="stylesheet" type="text/css" href="/css/jquery.edittable.css">
+    <link rel="stylesheet" type="text/css" href="/css/page.css">
+    <script type="text/javascript" src="/js/UserImport.js"></script>
+    <script type="text/javascript" src="/js/xlsx.full.min.js" ></script>
+    <script type="text/javascript" src="/js/processEXL.js" ></script>
+    <script type="text/javascript" src="/js/jquery.editable.js"></script>
+    <script type="text/javascript" src="/js/DocumentManagement.js"></script>
+</head>
+<body>
+<div style="height: 567px; z-index: 1; top: 0">
+    <table id="pg22_tb1" class="table_panel2">
+        <tr>
+            <td style="width:300px;text-align: left;">
+                <!--起始数据行-->
+                <!--<select>-->
+                    <!--<option>第01行</option>-->
+                    <!--<option>第02行</option>-->
+                    <!--<option>第03行</option>-->
+                    <!--<option>第04行</option>-->
+                    <!--<option>第05行</option>-->
+                    <!--<option>第06行</option>-->
+                    <!--<option>第07行</option>-->
+                    <!--<option>第08行</option>-->
+                    <!--<option>第09行</option>-->
+                    <!--<option>第10行</option>-->
+                <!--</select>-->
+                <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;输入方式<select><option>手工输入</option><option>XLS文件</option></select>&nbsp;&nbsp;-->
+                <input type="file" name="xlfile" id="xlf" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btnsize2" style="margin-top: 15px;background-image: url(../images/DataImport.jpg);" onclick="Dataimport()"/>
+                <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;读者职别-->
+                <!--<select>-->
+                    <!--<option>员工</option>-->
+                    <!--<option>教师</option>-->
+                    <!--<option>学生</option>-->
+                    <!--<option>其他</option>-->
+                <!--</select>-->
+                <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btnsize2" style="background-image: url(../images/AddDoc_no-op.jpg);"disabled="disabled" onclick="Page2_2_dbimport()"/>-->
+
+                <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btnsize2" style="background-image: url(../images/AddPhoto.png);"onclick="Page2_2_dbimport()"/>-->
+            </td>
+        </tr>
+    </table>
+    <div style="width:100%; height: 500px; margin: 20px auto; overflow:scroll;">
+        <table id="edittable" style="width: 100%;">
+            <!--<thead><th>重查</th><th>订否</th><th>文献名称</th><th>作者</th><th>出版社</th><th>ISBN</th><th>价格</th><th>册数</th><th>总价</th><th>供应商</th><th>预定号</th><th>备注</th></thead>-->
+        </table>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    GetClassInfo2();
+    GetUserLevel_3();
+    var mytable = $('#edittable').editTable({
+        data: [['']],           // Fill the table with a js array (this is overridden by the textarea content if not empty)
+        tableClass: 'inputtable',   // Table class, for styling
+        jsonData: false,        // Fill the table with json data (this will override data property)
+        headerCols: [
+            '',
+            '读者姓名',
+            '性别',
+            '年级组别班级',
+            '出生年月',
+            '家庭住址',
+            '联系电话',
+            '邮编',
+            '借书证号',
+            '身份证号',
+            '读者职别',
+            '失败原因',
+        ],      // Fix columns number and names (array of column names)
+        maxRows: 999,           // Max number of rows which can be added
+        first_row: false,        // First row should be highlighted?
+        row_template: ['checkbox','text','text', 'text', 'text','text','text','text','text','text','text','text'],    // An array of column types set in field_templates
+        field_templates: {
+            'checkbox' : {
+                html: '<input type="checkbox"/>',
+                getValue: function (input) {
+                    return $(input).is(':checked');
+                },
+                setValue: function (input, value) {
+                    if ( value ){
+                        return $(input).attr('checked', true);
+                    }
+                    return $(input).removeAttr('checked');
+                }
+            }
+        }, // An array of custom field type objects
+        displayAddDelButton : true,
+        // Validate fields
+        validate_field: function (col_id, value, col_type, $element) {
+            return true;
+        }
+    });
+    $("#edittable tr th:eq(0)").html("<input type='checkbox' name='allcheck'/>")
+    $("#edittable tr th:eq(0)").css("width","20px");
+    $("#edittable tr th:eq(1)").css("width","100px");
+    $("#edittable tr th:eq(2)").css("width","40px");
+    $("#edittable tr th:eq(3)").css("width","250px");
+    $("#edittable tr th:eq(4)").css("width","100px");
+    $("#edittable tr th:eq(5)").css("width","400px");
+    $("#edittable tr th:eq(6)").css("width","150px");
+    $("#edittable tr th:eq(7)").css("width","70px");
+    $("#edittable tr th:eq(8)").css("width","130px");
+    $("#edittable tr th:eq(9)").css("width","180px");
+    $("#edittable tr th:eq(10)").css("width","130px");
+    $("#edittable tr th:eq(11)").css("width","100px");
+    var X = XLSX;
+    var xlf = document.getElementById('xlf');
+    if(xlf.addEventListener) xlf.addEventListener('change', handleFile, false);
+
+</script>

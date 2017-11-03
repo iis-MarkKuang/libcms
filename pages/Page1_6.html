@@ -1,0 +1,49 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>阿法迪图书馆文献管理平台2.0</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <script type="text/javascript" src="/js/jquery-2.2.0.js" ></script>
+    <script type="text/javascript" src="/js/jquery.easyui.min.js" ></script>
+    <script type="text/javascript" src="/js/SkipPage2.js"></script>
+    <!--<meta http-equiv="Access-Control-Allow-Methods" content="POST">-->
+    <!--<meta http-equiv="Access-Control-Allow-Headers" content="x-requested-with,content-type">-->
+    <!--<meta http-equiv="content-type" content="text/css" />-->
+    <link rel="stylesheet" type="text/css" href="/css/page.css?ver=1.16">
+    <link rel="stylesheet" type="text/css" href="/css/easyui.css">
+</head>
+<body>
+    <div class="div_panel" style="width:1200px; height: 600px; margin: 20px auto;">
+        <table class="table_panel" style="margin:auto; width: 100%; font-size:21px;">
+            <caption>备份/恢复数据</caption>
+            <tbody>
+            </tbody>
+        </table>
+        <div style="width:1200px; margin: 30px auto;">
+            <div class="div_panel" style="width: 500px; height: 430px; z-index: 1; float:left; margin-left:30px; top: 150px;">
+                <table class="table_panel" style="text-align:left; margin:auto; width: 100%; height: auto; font-size:21px;">
+                    <caption>备份数据</caption>
+                    <tbody>
+                        <tr><td style="height: 50px; text-align: center;">选择要备份的数据</td></tr>
+                        <tr><td style="height: 50px; text-align: center;"><label><input type="checkbox" value="1">系统用户数据</label></td></tr>
+                        <tr><td style="height: 50px; text-align: center;"><label><input type="checkbox" value="2">辅助编目数据</label></td></tr>
+                        <tr><td style="height: 50px; text-align: center;"><input type="button" value="开始备份"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="div_panel" style="width: 500px; height: 430px; z-index: 1; float:left; left:980px; top: 150px; margin-left: 30px;">
+                <table class="table_panel" style="text-align:left ; margin:auto; width: 100%; height: auto; font-size:21px;">
+                    <caption>恢复数据</caption>
+                    <tbody>
+                        <tr><td colspan="2" style="height: 50px; text-align:center;">选择要恢复的数据</td></tr>
+                        <tr><td style="height: 50px; text-align: center;"><label><input type="checkbox" value="1">系统用户数据</label></td></tr>
+                        <tr><td style="height: 50px; text-align: center;"><label><input type="checkbox" value="2">辅助编目数据</label></td></tr>
+                        <tr><td style="height: 50px; text-align: center;"><input type="button" value="开始恢复"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

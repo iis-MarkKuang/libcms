@@ -1,0 +1,165 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>阿法迪图书馆文献管理平台2.0</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <link rel="stylesheet" type="text/css" href="/css/page.css">
+    <link rel="stylesheet" type="text/css" href="/css/dialog.css">
+    <link rel="stylesheet" type="text/css" href="/css/easyui.css">
+    <!--<script type="text/javascript" src="/js/jquery-2.2.0.js" ></script>-->
+    <script type="text/javascript" src="/js/vue.min.js"></script>
+    <script type="text/javascript" src="/js/UserRegister_000.js"></script>
+    <script type="text/javascript" src="/js/jquery.easyui.min.js" ></script>
+    <script type="text/javascript" src="/js/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div>
+    <div id="ReaderRegister">
+        <table style="width: 100%;table-layout: fixed;margin: 30px 0;font-size: 18px">
+            <tr>
+                <td colspan="3"></td>
+                <td colspan="4">
+                    条码号<input type="text" id="UserBarcode" v-model="UserBarcode">
+                    身份证号<input type="text" id="UserIdentity" v-model="UserIdentity">
+                    <input type="button" value="查找" @click="Userregister.UserSearch">
+                </td>
+                <td colspan="3"></td>
+            </tr>
+        </table>
+        <table style="width: 100%;table-layout: fixed">
+            <tr>
+                <td style="text-align: right"><span style="color: red">*</span>读者姓名</td>
+                <td colspan="7"><input type="text" style="width: 100%" id="Name" v-model="Name"></td>
+                <td colspan="2" rowspan="4"><input type="text" style="margin: 10px;width: 100px;height: 120px;"></td>
+            </tr>
+            <tr>
+                <td style="text-align: right"><span style="color: red">*</span>年级班级组别</td>
+                <td colspan="7">
+                    <!--<input style="width: 100%" type="text" id="Group" v-model="Group">-->
+                    <input id="Group" v-model="Group" readonly type="text" data-toggle="modal" data-target="#clamodal" style="width:100%;">
+                </td>
+                <td colspan="2" hidden></td>
+            </tr>
+            <tr>
+                <td style="text-align: right"><span style="color: red">*</span>读者职别</td>
+                <td colspan="7">
+                    <select id="Level" v-model="Level" v-on:change="GetLevelAuth" editable="false" style="width:100%;height:23px;">
+                    </select>
+                </td>
+                <td colspan="2" hidden></td>
+            </tr>
+            <tr>
+                <td style="text-align: right"><span style="color: red">*</span>出生年月</td>
+                <td colspan="3">
+                    <!--<input style="width: 100%" type="text" id="Birth" v-model="Birth">-->
+                    <input type="text" data-options="onSelect:UserRegister.onSelect" id="borndate" class="easyui-datebox" value="true" editable="false" style="width: 160px; height: 30px; margin: 10px; display: none;">
+                </td>
+                <td style="text-align: right"><span style="color: red">*</span>性别</td>
+                <td colspan="3">
+                    <select id="Gender" v-model="Gender" editable="false" style="width: 100%;height:23px;">
+                        <option value="请选择">请选择</option>
+                        <option value="男">男</option>
+                        <option value="女">女</option>
+                    </select>
+                </td>
+                <td colspan="2" hidden></td>
+            </tr>
+            <tr>
+                <td style="text-align: right">联系电话</td>
+                <td colspan="3"><input style="width: 100%" type="text" id="Phonenumber" v-model="Phonenumber"></td>
+                <td style="text-align: right">邮政编码</td>
+                <td colspan="4"><input style="width: 100%" type="text" id="Postcode" v-model="Postcode"></td>
+            </tr>
+            <tr>
+                <td style="text-align: right">家庭住址</td>
+                <td colspan="8"><input style="width: 100%" type="text" id="Address" v-model="Address"></td>
+            </tr>
+            <tr>
+                <td style="text-align: right">图书册数</td>
+                <td colspan="3"><input class="levelauth" style="width: 100%" type="text" id="BookNo" v-model="BookNo"></td>
+                <td style="text-align: right">图书期限</td>
+                <td colspan="4"><input class="levelauth" style="width: 100%" type="text" id="BookAuth" v-model="BookAuth"></td>
+            </tr>
+            <tr>
+                <td style="text-align: right">期刊册数</td>
+                <td colspan="3"><input class="levelauth" style="width: 100%" type="text" id="PeriodicalNo" v-model="PeriodicalNo"></td>
+                <td style="text-align: right">期刊权限</td>
+                <td colspan="4"><input class="levelauth" style="width: 100%" type="text" id="PeriodicalAuth" v-model="PeriodicalAuth"></td>
+            </tr>
+            <tr>
+                <td style="text-align: right">古籍册数</td>
+                <td colspan="3"><input class="levelauth" style="width: 100%" type="text" id="AncientNo" v-model="AncientNo"></td>
+                <td style="text-align: right">古籍权限</td>
+                <td colspan="4"><input class="levelauth" style="width: 100%" type="text" id="AncientAuth" v-model="AncientAuth"></td>
+            </tr>
+            <tr>
+                <td style="text-align: right">非书册数</td>
+                <td colspan="3"><input class="levelauth" style="width: 100%" type="text" id="OthersNo" v-model="OthersNo"></td>
+                <td style="text-align: right">非书权限</td>
+                <td colspan="4"><input class="levelauth" style="width: 100%" type="text" id="OthersAuth" v-model="OthersAuth"></td>
+            </tr>
+            <tr>
+                <td style="text-align: right">预约权限</td>
+                <td colspan="3"><input class="levelauth" style="width: 100%" type="text" id="ReserveAuth" v-model="ReserveAuth"></td>
+                <td style="text-align: right">续借权限</td>
+                <td colspan="4"><input class="levelauth" style="width: 100%" type="text" id="ReborrowAuth" v-model="ReborrowAuth"></td>
+            </tr>
+            <tr>
+                <td colspan="10" style="border-bottom: solid 1px cadetblue;"></td>
+            </tr>
+            <tr>
+                <td style="height: 20px;">&nbsp;</td>
+            </tr>
+            <tr>
+                <td style="text-align: right;"><span style="color: red">*</span>条码号</td>
+                <td colspan="3"><input type="text" style="width: 100%;" id="Barcode"  v-model="Barcode"></td>
+                <td style="text-align: right;"><span style="color: red">*</span>身份证号</td>
+                <td colspan="4"><input type="text" style="width: 100%;" id="Identity" v-model="Identity"></td>
+            </tr>
+            <tr>
+                <td colspan="9" style="text-align: center; height: 36px;">
+                    <input type="button" value="保存" v-on:click="Save">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="新建" @click="NewAndClear">
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+<div class="modal fade" id="clamodal" tabindex="-1" role="dialog" aria-labelledby="claLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color: white">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="claLabel">选择读者班级</h4>
+            </div>
+            <div class="modal-body" id="selarea">
+                <div>
+                    <div>已选择的班级：<button id="checkedclear" style="float: right;">一键清空</button></div>
+                </div>
+            </div>
+            <div style="border-top: 1px solid #e5e5e5;padding: 15px;">
+                <div id="classcheckbox"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button"  id="level_confirm" data-dismiss="modal">确定</button>
+                <button type="button"  onclick="Modify_cancel()"  data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+</body>
+<script type="text/javascript">
+    $("#borndate").datebox({
+        width:400,
+        height:23,
+    });
+    UserRegister.GetUserLevel_1("register");
+    UserRegister.GetClassInfo();
+</script>
+</html>
+
