@@ -1,68 +1,39 @@
 <!doctype html>
-<html ng-app="myApp">
+<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>阿法迪中小型图书馆文献信息管理系统</title>
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
-    <script type="text/javascript" src="/js/jquery-2.2.0.js" ></script>
-    <script type="text/javascript" src="/js/jquery.easyui.min.js" ></script>
-    <script type="text/javascript" src="/js/SkipPage.js"></script>
-    <!--<meta http-equiv="Access-Control-Allow-Methods" content="POST">-->
-    <!--<meta http-equiv="Access-Control-Allow-Headers" content="x-requested-with,content-type">-->
-    <!--<meta http-equiv="content-type" content="text/css" />-->
     <link rel="stylesheet" type="text/css" href="/css/page.css">
     <link rel="stylesheet" type="text/css" href="/css/easyui.css">
+    <script type="text/javascript" src="/js/Signed.js"></script>
 </head>
 <body>
-<div style="width: 810px; height: 567px; z-index: 1; position: absolute; left:0px; top: 0">
+<div style="width: 90%; height: 567px; z-index: 1; top: 50px; margin: 20px auto;">
     <table id="pg24_tb1">
-        <caption style=' font-size: 25px;color:white; background-color: cadetblue'>选择范围</caption>
+        <!--<caption style=' font-size: 25px;color:white; background-color: cadetblue'>选择范围</caption>-->
         <tr>
-            <td style="color:darkgray;width: 300px;">起始编号
-                <input type="text" class="form_wrapper easyui-tooltip"title="此项必须选择" name="readername" style="width:200px;">
-            </td>
-            <td style="color:darkgray;width: 300px;">年级组别
-                <input type="text" class="form_wrapper easyui-tooltip"title="此项必须选择" name="readername" style="width:200px;">
-            </td>
-            <td rowspan="2" width="200px;"><button class="btnsize2" type="button" style="background-image: url(../images/Comfirm.png)" onclick="Page2_1_continue()"/>
-            </td>
-        </tr>
-        <tr>
-            <td style="color:darkgray;width: 300px;">终止编号
-                <input type="text" class="form_wrapper easyui-tooltip"title="此项必须选择" name="readername" style="width:200px;">
-            </td>
-            <td style="color:darkgray;width: 300px;">班级
-                <input type="text" class="form_wrapper easyui-tooltip"title="此项必须选择" name="readername" style="width:200px;">
-            </td>
-        </tr>
+            <td style="text-align:center; color:black;width: auto; font-size: 22px;">日期&nbsp;&nbsp<input id='starttime' type='text' style='font-size: 20px; width:110px;' onfocus='setday(this,"yyyy-MM-dd","2016-1-1","2017-01-01",1)' readonly='readonly' />&nbsp;&nbsp;&nbsp;选择签到班级&nbsp;&nbsp<select id="signclass" style="font-size: 22px;" onchange="studentSigned.GetStudentByClass();"></select>&nbsp;&nbsp<input type="button" value="查询" style="font-size: 20px;" onclick="studentSigned.GetStudentByClass();">&nbsp;&nbsp;&nbsp;&nbsp;输入签到条码号
+            <input id="barcode" type="text"  style="width:360px; font-size: 26px;">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="签到" style="font-size: 22px;" onclick="studentSigned.Sign();">&nbsp;&nbsp<input type="button" value="打印" style="font-size: 22px;" onclick="studentSigned.PrintCountTable(signedtable,'班级阅览签到报表');"></td>
+         </tr>
     </table>
-    <table id="pg24_tb2" title="读者列表" width="100%">
-        <thead style=' font-size: 25px;color:white; background-color: cadetblue'>
+    <br><br>
+    <table id="signedtable" title="签到列表" border="1px" cellspacing="0" width="100%" style="border-collapse: collapse; border: 1px solid black; text-align: center;">
+        <caption id="signedcount" style="text-align: left;"></caption>
+        <thead style='background-color:cadetblue;text-align: center;color: white; '>
         <th>借书证号</th>
         <th>读者姓名</th>
-        <th>职别</th>
-        <th>年级组别</th>
         <th>班级</th>
+        <th>签到时间</th>
         </thead>
-    </table>
-</div>
-<div style="width: 540px; height: 567px; z-index: 1; position: absolute; left:60%; top: 0">
-    <table id="pg24_tb3">
-        <caption style=' font-size: 25px;color:white; background-color: cadetblue'>预览打印</caption>
-        <tr>
-            <td rowspan="2" width="200px;" align="center"><button type="button" class="btnsize2" style="margin: 25px 0;background-image: url(../images/Preview_no-op.jpg)" onclick="Page2_1_continue()"/>
-            </td>
-            <td rowspan="2" width="200px;" align="center"><button type="button" class="btnsize2" style="background-image: url(../images/Print_no-op.jpg)" onclick="Page2_1_continue()"/>
-            </td>
-            <td rowspan="2" width="200px;" align="center"><button type="button" class="btnsize2" style="background-image: url(../images/PrintList_no-op.jpg)" onclick="Page2_1_continue()"/>
-            </td>
-            <td rowspan="2" width="200px;" align="center"><button type="button" class="btnsize2"style="background-image: url(../images/ExportList_no-op.jpg)" onclick="Page2_1_continue()"/>
-            </td>
-        </tr>
-    </table>
-    <table id="pg24_tb4" title="读者列表" width="100%">
+        <tbody id="signedlist">
+
+        </tbody>
     </table>
 </div>
 </body>
 </html>
+<script>
+//    studentSigned.GetClassList();
+</script>
 
