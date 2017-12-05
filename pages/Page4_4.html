@@ -11,17 +11,13 @@
     <style>
         #selPanel tr{
             height: 40px;
-            background-color:#5f9d9f
+            /*background-color:#5f9d9f*/
         }
         #selPanel td,#resultPanel td,#rPanel td{
-            border:solid 1px cadetblue;
+            border:solid 0px cadetblue;
         }
-
-
-
     </style>
-    
-    <script>
+   <script>
 
         $(document).ready(function () {
             var et = window.localStorage["et"];
@@ -31,7 +27,7 @@
 
             $("#readerId , #bookBarcode").on("input propertychange",function () {
 
-            })
+            });
 
             Date.prototype.Format = function (fmt) { //author: meizz
                 var o = {
@@ -47,23 +43,21 @@
                 for (var k in o)
                     if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
                 return fmt;
-            }
-
-
+            };
 
             $("#searchBtn").on("click",function () {
                 var readerId= $("#readerId").val();
                 var bookBarcode= $("#bookBarcode").val();
                 var status= $("#status").val();
                 SearchReservation(readerId,bookBarcode,status)
-            })
+            });
 
             $("#reservationBtn").on("click",function () {
                 var readerId= $("#readerId").val();
                 var bookBarcode= $("#bookBarcode").val();
                 var status= $("#status").val();
                 ReservationByBarcode(readerId,bookBarcode);
-            })
+            });
             
             function  ReservationByBarcode(barcode,bookBarcode) {
 	            	 if($.trim(barcode) ==""){
@@ -96,11 +90,7 @@
                 
             }
 
-            
-
-            
             function  SearchReservation(reader,barcode,status) {
-
                 var searchReservationUrl=backServerUrl+"api/book/reservation?1=1"
                 if(reader!=""){
                     searchReservationUrl+="&reader="+reader;
@@ -111,10 +101,6 @@
                 if(status!=""){
                     searchReservationUrl+="&status="+status;
                 }
-
-
-                //console.log(et)
-                //console.log(backServerUrl)
                 $.ajax({
                     type: "GET",
                     url: searchReservationUrl,
@@ -128,7 +114,7 @@
                         $("#resultPanel").show();
                         $("#rPanel").hide();
 
-                        var str=' <tr style="height: 35px;background-color:#5f9d9f ">' +
+                        var str=' <tr style="height: 35px;background-color:#5f9d9f; color: white; ">' +
                             '<td >读者身份证 </td> ' +
                             '<td>读者条码 </td> ' +
                             '<td>读者姓名</td>' +
@@ -139,7 +125,7 @@
                             ' </tr>';
 
                         $.each(data.content,function (i,val) {
-                            var color=val.status=="reservation"?"":"red";
+                            var color=val.status=="reservation"?"":"rgba(211, 225, 225, 0.87)";
                             var status=val.status=="reservation"?"预约中":"已归档";
 
                             str+='<tr style="height: 35px;background-color:'+color+' "> ' +
@@ -151,7 +137,7 @@
                                 '<td>'+new Date(val._reservation.datetime).Format("yyyy-MM-dd hh:mm:ss")+'</td> ' +
                                 '<td>'+status+'</td> ' +
                                 '</tr>';
-                        })
+                        });
                         $("#resultPanel").append(str)
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -175,7 +161,7 @@
                 
 
                 //var reservationUrl=backServerUrl+"api/reader/members/"+id+"/reservation";
-                var reservationUrl=backServerUrl+"api/reader/members/"+id+"/reservation_new"
+                var reservationUrl=backServerUrl+"api/reader/members/"+id+"/reservation_new";
 
                 $.ajax({
                     type: "POST",
@@ -197,7 +183,7 @@
                             '</tr>';
 
                         $.each(data,function (i,val) {
-                            var color=val.reservationed?"":"red";
+                            var color=val.reservationed?"":"rgba(211, 225, 225, 0.87)";
                             var reservationed=val.reservationed?"成功":"失败";
 
                             str+='<tr style="height: 35px;background-color:'+color+' "> ' +
@@ -205,7 +191,7 @@
                                 '<td>'+reservationed+'</td> ' +
                                 '<td>'+val.result+'</td> ' +
                                 '</tr>';
-                        })
+                        });
                         $("#rPanel").append(str)
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -218,29 +204,24 @@
                         
                     },
                 });
-
-            }
-            
-        })
-
-
-
-    </script>
+;            }
+;        })
+;    </script>
 </head>
 <body>
  <div style="width: 100%;height: 576px;text-align: center">
 
-    <table  id="selPanel" style="width: 50%;text-align: center; border:solid 1px cadetblue;margin:0 auto;" >
+    <table  id="selPanel" cellspacing="0" style="width: auto; text-align: center; border:solid 0px transparent;margin:0 auto;" >
         <tr style="height: 50px">
-            <td  >读者条码</td>
-            <td  ><input id="readerId" type="text" style="width:98%;height: 35px;font-size: 25px;color: red"/></td>
-        </tr>
-        <tr style="height: 50px">
-            <td  >图书条码</td>
-            <td  ><input id="bookBarcode"type="text" style="width:98%;height: 35px;font-size: 25px;color: blue"/></td>
-        </tr>
-        <tr  >
-            <td  >预约状态</td>
+            <td style="font-size: 20px;">读者条码</td>
+            <td  ><input id="readerId" type="text" style="width:270px;height: 35px;font-size: 25px;color: red"/></td>
+        <!--</tr>-->
+        <!--<tr style="height: 50px">-->
+            <td style="font-size: 20px; padding-left: 30px;">图书条码</td>
+            <td  ><input id="bookBarcode"type="text" style="width:270px;height: 35px;font-size: 25px;color: blue"/></td>
+        <!--</tr>-->
+        <!--<tr  >-->
+            <td style="font-size: 20px; padding-left: 30px;">预约状态</td>
             <td  >
                 <select id="status">
                     <option value="">全部</option>
@@ -248,30 +229,17 @@
                     <option value="cancel">已归档</option>
                 </select>
             </td>
-        </tr>
-        <tr  >
-            <td  ><button id="searchBtn">查询</button></td>
-            <td  ><button id="reservationBtn">预约</button></td>
+        <!--</tr>-->
+        <!--<tr  >-->
+            <td style=" padding-left: 30px;"><button id="searchBtn">查询</button></td>
+            <td style=" padding-left: 30px;"><button id="reservationBtn">预约</button></td>
         </tr>
     </table>
-
-     <hr style="width: 100%;color: cadetblue;height: 3px" />
-
-     <table  id="resultPanel"style="width: 100%;text-align: center; border:solid 1px cadetblue;margin:0 auto;display: none">
-
-
+     <!--<hr style="width: 100%;color: cadetblue;height: 3px" />-->
+     <table  id="resultPanel"style="width: 96%;text-align: center; border:solid 1px cadetblue;margin:0 auto;display: none">
      </table>
-
-
      <table  id="rPanel"style="width: 60%;text-align: center; border:solid 1px cadetblue;margin:0 auto;;display: none">
-
-
      </table>
-
-
-
-
-
  </div>
 </body>
 </html>

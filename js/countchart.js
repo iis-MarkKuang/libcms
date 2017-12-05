@@ -357,6 +357,8 @@ var Statistics = function () {
                     $("#countreportbutton").removeClass("breath_light");
                 },
                 success: function (data) {
+                    // $("#buttoncounttoexcel").remove();
+                    // var tableCount = "<table id='buttoncounttoexcel' style='width: 300px; margin: auto;'><tr><td><input type='button' value='导出Excel' onclick='Statistics.GeneralXLS();'></td></tr></table>";
                     var tableCount = "";
                     var bu = null;
 
@@ -372,19 +374,22 @@ var Statistics = function () {
                         }
                         // tableCount += "<input id='buttoncountprintsuccess' type='button' value='打印表格' onclick='PrintCountTable(tablecountlocation,\"读者排行榜\");' style='margin-left: 30px;'/>";
                         // tableCount += "<div id='count_chart_location' style='width: 90%; margin: auto;'>统计图表</div>";
-                        tableCount += "<table id='tablecountlocation' border='1px' cellpadding='0' cellspacing='0' bordercolor='cadetblue' style='width:auto; border:solid 1px cadetblue; background-color: rgba(151, 217, 219, 0.22); border-collapse:collapse; font-size: 20px; margin: auto;'><thead><tr style='background-color: cadetblue; color: white;'><th>日期</th><th>书名</th><th style='text-align: right;'>借阅数量</th></tr></thead><tbody>";
+                        tableCount += "<table id='tablecountlocation' border='1px' cellpadding='0' cellspacing='0' bordercolor='cadetblue' style='width:auto; border:solid 1px cadetblue; background-color: rgba(151, 217, 219, 0.22); border-collapse:collapse; font-size: 20px; margin: auto;'><caption style='text-align: right;'><input type='button' value='导出Excel' onclick='Statistics.GeneralXLS(1);'></caption><thead><tr style='background-color: cadetblue; color: white;'><th>日期</th><th>书名</th><th style='text-align: right;'>借阅数量</th></tr></thead><tbody>";
                         var xCategories = [];
                         var borrowTitle = [];
                         var borrowData = [];
+                        var borrwoCount = 0;
                         for (var i in bu) {
                             xCategories.push(bu[i].date);
                             for(var j in bu[i].borrows_per_day)
                             {
                                 borrowTitle.push(bu[i].borrows_per_day[j].book_title);
                                 borrowData.push(bu[i].borrows_per_day[j].count);
-                                tableCount += "</td><td>" + bu[i].date.toString().substring(0,10)+ "</td><td>" + bu[i].borrows_per_day[j].book_title + "</td><td>" + bu[i].borrows_per_day[j].count + "</td></tr>";
+                                borrwoCount += parseInt(bu[i].borrows_per_day[j].count);
+                                tableCount += "<tr><td>" + bu[i].date.toString().substring(0,10)+ "</td><td>" + bu[i].borrows_per_day[j].book_title + "</td><td>" + bu[i].borrows_per_day[j].count + "</td></tr>";
                             }
                         }
+                        tableCount += "<tr><td colspan='2' style='text-align: right;'>共计</td><td>" + borrwoCount + "</td></tr>";
                         tableCount += "</tbody></table>";
                     }
                     //按还书
@@ -399,19 +404,22 @@ var Statistics = function () {
                         }
                         // tableCount += "<input id='buttoncountprintsuccess' type='button' value='打印表格' onclick='PrintCountTable(tablecountlocation,\"读者排行榜\");' style='margin-left: 30px;'/>";
                         // tableCount += "<div id='count_chart_location' style='width: 90%; margin: auto;'>统计图表</div>";
-                        tableCount += "<table id='tablecountlocation' border='1px' cellpadding='0' cellspacing='0' bordercolor='cadetblue' style='width:auto; border:solid 1px cadetblue; background-color: rgba(151, 217, 219, 0.22); border-collapse:collapse; font-size: 20px; margin: auto;'><thead><tr style='background-color: cadetblue; color: white;'><th>日期</th><th>书名</th><th style='text-align: right;'>借阅数量</th></tr></thead><tbody>";
+                        tableCount += "<table id='tablecountlocation' border='1px' cellpadding='0' cellspacing='0' bordercolor='cadetblue' style='width:auto; border:solid 1px cadetblue; background-color: rgba(151, 217, 219, 0.22); border-collapse:collapse; font-size: 20px; margin: auto;'><caption style='text-align: right;'><input type='button' value='导出Excel' onclick='Statistics.GeneralXLS(2);'></caption><thead><tr style='background-color: cadetblue; color: white;'><th>日期</th><th>书名</th><th style='text-align: right;'>借阅数量</th></tr></thead><tbody>";
                         var xCategories = [];
                         var borrowTitle = [];
                         var borrowData = [];
+                        var borrwoCount = 0;
                         for (var i in bu) {
                             xCategories.push(bu[i].date);
                             for(var j in bu[i].returns_per_day)
                             {
                                 borrowTitle.push(bu[i].returns_per_day[j].book_title);
                                 borrowData.push(bu[i].returns_per_day[j].count);
-                                tableCount += "</td><td>" + bu[i].date.toString().substring(0,10)+ "</td><td>" + bu[i].returns_per_day[j].book_title + "</td><td>" + bu[i].returns_per_day[j].count + "</td></tr>";
+                                borrwoCount += parseInt(bu[i].returns_per_day[j].count);
+                                tableCount += "<tr><td>" + bu[i].date.toString().substring(0,10)+ "</td><td>" + bu[i].returns_per_day[j].book_title + "</td><td>" + bu[i].returns_per_day[j].count + "</td></tr>";
                             }
                         }
+                        tableCount += "<tr><td colspan='2' style='text-align: right;'>共计</td><td>" + borrwoCount + "</td></tr>";
                         tableCount += "</tbody></table>";
                     }
                     //按续借
@@ -426,19 +434,22 @@ var Statistics = function () {
                         }
                         // tableCount += "<input id='buttoncountprintsuccess' type='button' value='打印表格' onclick='PrintCountTable(tablecountlocation,\"读者排行榜\");' style='margin-left: 30px;'/>";
                         // tableCount += "<div id='count_chart_location' style='width: 90%; margin: auto;'>统计图表</div>";
-                        tableCount += "<table id='tablecountlocation' border='1px' cellpadding='0' cellspacing='0' bordercolor='cadetblue' style='width:auto; border:solid 1px cadetblue; background-color: rgba(151, 217, 219, 0.22); border-collapse:collapse; font-size: 20px; margin: auto;'><thead><tr style='background-color: cadetblue; color: white;'><th>日期</th><th>书名</th><th style='text-align: right;'>借阅数量</th></tr></thead><tbody>";
+                        tableCount += "<table id='tablecountlocation' border='1px' cellpadding='0' cellspacing='0' bordercolor='cadetblue' style='width:auto; border:solid 1px cadetblue; background-color: rgba(151, 217, 219, 0.22); border-collapse:collapse; font-size: 20px; margin: auto;'><caption style='text-align: right;'><input type='button' value='导出Excel' onclick='Statistics.GeneralXLS(3);'></caption><thead><tr style='background-color: cadetblue; color: white;'><th>日期</th><th>书名</th><th style='text-align: right;'>借阅数量</th></tr></thead><tbody>";
                         var xCategories = [];
                         var borrowTitle = [];
                         var borrowData = [];
+                        var borrwoCount = 0;
                         for (var i in bu) {
                             xCategories.push(bu[i].date);
                             for(var j in bu[i].renews_per_day)
                             {
                                 borrowTitle.push(bu[i].renews_per_day[j].book_title);
                                 borrowData.push(bu[i].renews_per_day[j].count);
-                                tableCount += "</td><td>" + bu[i].date.toString().substring(0,10)+ "</td><td>" + bu[i].renews_per_day[j].book_title + "</td><td>" + bu[i].renews_per_day[j].count + "</td></tr>";
+                                borrwoCount += parseInt(bu[i].renews_per_day[j].count);
+                                tableCount += "<tr><td>" + bu[i].date.toString().substring(0,10)+ "</td><td>" + bu[i].renews_per_day[j].book_title + "</td><td>" + bu[i].renews_per_day[j].count + "</td></tr>";
                             }
                         }
+                        tableCount += "<tr><td colspan='2' style='text-align: right;'>共计</td><td>" + borrwoCount + "</td></tr>";
                         tableCount += "</tbody></table>";
                     }
                     $('#count_chart_location').remove();
@@ -448,6 +459,22 @@ var Statistics = function () {
 
                 }
             });
+        }
+    }
+
+    function GeneralXLS(actionFlag) {
+        if(actionFlag === 1){
+            ReportGeneralXLS("流通统计 - 按借书", "tablecountlocation");
+        }else if(actionFlag === 2){
+            ReportGeneralXLS("流通统计 - 按还书", "tablecountlocation");
+        }else if(actionFlag === 3){
+            ReportGeneralXLS("流通统计 - 按续借", "tablecountlocation");
+        }else if(actionFlag === 4){
+            ReportGeneralXLS("分类流通统计 - 按借书", "tablecountlocation");
+        }else if(actionFlag === 5){
+            ReportGeneralXLS("分类流通统计 - 按还书", "tablecountlocation");
+        }else{
+            ReportGeneralXLS("分类流通统计 - 按续借", "tablecountlocation");
         }
     }
 
@@ -518,19 +545,22 @@ var Statistics = function () {
                         }
                         // tableCount += "<input id='buttoncountprintsuccess' type='button' value='打印表格' onclick='PrintCountTable(tablecountlocation,\"图书流通分类统计\");' style='margin-left: 30px;'/>";
                         // tableCount += "<div id='count_chart_location' style='width: 90%; margin: auto;'>统计图表</div>";
-                        tableCount += "<table id='tablecountlocation' border='1px' cellpadding='0' cellspacing='0' bordercolor='cadetblue' style='width:500px; border:solid 1px cadetblue; background-color: rgba(151, 217, 219, 0.22); border-collapse:collapse; font-size: 20px; margin: auto;'><thead><tr style='background-color: cadetblue; color: white;'><th>日期</th><th>书类</th><th style='text-align: right;'>借阅数量</th></tr></thead><tbody>";
+                        tableCount += "<table id='tablecountlocation' border='1px' cellpadding='0' cellspacing='0' bordercolor='cadetblue' style='width:500px; border:solid 1px cadetblue; background-color: rgba(151, 217, 219, 0.22); border-collapse:collapse; font-size: 20px; margin: auto;'><caption style='text-align: right;'><input type='button' value='导出Excel' onclick='Statistics.GeneralXLS(4);'></caption><thead><tr style='background-color: cadetblue; color: white;'><th>日期</th><th>书类</th><th style='text-align: right;'>借阅数量</th></tr></thead><tbody>";
                         var xCategories = [];
                         var borrowData = [];
                         var yCategories = [];
+                        var borrwoCount = 0;
                         for (var i in bu) {
                             xCategories.push(bu[i].date);
                             for(var j in bu[i].borrows_per_day)
                             {
                                 borrowData.push(parseInt(bu[i].borrows_per_day[j].count));
                                 yCategories.push(bu[i].borrows_per_day[j].category);
+                                borrwoCount += parseInt(bu[i].borrows_per_day[j].count);
                                 tableCount += "</td><td>" + bu[i].date.toString().substring(0,10)+ "</td><td>" + bu[i].borrows_per_day[j].category + "</td><td>" + bu[i].borrows_per_day[j].count + "</td></tr>";
                             }
                         }
+                        tableCount += "<tr><td colspan='2' style='text-align: right;'>共计</td><td>" + borrwoCount + "</td></tr>";
                         tableCount += "</tbody></table>";
                     }
                     //按还书
@@ -545,19 +575,22 @@ var Statistics = function () {
                         }
                         // tableCount += "<input id='buttoncountprintsuccess' type='button' value='打印表格' onclick='PrintCountTable(tablecountlocation,\"图书流通分类统计\");' style='margin-left: 30px;'/>";
                         // tableCount += "<div id='count_chart_location' style='width: 90%; margin: auto;'>统计图表</div>";
-                        tableCount += "<table id='tablecountlocation' border='1px' cellpadding='0' cellspacing='0' bordercolor='cadetblue' style='width:500px; border:solid 1px cadetblue; background-color: rgba(151, 217, 219, 0.22); border-collapse:collapse; font-size: 20px; margin: auto;'><thead><tr style='background-color: cadetblue; color: white;'><th>日期</th><th>书类</th><th style='text-align: right;'>借阅数量</th></tr></thead><tbody>";
+                        tableCount += "<table id='tablecountlocation' border='1px' cellpadding='0' cellspacing='0' bordercolor='cadetblue' style='width:500px; border:solid 1px cadetblue; background-color: rgba(151, 217, 219, 0.22); border-collapse:collapse; font-size: 20px; margin: auto;'><caption style='text-align: right;'><input type='button' value='导出Excel' onclick='Statistics.GeneralXLS(5);'></caption><thead><tr style='background-color: cadetblue; color: white;'><th>日期</th><th>书类</th><th style='text-align: right;'>借阅数量</th></tr></thead><tbody>";
                         var xCategories = [];
                         var borrowData = [];
                         var yCategories = [];
+                        var borrwoCount = 0;
                         for (var i in bu) {
                             xCategories.push(bu[i].date);
                             for(var j in bu[i].returns_per_day)
                             {
                                 borrowData.push(parseInt(bu[i].returns_per_day[j].count));
                                 yCategories.push(bu[i].returns_per_day[j].category);
+                                borrwoCount += parseInt(bu[i].returns_per_day[j].count);
                                 tableCount += "</td><td>" + bu[i].date.toString().substring(0,10)+ "</td><td>" + bu[i].returns_per_day[j].category + "</td><td>" + bu[i].returns_per_day[j].count + "</td></tr>";
                             }
                         }
+                        tableCount += "<tr><td colspan='2' style='text-align: right;'>共计</td><td>" + borrwoCount + "</td></tr>";
                         tableCount += "</tbody></table>";
                     }
 
@@ -573,19 +606,22 @@ var Statistics = function () {
                         }
                         // tableCount += "<input id='buttoncountprintsuccess' type='button' value='打印表格' onclick='PrintCountTable(tablecountlocation,\"图书流通分类统计\");' style='margin-left: 30px;'/>";
                         // tableCount += "<div id='count_chart_location' style='width: 90%; margin: auto;'>统计图表</div>";
-                        tableCount += "<table id='tablecountlocation' border='1px' cellpadding='0' cellspacing='0' bordercolor='cadetblue' style='width:500px; border:solid 1px cadetblue; background-color: rgba(151, 217, 219, 0.22); border-collapse:collapse; font-size: 20px; margin: auto;'><thead><tr style='background-color: cadetblue; color: white;'><th>日期</th><th>书类</th><th style='text-align: right;'>借阅数量</th></tr></thead><tbody>";
+                        tableCount += "<table id='tablecountlocation' border='1px' cellpadding='0' cellspacing='0' bordercolor='cadetblue' style='width:500px; border:solid 1px cadetblue; background-color: rgba(151, 217, 219, 0.22); border-collapse:collapse; font-size: 20px; margin: auto;'><caption style='text-align: right;'><input type='button' value='导出Excel' onclick='Statistics.GeneralXLS(6);'></caption><thead><tr style='background-color: cadetblue; color: white;'><th>日期</th><th>书类</th><th style='text-align: right;'>借阅数量</th></tr></thead><tbody>";
                         var xCategories = [];
                         var borrowData = [];
                         var yCategories = [];
+                        var borrwoCount = 0;
                         for (var i in bu) {
                             xCategories.push(bu[i].date);
                             for(var j in bu[i].renews_per_day)
                             {
                                 borrowData.push(parseInt(bu[i].renews_per_day[j].count));
                                 yCategories.push(bu[i].renews_per_day[j].category);
+                                borrwoCount += parseInt(bu[i].renews_per_day[j].count);
                                 tableCount += "</td><td>" + bu[i].date.toString().substring(0,10)+ "</td><td>" + bu[i].renews_per_day[j].category + "</td><td>" + bu[i].renews_per_day[j].count + "</td></tr>";
                             }
                         }
+                        tableCount += "<tr><td colspan='2' style='text-align: right;'>共计</td><td>" + borrwoCount + "</td></tr>";
                         tableCount += "</tbody></table>";
                     }
                     $('#count_chart_location').remove();
@@ -1569,6 +1605,7 @@ var Statistics = function () {
         InventoryBooks : InventoryBooks,
         DisplayInfoByPage : DisplayInfoByPage,
         ReaderScoreBoard : ReaderScoreBoard,
-        GenInventoryPageUrl : GenInventoryPageUrl
+        GenInventoryPageUrl : GenInventoryPageUrl,
+        GeneralXLS : GeneralXLS
     }
 }();

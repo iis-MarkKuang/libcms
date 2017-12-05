@@ -9,8 +9,7 @@
     <link rel="stylesheet" type="text/css" href="/css/menu.css?ver=1" media="screen" />
     <link rel="stylesheet" type="text/css" href="/css/icon.css">
     <link rel="stylesheet" type="text/css" href="/css/easyui.css">
-    <!--<script type="text/javascript" src="/js/jquery-2.2.0.js"></script>-->
-    <script type="text/javascript" src="/js/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-2.2.0.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/excellentexport.js"></script>
     <script type="text/javascript" src="/js/dialog.js"></script>
@@ -23,6 +22,11 @@
     <script type="text/javascript" src="/js/pub.js"></script>
     <script type="text/javascript" src="/js/vue.min.js"></script>
     <script type="text/javascript" src="/js/SystemSetting.js"></script>
+
+    <script type="text/javascript" src="/js/xlsx.full.min.js" ></script>
+    <script type="text/javascript" src="/js/processXLS.js" ></script>
+    <script type="text/javascript" src="/js/Blob.js"></script>
+    <script type="text/javascript" src="/js/FileSaver.js"></script>
     <title>阿法迪图书馆文献管理平台2.0</title>
 </head>
 <body>
@@ -35,7 +39,7 @@
         cache: false //close AJAX cache
     });
 </script>
-<div id="title" align="center">阿法迪图书馆文献管理平台 <p style="display:inline; font-size: 12px;">2.0 Build0925</p></div>
+<div id="title" align="center">阿法迪图书馆文献管理平台 <p style="display:inline; font-size: 12px;">2.0 Build1127</p></div>
 <div id="logininfo"><div id="pagename"></div><div id="userinfo"></div><div id="exitdiv"><input type="button" value="退出" onclick="UserExit()" />&nbsp;</div></div>
 <div id="local">
     <ul id="menucss3">
@@ -58,7 +62,7 @@
             </td>
             <td>
                 <div>
-                    <button type="button" onclick="SkipPage('Page3_4','文献采编')" id="btnicon3" style="background-image:url(../images/cb.png)"></button>
+                    <button type="button" onclick="SkipPage('Page3_4order','文献采编')" id="btnicon3" style="background-image:url(../images/cb.png)"></button>
                 </div>
             </td>
         </tr>

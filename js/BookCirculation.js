@@ -1,3 +1,4 @@
+//# sourceURL=BookCirculation.js
 var connectfail = 0;
 var userInfo;
 var userid;
@@ -6,17 +7,120 @@ var userid;
 $(document).ready(function () {
     $("#pg43_tb3 input:gt(0)").prop("readOnly",true);
 
-    $("#userbook_barcode").on('keypress',function () {
-        var barcode=$("#userbook_barcode").val().trim();
-        if(barcode.length === 40){
-            $("#userbook_barcode").val(barcode.substring(2,21));
+    // // $(document).keydown(function (evnet) {
+    // $("#userbook_barcode").on("keydown", function (evnet) {
+    //     // 回车
+    //     if (evnet.keyCode === 13) {
+    //         $("#pg43_tb2 tr:gt(0)").remove();
+    //         var barcode=$("#userbook_barcode").val().trim();
+    //         if(barcode.length === 40){
+    //             barcode = barcode.substring(2,21);
+    //             // $("#userbook_barcode").val(barcode.substring(2,21));
+    //         }
+    //         // if(barcode.length==9)//书的条码号
+    //         // {
+    //         //     if($("#readerbarcode").val().length<=0)//未输入读者条码号，默认为还书
+    //         //     {
+    //         //         CheckBook(barcode);
+    //         //         //ReturnBook(barcode);
+    //         //     }
+    //         //     else//借书
+    //         //     {
+    //         //         BorrowBook(barcode);
+    //         //     }
+    //         // }
+    //         // else//读者条码号
+    //         // {
+    //         //     GetSingleUser_1(barcode);
+    //         // }
+    //         if(barcode.length === parseInt(readerIdLength))//读者条码号
+    //         {
+    //             GetSingleUser_1(barcode);
+    //         }
+    //         else//书的条码号
+    //         {
+    //             if($("#readerbarcode").val().length<=0)//未输入读者条码号，默认为还书
+    //             {
+    //                 CheckBook(barcode);
+    //                 //ReturnBook(barcode);
+    //             }
+    //             else//借书
+    //             {
+    //                 BorrowBook(barcode);
+    //             }
+    //         }
+    //         $("#userbook_barcode").val(barcode).select();
+    //     }
+    // });
+
+    $("#user_barcode").on("keydown", function (evnet) {
+        // 回车
+        if (evnet.keyCode === 13) {
+            $("#pg43_tb2 tr:gt(0)").remove();
+            var barcode=$("#user_barcode").val().trim();
+            if(barcode.length === 40){
+                barcode = barcode.substring(2,21);
+                // $("#userbook_barcode").val(barcode.substring(2,21));
+            }
+            GetSingleUser_1(barcode);
+            $("#user_barcode").val(barcode).select();
+            // $("#book_barcode").focus();
         }
     });
 
-    $("#userbook_barcode").on('change',function () {
-        $("#pg43_tb2 tr:gt(0)").remove();
-        var barcode=$("#userbook_barcode").val().trim();
-        // if(barcode.length==9)//书的条码号
+    $("#book_barcode").on("keydown", function (evnet) {
+        // 回车
+        if (evnet.keyCode === 13) {
+            $("#pg43_tb2 tr:gt(0)").remove();
+            var barcode=$("#book_barcode").val().trim();
+            if($("#readerbarcode").val().length<=0)//未输入读者条码号，默认为还书
+            {
+                CheckBook(barcode);
+                //ReturnBook(barcode);
+            }
+            else//借书
+            {
+                BorrowBook(barcode);
+            }
+            $("#book_barcode").val(barcode).select();
+        }
+    });
+
+    // $("#userbook_barcode").on('keypress',function () {
+    //     var barcode=$("#userbook_barcode").val().trim();
+    //     if(barcode.length === 40){
+    //         $("#userbook_barcode").val(barcode.substring(2,21));
+    //     }
+    // });
+
+    // $("#userbook_barcode").on('change',function () {
+        // $("#pg43_tb2 tr:gt(0)").remove();
+        // var barcode=$("#userbook_barcode").val().trim();
+        // if(barcode.length === 40){
+        //     barcode = barcode.substring(2,21);
+        //     // $("#userbook_barcode").val(barcode.substring(2,21));
+        // }
+        // // if(barcode.length==9)//书的条码号
+        // // {
+        // //     if($("#readerbarcode").val().length<=0)//未输入读者条码号，默认为还书
+        // //     {
+        // //         CheckBook(barcode);
+        // //         //ReturnBook(barcode);
+        // //     }
+        // //     else//借书
+        // //     {
+        // //         BorrowBook(barcode);
+        // //     }
+        // // }
+        // // else//读者条码号
+        // // {
+        // //     GetSingleUser_1(barcode);
+        // // }
+        // if(barcode.length === parseInt(readerIdLength))//读者条码号
+        // {
+        //     GetSingleUser_1(barcode);
+        // }
+        // else//书的条码号
         // {
         //     if($("#readerbarcode").val().length<=0)//未输入读者条码号，默认为还书
         //     {
@@ -28,32 +132,15 @@ $(document).ready(function () {
         //         BorrowBook(barcode);
         //     }
         // }
-        // else//读者条码号
-        // {
-        //     GetSingleUser_1(barcode);
-        // }
-        if(barcode.length === readerIdLength)//读者条码号
-        {
-            GetSingleUser_1(barcode);
-        }
-        else//书的条码号
-        {
-            if($("#readerbarcode").val().length<=0)//未输入读者条码号，默认为还书
-            {
-                CheckBook(barcode);
-                //ReturnBook(barcode);
-            }
-            else//借书
-            {
-                BorrowBook(barcode);
-            }
-        }
-        $("#userbook_barcode").val("");
-    });
+        // $("#userbook_barcode").val("");
+    // });
 
     $("#update").click(function () {
         $("#pg43_tb3").find("input").val("");
         $("#pg43_tb2").find("tr:gt(0)").remove();
+        $("#user_barcode").val("");
+        $("#book_barcode").val("");
+        $("#user_barcode").focus();
     });
 
     $("#VerifyUser").on('click',function () {
@@ -146,7 +233,8 @@ $(document).ready(function () {
         var et = window.localStorage["et"];
         var backServerUrl = window.localStorage["backServerUrl"];
         var bookbarcode=new Array();
-        bookbarcode[0]=$(".reborrow").val();
+        // bookbarcode[0]=$(".reborrow").val();
+        bookbarcode[0]=$(this).val();
         var Body={"book_barcodes":bookbarcode,
             "location":""};
         $.ajax({
@@ -158,12 +246,12 @@ $(document).ready(function () {
             success(data){
                 for(var i in data)
                 {
-                    if(data[i].result.indexOf("已续借过次图书或已归还"))
+                    if(data[i].renewed)
                     {
-                        alert("已续借过此图书！");
+                        alert("续借成功!")
                     }
                     else{
-                        alert(data[i].result);
+                        alert("续借图书失败！- " + data[i].result);
                     }
                 }
             },
@@ -216,16 +304,19 @@ function GetSingleUser_1(barcode) {
             {
                 $("#pg43_tb3 input").val("");
                 alert("借书证号不存在！");
+                $("#user_barcode").select();
             }
             else if(!data.content[0].is_active)
             {
                 $("#pg43_tb3 input").val("");
                 alert("该借书证已注销！");
+                $("#user_barcode").select();
             }
             else if(data.content[0].is_suspend)
             {
                 $("#pg43_tb3 input").val("");
                 alert("该借书证已停借！");
+                $("#user_barcode").select();
             }
             else
             {
@@ -235,7 +326,10 @@ function GetSingleUser_1(barcode) {
                 $("#pg43_tb3").find("input:eq(1)").val(data.content[0].gender);
                 $("#pg43_tb3").find("input:eq(2)").val(data.content[0].dob);
                 $("#pg43_tb3").find("input:eq(3)").val(level_name);
-                $("#userimage").prop("src",data.content[0].profile_image);
+                if(data.content[0].profile_image === "")
+                    $("#userimage").prop("src","/images/nopic.png");
+                else
+                    $("#userimage").prop("src",data.content[0].profile_image);
                 for(var index in data.content[0].groups)
                 {
                     groups_name += (","+localStorage.getItem(data.content[0].groups[index]));
@@ -244,6 +338,7 @@ function GetSingleUser_1(barcode) {
                 $("#pg43_tb3").find("input:eq(7)").val(data.content[0].barcode);
                 GetUserBorrowed(level_name);
                 GetBorrowedBook();
+                $("#book_barcode").focus();
             }
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -287,7 +382,9 @@ function GetUserBorrowed(levelname) {
     var quantity=localStorage.getItem(levelname);
     $.ajax({
         type: "GET",
-        url: backServerUrl + "api/reader/members/"+userid+"/holdings",
+        // url: backServerUrl + "api/reader/members/"+userid+"/holdings",
+        // url: backServerUrl + "api/reader/members/holdings?barcode=" + $("#userbook_barcode").val(),
+        url: backServerUrl + "api/reader/members/holdings?barcode=" + $("#user_barcode").val(),
         dataType: "json",
         headers: {'Content-Type': 'application/json','Authorization':et},
         success: function (data) {
@@ -345,7 +442,9 @@ function GetBorrowedBook() {
     var datenow=new Date();
     $.ajax({
         type: "GET",
-        url: backServerUrl + "api/reader/members/"+userid+"/holdings",
+        // url: backServerUrl + "api/reader/members/"+userid+"/holdings",
+        // url: backServerUrl + "api/reader/members/holdings?barcode=" + $("#userbook_barcode").val(),
+        url: backServerUrl + "api/reader/members/holdings?barcode=" + $("#user_barcode").val(),
         dataType: "json",
         headers: {'Content-Type': 'application/json','Authorization':et},
         success: function (data) {
@@ -355,12 +454,12 @@ function GetBorrowedBook() {
                 var brw_date= new Date(data.content[index].datetime);
                 var due_date= new Date(data.content[index].due_at);
                 str+="<tr>" +
-                    "<td>"+brw_date.format("yyyy-MM-dd hh:mm:ss")+"</td>"+
-                    "<td>"+due_date.format("yyyy-MM-dd hh:mm:ss")+"</td>"+
-                    "<td>"+data.content[index].book.barcode+"</td>"+
-                    "<td>"+data.content[index].book.title+"</td>"+
-                    "<td class='overdue' value='"+(due_date<=datenow)+"' ><input type='checkbox' style='width: 40px;'disabled='disabled'></td>"+
-                    "<td><button class='reborrow' value='"+data.content[index].book.barcode+"'>续借</button></td>"+
+                    "<td style='border: 1px solid cadetblue;' title='" + brw_date.format("yyyy-MM-dd hh:mm:ss") + "'>"+brw_date.format("yyyy-MM-dd")+"</td>"+
+                    "<td style='border: 1px solid cadetblue;' title='" + due_date.format("yyyy-MM-dd hh:mm:ss") + "'>"+due_date.format("yyyy-MM-dd")+"</td>"+
+                    "<td style='border: 1px solid cadetblue;'>"+data.content[index].book.barcode+"</td>"+
+                    "<td style='border: 1px solid cadetblue;'>"+data.content[index].book.title+"</td>"+
+                    "<td style='border: 1px solid cadetblue;' class='overdue' value='"+(due_date<=datenow)+"' ><input type='checkbox' style='width: 40px;'disabled='disabled'></td>"+
+                    "<td style='border: 1px solid cadetblue;'><button class='reborrow' value='"+data.content[index].book.barcode+"'>续借</button></td>"+
                     "</tr>";
             }
             $("#pg43_tb2").append(str);

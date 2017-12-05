@@ -10,17 +10,18 @@
 </head>
 <body>
 <div style="width: 90%; height: 567px; z-index: 1; top: 50px; margin: 20px auto;">
-    <table id="pg24_tb1">
+    <table id="pg24_tb1" style="width: 98%;">
         <!--<caption style=' font-size: 25px;color:white; background-color: cadetblue'>选择范围</caption>-->
         <tr>
-            <td style="text-align:center; color:black;width: auto; font-size: 22px;">日期&nbsp;&nbsp<input id='starttime' type='text' style='font-size: 20px; width:110px;' onfocus='setday(this,"yyyy-MM-dd","2016-1-1","2017-01-01",1)' readonly='readonly' />&nbsp;&nbsp;&nbsp;选择签到班级&nbsp;&nbsp<select id="signclass" style="font-size: 22px;" onchange="studentSigned.GetStudentByClass();"></select>&nbsp;&nbsp<input type="button" value="查询" style="font-size: 20px;" onclick="studentSigned.GetStudentByClass();">&nbsp;&nbsp;&nbsp;&nbsp;输入签到条码号
-            <input id="barcode" type="text"  style="width:360px; font-size: 26px;">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="签到" style="font-size: 22px;" onclick="studentSigned.Sign();">&nbsp;&nbsp<input type="button" value="打印" style="font-size: 22px;" onclick="studentSigned.PrintCountTable(signedtable,'班级阅览签到报表');"></td>
+            <td style="text-align:center; color:black; font-size: 18px;">日期&nbsp;&nbsp;<input id='starttime' type='text' style='font-size: 20px; width:110px;' onfocus='setday(this,"yyyy-MM-dd","2016-1-1","2017-01-01",1)' readonly='readonly' />&nbsp;&nbsp;&nbsp;选择签到班级&nbsp;&nbsp<select id="signclass" style="font-size: 20px;" onchange="studentSigned.GetStudentByClass();"></select>&nbsp;&nbsp<input type="button" value="查询" style="font-size: 18px;" onclick="studentSigned.GetStudentByClass();"></td>
+            <td>输入签到条码号
+            <input id="barcode" type="text"  style="width:200px; font-size: 20px;">&nbsp;&nbsp;<input type="button" value="签到" style="font-size: 18px;" onclick="studentSigned.Sign();">&nbsp;&nbsp<input type="button" value="打印" style="font-size: 18px;" onclick="studentSigned.PrintCountTable(signedtable,'班级阅览签到报表');"></td>
          </tr>
     </table>
     <br><br>
-    <table id="signedtable" title="签到列表" border="1px" cellspacing="0" width="100%" style="border-collapse: collapse; border: 1px solid black; text-align: center;">
+    <table id="signedtable" title="签到列表" border="1px" cellspacing="0" width="100%" style="border-collapse: collapse; border: 1px solid cadetblue; text-align: center;">
         <caption id="signedcount" style="text-align: left;"></caption>
-        <thead style='background-color:cadetblue;text-align: center;color: white; '>
+        <thead style='background-color:rgba(95,158,160,0.87); text-align: center;color: white; '>
         <th>借书证号</th>
         <th>读者姓名</th>
         <th>班级</th>

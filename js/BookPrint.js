@@ -1,4 +1,4 @@
-
+//# sourceURL=BookPrint.js
 var BookPrintAll = function () {
 
     var et = window.localStorage["et"];
@@ -47,7 +47,7 @@ var BookPrintAll = function () {
             codestart:"",
             codeend:"",
             schoolnamefont:"15",
-            bookindexfont:"15",
+            bookindexfont:"20",
             barcodefont:"15"
         },
         methods: {
@@ -90,12 +90,12 @@ var BookPrintAll = function () {
                     return;
                 }
                 else  if(!tablerowNow&&tablerowNow!==0){
-                    var Url = backServerUrl + "api/book/items/within?barcode_upper="+_end+"&barcode_lower="+_start+"&offset=0&limit=10";
+                    var Url = backServerUrl + "api/book/items/within?barcode_upper="+_end+"&barcode_lower="+_start+"&offset=0&limit=10&ordering=barcode";
                 }
                 else
                 {
                     tablerowNow=tablerowNow.trim()
-                    Url = backServerUrl + "api/book/items/within?barcode_upper="+_end+"&barcode_lower="+_start+"&offset=0&limit="+tablerowNow;
+                    Url = backServerUrl + "api/book/items/within?barcode_upper="+_end+"&barcode_lower="+_start+"&offset=0&limit="+tablerowNow + "&ordering=barcode";
                 }
                 GetCodelist(Url);
             },
@@ -232,8 +232,8 @@ var BookPrintAll = function () {
                 var z = 0;
                 $.each(data.content, function (i) {
                     isbn = (data.content[i].reference_info.hasOwnProperty("value"))?"":data.content[i].reference_info.ISBN.ISBN;
-                    author = (data.content[i].reference_info.hasOwnProperty("value"))?"":data.content[i].reference_info.责任者.主标目
-                    publisher = (data.content[i].reference_info.hasOwnProperty("value"))?"":data.content[i].reference_info.出版发行.出版发行者名称
+                    author = (data.content[i].reference_info.hasOwnProperty("value"))?"":data.content[i].reference_info.责任者.主标目;
+                    publisher = (data.content[i].reference_info.hasOwnProperty("value"))?"":data.content[i].reference_info.出版发行.出版发行者名称;
                     listhtml += "<tr><td>" + data.content[i].item_info.barcode
                         +"</td><td>" + isbn
                         +"</td><td>" + data.content[i].item_info.clc
@@ -249,8 +249,7 @@ var BookPrintAll = function () {
                             +"</span></td>";
                         z++;
                     }
-                    else if(data.content[i].item_info.clc.length>0&&
-                        data.content[i].item_info.book_index.toString().length>0)
+                    else if(data.content[i].item_info.clc.length>0 && data.content[i].item_info.book_index.toString().length>0)
                     {
                         previewhtml += "<td style='vertical-align: middle'><span class='schoolname'>"
                             + BookCodeManage.schoolname + "</span><span class='bookindex' style='display: block'>"
@@ -259,12 +258,24 @@ var BookPrintAll = function () {
                             +"</td>";
                         z++;
                     }
-                    if( z % (BookCodeManage.bookclos) == 0 && z!= 0 )
+                    if( z % (BookCodeManage.bookclos) == 0 && z!= 0)
                     {
                         previewhtml += "</tr><tr style='height: 80px'>";
                     }
 
-                })
+                });
+
+                if(z < BookCodeManage.bookclos){
+                    var reg= /\d+/;
+                    var pw = $("#preview").css("width").match(reg)[0];
+                    var cols =parseInt(BookCodeManage.bookclos);
+                    var colwidth = parseInt(parseInt(pw) / cols);
+                    var patchtd = "";
+                    for(var i = 0; i < cols - z; i++){
+                        patchtd += "<td style='width:" + colwidth + "px;'></td>";
+                    }
+                    previewhtml += patchtd;
+                }
 
                 previewhtml += "</tr>";
 

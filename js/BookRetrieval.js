@@ -195,11 +195,11 @@ function SearchBook(param,flag) {
         case "0":
             $("#bookpageno span[name='pagenow']").html("1/");
             // Url= backServerUrl + "api/book/reference?keyword=&author=&title=&isbn=&publisher=&clc=" + "&publish_year=&topic=&offset=0&limit=10&hold=false";
-            Url= backServerUrl + "api/book/items_with_ref?offset=0&limit="+limit+"&is_active=true";
+            Url= backServerUrl + "api/book/items_with_ref?offset=0&limit="+limit+"&is_active=true&ordering=isbn,barcode";
             break;
         case "1":$("#bookpageno span[name='pagenow']").html("1/");
             // Url= backServerUrl + "api/book/reference?keyword=&author=" + author+"&title=" +bookname+"&isbn="+ISBN+"&publisher=&clc="+ clc+"&publish_year="+publisherdate+"&topic="+topic+ "&offset=&limit="+limit+"&hold=false"; break;//加载时
-            Url= backServerUrl + "api/book/items_with_ref?keyword=&author=" + author+"&title=" +bookname+"&isbn="+ISBN+"&publisher=&clc="+ clc+"&publish_year="+publisherdate+"&barcode="+barcode+ "&is_active=true&offset=&limit="+limit+"&hold=false";
+            Url= backServerUrl + "api/book/items_with_ref?keyword=&author=" + author+"&title=" +bookname+"&isbn="+ISBN+"&publisher=&clc="+ clc+"&publish_year="+publisherdate+"&barcode="+barcode+ "&is_active=true&offset=&limit="+limit+"&hold=false&ordering=barcode";
             break;//加载时
         case "2":
             Url= param;

@@ -210,22 +210,23 @@ function User_monitor() {
     var index=0;
     var datenow=new Date();
     var readerbarcode=$("#readerbarcode").val().trim();
-    var readeridentityno=$("#identityno").val().trim();
+    // var readeridentityno=$("#identityno").val().trim();
     var readerfull_name=$("#readername").val().trim();
     var readerlevel="";
     var readergender="";
     ($("#readersex option:selected").val()==="请选择")?readergender="":readergender=$("#readersex option:selected").val();
     ($("#readerjob option:selected").val()==="请选择")?readerlevel="":readerlevel=$("#readerjob option:selected").val();
     groupid=[];
-    if($("input[type='checkbox']").is(':checked')) {
-        var index = 0;
-        $("#classcheckbox input:checked").each(function () {
-            groupid[index] = this.name;
-            index++;
-        });
-    }
+    // if($("input[type='checkbox']").is(':checked')) {
+    //     var index = 0;
+    //     $("#classcheckbox input:checked").each(function () {
+    //         groupid[index] = this.name;
+    //         index++;
+    //     });
+    // }
+    groupid[0] = $("#clainput").val();
     // if(readerbarcode!=""&&readeridentityno!=""&&readerfull_name!=""&&readergender!=""&&  readerlevel!=""&&groupid!=""&&readerdob!="")
-    if(readerbarcode!=""&&readeridentityno!=""&&readerfull_name!=""&&readergender!=""&&  readerlevel!=""&&groupid!="")
+    if(readerbarcode!=""&&readerfull_name!=""&&readergender!=""&&  readerlevel!=""&&groupid!="")
     {
         $("#Saveuser").attr("disabled",false);
         $("#Saveuser").css("background-image","url('../images/Save.png')");
@@ -249,7 +250,8 @@ function Checkduplicate(){
         var et = window.localStorage["et"];
         var backServerUrl = window.localStorage["backServerUrl"];
         var duplicate_barcode=$("#readerbarcode").val().trim();
-        var duplicate_identity=$("#identityno").val().trim();
+        // var duplicate_identity=$("#identityno").val().trim();
+        var duplicate_identity="";
         $.ajax({
             type: "GET",
             url: backServerUrl + "api/reader/members?offset=0&limit=&barcode=" +duplicate_barcode+
@@ -264,8 +266,14 @@ function Checkduplicate(){
                 }
                 else
                 {
-                    alert("该读者证或身份证号已存在！");
-                    Continue_User();
+                    if(data.count === 1){
+                        if(data.errors[0].indexOf("identity") > -1){
+                            Save_User();
+                        }
+                    }else{
+                        alert("该读者证号已存在！");
+                    }
+                    // Continue_User();
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -358,7 +366,7 @@ function Modify_confirm(UserID) {
                     $("#readername").val(data.full_name);
                     $("#contactno").val(data.mobile);
                     $("#address").val(data.address);
-                    $("#PostCode").val(data.postcode);
+                    // $("#PostCode").val(data.postcode);
                     $("#readerbarcode").val(modify_barcode);
                     $("#identityno").val(data.identity);
                     $("#readersex").val(data.gender);
@@ -369,15 +377,18 @@ function Modify_confirm(UserID) {
                     //     $("#classcheckbox input[type='checkbox'][value='"+data.groups[index].name+"']").prop("checked",true);
                     //     getgroupid[index]=data.groups[index].id;
                     // }
-                    var groupstr="";
-                    for(var index in data.groups)
-                    {
-                        groupstr += (","+localStorage.getItem(data.groups[index]));
-                        $("#classcheckbox input[type='checkbox'][value='"+localStorage.getItem(data.groups[index])+"']").prop("checked",true);
-                        getgroupid[index]=data.groups[index];
-                    }
-                    $("#selarea").append($("#classcheckbox").find(":checked").parent().clone().css({"width":"","background":"","border":""}));
-                    $("#clainput").val(groupstr.substring(1));
+
+                    // var groupstr="";
+                    // for(var index in data.groups)
+                    // {
+                    //     groupstr += (","+localStorage.getItem(data.groups[index]));
+                    //     $("#classcheckbox input[type='checkbox'][value='"+localStorage.getItem(data.groups[index])+"']").prop("checked",true);
+                    //     getgroupid[index]=data.groups[index];
+                    // }
+                    // $("#selarea").append($("#classcheckbox").find(":checked").parent().clone().css({"width":"","background":"","border":""}));
+                    // $("#clainput").val(groupstr.substring(1));
+                    $("#clainput").val(data.groups[0]);
+
                     // $("#borndate").datebox("setValue",data.dob);
                     $("#borndate").val(data.dob);
                     // $("#registerdate").datebox("setValue",data.create_at.substring(0,10));
@@ -448,7 +459,7 @@ function ModifyorUser() {
     var et = window.localStorage["et"];
     var backServerUrl = window.localStorage["backServerUrl"];
     var datenow= new Date();
-    if(readeridentityno.length!=18)
+    if(readeridentityno.length>0 && readeridentityno.length!=18)  //身份证可以不填
     {
         alert("二代身份证号应为18位！");
         $("#Saveuser").prop("disabled",true);
@@ -463,11 +474,14 @@ function ModifyorUser() {
         var index=0;
         var newgroupid=[];
         ($("#readersex option:selected").val()==="请选择")?readergender="":readergender=$("#readersex option:selected").text();
-        $("#classcheckbox input:checked").each(function () {
-            //newgroupid[index]=parseInt(this.name);
-            newgroupid[index]=this.name;
-            index++;
-        });
+        // $("#classcheckbox input:checked").each(function () {
+        //     //newgroupid[index]=parseInt(this.name);
+        //     newgroupid[index]=this.name;
+        //     index++;
+        // });
+        newgroupid[0] = $("#clainput").val();
+
+
         // var Detele= $.grep(getgroupid,function(n,i){
         //     return newgroupid.indexOf(n)<0;
         // });
@@ -487,7 +501,8 @@ function ModifyorUser() {
             "email":"", //选填
             "mobile": $("#contactno").val().trim(), //选填
             "address": $("#address").val().trim(), //选填
-            "postcode": $("#PostCode").val().trim(), //选填
+            // "postcode": $("#PostCode").val().trim(), //选填
+            "postcode": "", //选填
             "profile_image":$("#userimage").prop("src"), //选填
             "restore_at":"",
             "is_active":true,
@@ -526,9 +541,17 @@ function Continue_User() {
     $("#ModifyUser").hide();
     $("#pg21_tb1 input").not(":checkbox").val("");
     $("#pg21_tb2 input").val("");
-    $("#pg21_tb3 input").val("");
+    // $("#pg21_tb3 input").val("");
     $("#pg21_tb4 input").val("");
     // $(".easyui-datebox").datebox();
+    $("#classmanage").val("班级管理");
+
+    var now = new Date();
+    now.setYear(now.getYear() - 7 + 1900);
+    var snow = now.format("yyyy-MM-dd");
+    $("#borndate").val(snow);
+    $("#registerdate").val(new Date().format("yyyy-MM-dd"));
+
     $(":checkbox").prop("checked",false);
     $("#readersex").val("请选择");
     $("#readerjob").val("请选择");
@@ -539,7 +562,7 @@ function Continue_User() {
 function Save_User() {
     var readeridentityno=$("#identityno").val().trim();
     var datenow= new Date();
-    if(readeridentityno.length!=18)
+    if(readeridentityno.length > 0 && readeridentityno.length!=18)  //身份证可以不填
     {
         alert("二代身份证号应为18位！");
         $("#Saveuser").prop("disabled",true);
@@ -556,11 +579,13 @@ function Save_User() {
         var index=0;
         groupid=[];
         ($("#readersex option:selected").val()==="请选择")?readergender="":readergender=$("#readersex option:selected").text();
-        $("#classcheckbox input:checked").each(function () {
-            //group +=this.value;
-            groupid[index]=this.name;
-            index++;
-        });
+        // $("#classcheckbox input:checked").each(function () {
+        //     //group +=this.value;
+        //     groupid[index]=this.name;
+        //     index++;
+        // });
+        groupid[0] = $("#clainput").val();
+
         var et = window.localStorage["et"];
         var backServerUrl = window.localStorage["backServerUrl"];
         var body={
@@ -577,10 +602,11 @@ function Save_User() {
             "email":"", //选填
             "mobile": $("#contactno").val().trim(), //选填
             "address": $("#address").val().trim(), //选填
-            "postcode": $("#PostCode").val().trim(), //选填
+            // "postcode": $("#PostCode").val().trim(), //选填
+            "postcode": "", //选填
             "profile_image": $("#userimage").prop("src"), //选填
             "create_at":datenow
-        }
+        };
         $.ajax({
             type: "POST",
             url: backServerUrl + "api/reader/members",
@@ -590,6 +616,7 @@ function Save_User() {
             headers: {'Content-Type': 'application/json','Authorization':et},
             success: function (data) {
                 alert("注册成功！");
+                Continue_User();
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 if(XMLHttpRequest.responseText.indexOf("exists"))
@@ -607,7 +634,7 @@ function Save_User() {
                     alert("注册失败！");
                 }
             },
-            complete:Continue_User(),
+            // complete:Continue_User(),
         });
     }
 
@@ -698,8 +725,8 @@ function GetUserLevel_2(){
                     // $("#ancientdeadline").val(data.content[index].ancient_book_rule.day);
                     // $("#otherbookno").val(data.content[index].other_media_rule.quantity);
                     // $("#otherbookdeadline").val(data.content[index].other_media_rule.day);
-                    $("#renewright").val(data.content[index].borrow_rule.can_renew);
-                    $("#bookright").val(data.content[index].borrow_rule.can_book);
+                    $("#renewright").prop("checked",data.content[index].borrow_rule.can_renew);
+                    $("#bookright").prop("checked",data.content[index].borrow_rule.can_book);
                 }
             }
         },
@@ -744,17 +771,21 @@ function GetClassInfo1(){
     $("#delclasscheckbox").find("label").remove();
     $.ajax({
         type: "GET",
-        url: backServerUrl + "api/reader/groups",
+        url: backServerUrl + "api/reader/groups?limit=-1",
         dataType: "json",
         headers: {'Content-Type': 'application/json','Authorization':et},
         success: function (data) {
-            var gradeinfo="";
+            var gradeinfo="<ol>";
+            var selectOption = "<option value='0'>非年组班级成员</option>";
             for(var index in data.content)
             {
-                gradeinfo+="<label style='font-size: 18px;margin-right: 10px;'><input type='checkbox' name='"+data.content[index].id+"' value='"+data.content[index].name+"' style='height: 20px; width: 30px;'>"+data.content[index].name+"</label>";
+                selectOption += "<option value='" + data.content[index].id + "'>" + data.content[index].name + "</option>";
+                gradeinfo+="<li><label style='font-size: 18px;margin-right: 10px;'><input type='checkbox' name='"+data.content[index].id+"' value='"+data.content[index].name+"' style='height: 20px; width: 30px;'>"+data.content[index].name+"</label></li>";
                 localStorage.setItem(data.content[index].id, data.content[index].name);
             }
-            $("#classcheckbox").append(gradeinfo);
+            $("#clainput").append(selectOption);
+            // $("#classcheckbox").append(gradeinfo);
+            gradeinfo += "</ol>";
             $("#delclasscheckbox").append(gradeinfo);
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -811,7 +842,7 @@ function GetUserID() {
                 if(data.count=="0")
                 {
                     alert("借书证号不存在！");
-                    Continue_User();
+                    // Continue_User();
                 }
                 else{
                     Modify_confirm(data.content[0].id);

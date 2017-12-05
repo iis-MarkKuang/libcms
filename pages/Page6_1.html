@@ -11,56 +11,34 @@
     <link rel="stylesheet" type="text/css" href="/css/page.css">
 </head>
 <body>
-<div id="BookcodeManage" class="div_panel" style="width:96%; height: 100px; margin: 20px auto;">
-    <table class="table_panel" style="margin:auto; width: 100%; font-size:21px;">
-        <caption>书标打印</caption>
+<div id="BookcodeManage" class="aadiv_panel" style="width:96%; height: 100px; margin: 20px auto; border-bottom: 0px solid cadetblue;">
+    <table class="aatable_panel" style="margin:auto; width: 100%; font-size:21px;">
+        <!--<caption>书标打印</caption>-->
     </table>
     <div style="width:100%; height: auto; margin: 20px auto;">
-        <table id="printparam" class="table_panel" style="margin:auto; width: 100%; height: auto; font-size:16px; text-align: center;">
-            <tbody>
+        <table id="printparam" class="aatable_panel" style="margin:auto; width: 100%; height: auto; font-size:16px; text-align: center;">
+            <tbody style="text-align: left;">
             <tr>
-                <td>
-                    中小学名称<input v-model="schoolname" v-on:change="changename" type="text">
-                    书标宽度<input v-model="bookwidth" v-on:change="changelent" type="number" min="0" style="width: 50px;" placeholder="mm">
-                    书标高度<input v-model="bookheight" v-on:change="changelent" type="number" min="0" style="width: 50px;" placeholder="mm">
-                    书码预览列数<input v-model="bookclos" v-on:change="changecols" type="number" min="0" style="width: 50px;" placeholder="列">
-                    是否显示条码号<input v-model="isShowcode" v-on:change="changeisshow" type="checkbox"></td>
+                <td style="text-align: right;">中小学名称</td><td><input v-model="schoolname" v-on:change="changename" type="text"></td>
+                <td style="text-align: right;">书标宽度</td><td><input v-model="bookwidth" v-on:change="changelent" type="number" min="0" style="width: 50px;" placeholder="mm"></td>
+                <td style="text-align: right;">书标高度</td><td><input v-model="bookheight" v-on:change="changelent" type="number" min="0" style="width: 50px;" placeholder="mm"></td>
+                <td style="text-align: right;">书码预览列数</td><td><input v-model="bookclos" v-on:change="changecols" type="number" min="0" style="width: 50px;" placeholder="列"></td>
+                <td colspan="2" style="text-align: center;">是否显示条码号<input v-model="isShowcode" v-on:change="changeisshow" type="checkbox"></td>
                     </td>
             </tr>
             <tr>
-                <td>
-                    学校名字体大小<input v-model="schoolnamefont" v-on:change="changefont" type="number" min="0" style="width: 50px;" placeholder="px">
-                    索书号字体大小<input v-model="bookindexfont" v-on:change="changefont" type="number" min="0" style="width: 50px;" placeholder="px">
-                    条码号字体大小<input v-model="barcodefont" v-on:change="changefont" type="number" min="0" style="width: 50px;" placeholder="px">
-                    <input id="codestart" v-model="codestart" type="text"  placeholder="起始书码">-<input v-model="codeend" type="text" placeholder="终止书码">
-                    &nbsp;&nbsp;<button id="searchbycode" @click="searchbycode" title="请输入起始书码和终止书码进行查询">查询</button>
-                    <button @click="bookcodeprint">打印</button>
-                </td>
+                <td style="text-align: right;">学校名字体大小</td><td><input v-model="schoolnamefont" v-on:change="changefont" type="number" min="0" style="width: 50px;" placeholder="px"></td>
+                <td style="text-align: right;">索书号字体大小</td><td><input v-model="bookindexfont" v-on:change="changefont" type="number" min="0" style="width: 50px;" placeholder="px"></td>
+                <td style="text-align: right;">条码号字体大小</td><td><input v-model="barcodefont" v-on:change="changefont" type="number" min="0" style="width: 50px;" placeholder="px"></td>
+                <td colspan="2"><input id="codestart" v-model="codestart" type="text"  placeholder="起始书码">-<input v-model="codeend" type="text" placeholder="终止书码"></td>
+                <td colspan="2"><button id="searchbycode" @click="searchbycode" title="请输入起始书码和终止书码进行查询">查询</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button @click="bookcodeprint">打印</button></td>
             </tr>
-            <!--<tr>-->
-                <!--<td style="text-align: right">顶距</td>-->
-                <!--<td><input v-model="topdist" type="number" style="width: 50px;"></td>-->
-                <!--<td style="text-align: right">左边距</td>-->
-                <!--<td><input v-model="leftdist" type="number" style="width: 50px;"></td>-->
-                <!--<td style="text-align: right">书标水平间距</td>-->
-                <!--<td><input v-model="vertical" type="number" style="width: 50px;"></td>-->
-                <!--<td style="text-align: right">书标垂直间距</td>-->
-                <!--<td><input v-model="horizontal" type="number" style="width: 50px;"></td>-->
-            <!--<tr>-->
-                <!--<td style="text-align: right;padding: 10px;">行数</td>-->
-                <!--<td colspan="3"><input v-model="lines" type="number" style="width: 100%"></td>-->
-                <!--<td style="text-align: right">列数</td>-->
-                <!--<td colspan="3"><input v-model="rows" type="number" style="width: 100%"></td>-->
-                <!--<td colspan="3"><input id="codestart" v-model="codestart" type="text"  placeholder="起始书码">-<input v-model="codeend" type="text" placeholder="终止书码">-->
-                    <!--&nbsp;&nbsp;<button id="searchbycode" @click="searchbycode" title="请输入起始书码和终止书码进行查询">查询</button></td>-->
-                <!--<td><button @click="bookcodepreview">预览</button></td>-->
-            <!--</tr>-->
             </tbody>
         </table>
     </div>
     <div id="booklist" style="margin:auto; width: 50%; position:absolute; top:150px;border:solid 0px cadetblue;">
         <table id="printlist" cellspacing='0' border='1px;' style="border:solid 0px cadetblue; width: 100%; border-collapse:collapse; text-align: center;">
-            <thead>
+            <thead style="background-color:rgba(95,158,160,0.87);text-align: center;color: white;">
             <tr>
                 <th>条码号</th>
                 <th>ISBN</th>

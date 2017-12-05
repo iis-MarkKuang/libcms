@@ -1,87 +1,93 @@
 //# sourceURL=DocumentManagement.js
 // var gusergroup;   //SetCheckbox要用的变量
 var booksellerToIdMap = {};
-function PrintCountTable(tableID,title)
-{
-    var op = window.open();
-    op.document.writeln('<!DOCTYPE html><html><head><style type="text/css" media="print">@page { size: landscape; }</style></head><body>');
-    op.document.writeln("<div style='margin: auto auto 30px; width:90%; font-size: 30px; text-align: center;'>" + title + "</div>");
-    //op.document.writeln("<div style='margin: auto; width:90%;'>起始日期：" + startTime + " 结束日期：" + endTime + "</div>");
-    op.document.writeln(tableID.outerHTML);
-    //op.document.writeln('<script>document.getElementById(\"'+tableID.getAttribute("id")+'\").style.display = ""</script>');
-    op.document.writeln('<script>document.getElementById(\"'+tableID.getAttribute("id")+'\").style.fontSize = "12pt"</script>');
-    op.document.writeln('<script>window.print()</script>');
-    op.document.writeln('</body></html>');
-    op.document.close();
-}
-
-function PrintCountTableByRaw(tableID,title,start,end)
-{
-    var op = window.open();
-    op.document.writeln('<!DOCTYPE html><html><head><style type="text/css" media="print">@page { size: landscape; }</style></head><body>');
-    op.document.writeln("<div style='margin: auto auto 30px; width:90%; font-size: 30px; text-align: center;'>" + title + "</div>");
-    //op.document.writeln("<div style='margin: auto; width:90%;'>起始日期：" + startTime + " 结束日期：" + endTime + "</div>");
-    op.document.writeln(tableID.outerHTML);
-    //op.document.writeln('<script>document.getElementById(\"'+tableID.getAttribute("id")+'\").style.display = ""</script>');
-    op.document.writeln('<script>document.getElementById(\"'+tableID.getAttribute("id")+'\").style.fontSize = "12pt"</script>');
-    op.document.writeln('<script>var rows = edittable.querySelectorAll("tbody tr").length;' +
-        'for(var i=0; i<rows; i++){var txt = edittable.querySelectorAll("tbody tr")[i].querySelector("td").innerText;' +
-        'if(txt < ' + start.value + ' || txt > ' + end.value + ')edittable.querySelectorAll("tbody tr")[i].style.display = "none";}</script>');
-    op.document.writeln('<script>window.print()</script>');
-    op.document.writeln('</body></html>');
-    op.document.close();
-}
-
-function PrintDynamicTable(tableID,title,ec)
-{
-    // GetDynamicTableHtml(tableID);
-    var op = window.open();
-    op.document.writeln('<!DOCTYPE html><html><head><style type="text/css" media="print">@page { size: landscape; }</style></head><body>');
-    op.document.writeln("<div style='margin: auto auto 30px; width:90%; font-size: 30px; text-align: center;'>" + title + "</div>");
-    op.document.writeln(GetDynamicTableHtml(tableID,ec));
-    op.document.writeln('<script>document.getElementById(\"'+tableID.id+'\").style.fontSize = "12pt"</script>');
-    op.document.writeln('<script>window.print()</script>');
-    op.document.writeln('</body></html>');
-    op.document.close();
-}
-
-function GetDynamicTableHtml(tableID, ec) {
-    var table = "<table cellspacing='0' border='1px;' style='border-collapse:collapse;'>";
-    var trobj = "";
-    var tdobj = "";
-
-    if($("#dispcount").text() !== "")
-        table +="<caption style='text-align: left;'>" + $("#dispcount").text() + "</caption>";
-    if($("#dispscount").text() !== "")
-        table +="<caption style='text-align: left;'>" + $("#dispscount").text() + "</caption>";
-    table +="<thead>";
-    $("#"+ tableID.id + " thead tr").each(function (index, o) {
-        tdobj = "";
-        $(o).children('th').each(function (i, ob) {
-            if(i !== ec)
-                tdobj += "<th>" + $(ob).text() + "</th>";
-        });
-        trobj += "<tr>" + tdobj + "</tr>";
-    });
-    table += trobj + "</thead><tbody>";
-
-    trobj = "";
-    $("#"+ tableID.id + " tr").each(function (index, o) {
-        tdobj = "";
-        $(o).children('td').each(function (i, ob) {
-            if(i !== ec){
-                if($(ob).children('input').val() === undefined) {
-                    tdobj += "<td>" + $(ob).text() + "</td>";
-                }else{
-                    tdobj += "<td>" + $(ob).children('input').val() + "</td>";
-                }
-            }
-        });
-        trobj += "<tr>" + tdobj + "</tr>";
-    });
-    table += trobj + "</tbody></table>";
-    return table;
-}
+// function PrintCountTable(tableID,title)
+// {
+//     var op = window.open();
+//     op.document.writeln('<!DOCTYPE html><html><head><style type="text/css" media="print">@page { size: landscape; }</style></head><body>');
+//     op.document.writeln("<div style='margin: auto auto 30px; width:90%; font-size: 30px; text-align: center;'>" + title + "</div>");
+//     //op.document.writeln("<div style='margin: auto; width:90%;'>起始日期：" + startTime + " 结束日期：" + endTime + "</div>");
+//     op.document.writeln(tableID.outerHTML);
+//     //op.document.writeln('<script>document.getElementById(\"'+tableID.getAttribute("id")+'\").style.display = ""</script>');
+//     op.document.writeln('<script>document.getElementById(\"'+tableID.getAttribute("id")+'\").style.fontSize = "12pt"</script>');
+//     op.document.writeln('<script>window.print()</script>');
+//     op.document.writeln('</body></html>');
+//     op.document.close();
+// }
+//
+// function PrintCountTableByRaw(tableID,title,start,end)
+// {
+//     var op = window.open();
+//     op.document.writeln('<!DOCTYPE html><html><head><style type="text/css" media="print">@page { size: landscape; }</style></head><body>');
+//     op.document.writeln("<div style='margin: auto auto 30px; width:90%; font-size: 30px; text-align: center;'>" + title + "</div>");
+//     //op.document.writeln("<div style='margin: auto; width:90%;'>起始日期：" + startTime + " 结束日期：" + endTime + "</div>");
+//     op.document.writeln(tableID.outerHTML);
+//     //op.document.writeln('<script>document.getElementById(\"'+tableID.getAttribute("id")+'\").style.display = ""</script>');
+//     op.document.writeln('<script>document.getElementById(\"'+tableID.getAttribute("id")+'\").style.fontSize = "12pt"</script>');
+//     op.document.writeln('<script>var rows = edittable.querySelectorAll("tbody tr").length;' +
+//         'for(var i=0; i<rows; i++){var txt = edittable.querySelectorAll("tbody tr")[i].querySelector("td").innerText;' +
+//         'if(txt < ' + start.value + ' || txt > ' + end.value + ')edittable.querySelectorAll("tbody tr")[i].style.display = "none";}</script>');
+//     op.document.writeln('<script>window.print()</script>');
+//     op.document.writeln('</body></html>');
+//     op.document.close();
+// }
+//
+// function PrintDynamicTable(tableID,title,ec)
+// {
+//     // GetDynamicTableHtml(tableID);
+//     var op = window.open();
+//     op.document.writeln('<!DOCTYPE html><html><head><style type="text/css" media="print">@page { size: landscape; }</style></head><body>');
+//     op.document.writeln("<div style='margin: auto auto 30px; width:90%; font-size: 30px; text-align: center;'>" + title + "</div>");
+//     op.document.writeln(GetDynamicTableHtml(tableID,ec));
+//     op.document.writeln('<script>document.getElementById(\"'+tableID.id+'\").style.fontSize = "12pt"</script>');
+//     op.document.writeln('<script>window.print()</script>');
+//     op.document.writeln('</body></html>');
+//     op.document.close();
+// }
+//
+// function GetDynamicTableHtml(tableID, ec) {
+//     var table = "<table cellspacing='0' border='1px;' style='border-collapse:collapse;'>";
+//     var trobj = "";
+//     var tdobj = "";
+//
+//     if($("#dispcount").text() !== "")
+//         table +="<caption style='text-align: left;'>" + $("#dispcount").text() + "</caption>";
+//     if($("#dispscount").text() !== "")
+//         table +="<caption style='text-align: left;'>" + $("#dispscount").text() + "</caption>";
+//     table +="<thead>";
+//     $("#"+ tableID.id + " thead tr").each(function (index, o) {
+//         tdobj = "";
+//         $(o).children('th').each(function (i, ob) {
+//             if(i !== ec)
+//                 tdobj += "<th>" + $(ob).text() + "</th>";
+//         });
+//         trobj += "<tr>" + tdobj + "</tr>";
+//     });
+//     table += trobj + "</thead><tbody>";
+//
+//     trobj = "";
+//     $("#"+ tableID.id + " tr").each(function (index, o) {
+//         tdobj = "";
+//         $(o).children('td').each(function (i, ob) {
+//             if(i !== ec){
+//                 if($(ob).children('input').val() === undefined) {
+//                     if($(ob).attr("colspan") === undefined)
+//                         tdobj += "<td>" + $(ob).text() + "</td>";
+//                     else
+//                         tdobj += "<td colspan='" +$(ob).attr("colspan")+ "'>" + $(ob).text() + "</td>";
+//                 }else{
+//                     if($(ob).attr("colspan") === undefined)
+//                         tdobj += "<td>" + $(ob).children('input').val() + "</td>";
+//                     else
+//                         tdobj += "<td colspan='" +$(ob).attr("colspan")+ "'>" + $(ob).children('input').val() + "</td>";
+//                 }
+//             }
+//         });
+//         trobj += "<tr>" + tdobj + "</tr>";
+//     });
+//     table += trobj + "</tbody></table>";
+//     return table;
+// }
 
 function GetBookSeller() {
     var et = window.localStorage["et"];
@@ -320,6 +326,22 @@ function FillStacks(data) {
     }
 }
 
+function FillStacksForMoveLib(data) {
+    if(data.content.length > 0){
+        data.content.forEach(function (o) {
+            $("#stacks").append("<option value='" + o.id +"' title='" + o.book_barcode_length +"'>" + o.name + "</option>");
+        });
+        $("#stacks").val(systemDefaultStack);
+
+        // $("#stacks").change(function () {
+        //     // alert($(this).children('option:selected').attr("title"));
+        //     catalogueRW.currentBookBarcodeLength = parseInt($(this).children('option:selected').attr("title"));
+        // });
+
+        // $("#stacks").get(0).selectedIndex = 0;
+    }
+}
+
 var CancelBook = function () {
 
     var keyudnav= 0;
@@ -417,30 +439,147 @@ var CancelBook = function () {
                 }
                 else{
                     catalogue.alldata = data.result[0].reference_info;
+                    CancelBook.SetBook(CancelBook.catalogue.alldata);
+                    // //CancelBook.SetBook(data.reference_info);
+                    // var purl = parseURL(Url);
+                    // var body = "";
+                    // if (purl.params.offset === "")
+                    //     purl.params.offset = 0;
+                    // // data.content.forEach(function (o, index) {
+                    // //     body += "<tr id='bi" + index + "'><td>" + (index + 1 + parseInt(purl.params.offset)) + "</td><td>" + o.ISBN.ISBN + "</td><td>" + o.题名与责任者.正题名 + "</td><td>" + o.责任者.主标目 + "</td><td>" + o.出版发行.出版发行者名称 + "</td><td>" + o.出版发行.出版发行日期 + "</td><td><input type='button' value='选择' onclick='CancelBook.SetBook(CancelBook.catalogue.alldata.content[" + index + "])'></td></tr>";
+                    // //     //body += "<tr id='bi" + index + "'><td>" + (index + 1 + parseInt(purl.params.offset)) + "</td><td>" + o.ISBN.ISBN + "</td><td>" + o.题名与责任者.正题名 + "</td><td>" + o.责任者.主标目 + "</td><td>" + o.出版发行.出版发行者名称 + "</td><td>" + o.出版发行.出版发行日期 + "</td><td><input type='button' value='选择'></td></tr>";
+                    // // });
+                    // // if (data.prev === "" && data.next === "") {
+                    // //     body += "<tr><td colspan='6'>共 " + data.count + " 条记录&nbsp;&nbsp;<input id='prev' type='button' value='上一页' disabled='disabled' onclick='CancelBook.ShowPage(\"" + backServerUrl + data.prev.substring(1) + "\")'> " + (purl.params.offset / purl.params.limit + 1) + "/" + (Math.ceil(data.count / purl.params.limit)) + "<input id='next' type='button' value='下一页' disabled='disabled' onclick='CancelBook.ShowPage(\"" + backServerUrl + data.next.substring(1) + "\")'></td><td><input type='button' value='关闭窗口' onclick='$(\"#searchlist\").hide();'></td></tr>";
+                    // // } else if (data.prev === "" && data.next !== "") {
+                    // //     body += "<tr><td colspan='6'>共 " + data.count + " 条记录&nbsp;&nbsp;<input id='prev' type='button' value='上一页' disabled='disabled' onclick='CancelBook.ShowPage(\"" + backServerUrl + data.prev.substring(1) + "\")'> " + (purl.params.offset / purl.params.limit + 1) + "/" + (Math.ceil(data.count / purl.params.limit)) + "<input id='next' type='button' value='下一页' onclick='CancelBook.ShowPage(\"" + backServerUrl + data.next.substring(1) + "\")'></td><td><input type='button' value='关闭窗口' onclick='$(\"#searchlist\").hide();'></td></tr>";
+                    // // } else if (data.prev !== "" && data.next === "") {
+                    // //     body += "<tr><td colspan='6'>共 " + data.count + " 条记录&nbsp;&nbsp;<input id='prev' type='button' value='上一页' onclick='CancelBook.ShowPage(\"" + backServerUrl + data.prev.substring(1) + "\")'> " + (purl.params.offset / purl.params.limit + 1) + "/" + (Math.ceil(data.count / purl.params.limit)) + "<input id='next' type='button' value='下一页' disabled='disabled' onclick='CancelBook.ShowPage(\"" + backServerUrl + data.next.substring(1) + "\")'></td><td><input type='button' value='关闭窗口' onclick='$(\"#searchlist\").hide();'></td></tr>";
+                    // // } else {
+                    // //     body += "<tr><td colspan='6'>共 " + data.count + " 条记录&nbsp;&nbsp;<input id='prev' type='button' value='上一页' onclick='CancelBook.ShowPage(\"" + backServerUrl + data.prev.substring(1) + "\")'> " + (purl.params.offset / purl.params.limit + 1) + "/" + (Math.ceil(data.count / purl.params.limit)) + "<input id='next' type='button' value='下一页' onclick='CancelBook.ShowPage(\"" + backServerUrl + data.next.substring(1) + "\")'></td><td><input type='button' value='关闭窗口' onclick='$(\"#searchlist\").hide();'></td></tr>";
+                    // // }
+                    // body += "<tr><td>" + 1 + "</td><td>" + data.result[0].reference_info.ISBN.ISBN + "</td><td>" + data.result[0].reference_info.题名与责任者.正题名 + "</td><td>" + data.result[0].reference_info.责任者.主标目 + "</td><td>" + data.result[0].reference_info.出版发行.出版发行者名称 + "</td><td>" + data.result[0].reference_info.出版发行.出版发行日期 + "</td><td><input type='button' value='选择' onclick='CancelBook.SetBook(CancelBook.catalogue.alldata)'></td></tr>";
+                    // $("#searchlistbody").html(body);
+                    // if($("#searchlist").is(":hidden")){
+                    //     $("#searchlist").show();
+                    // }
+                    // $("#bi" + keyudnav).css("backgroundColor", "rgba(151, 217, 219, 0.22)");
+                }
+                $("#bookbarcode").focus();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                if(XMLHttpRequest.responseText.indexOf("no record can be found")>0)
+                {
+                    alert("未找到该图书条码！");
+                }
+                else{
+                    alert("查找失败!");
+                }
+            },
+        });
+    }//查询图书by_barcode
+
+    function SearchIsNoacitveBook() {
+        $("#searchlistbody").find("tr").remove();
+        $("#searchlist").hide();
+        var Url="";
+        var et = window.localStorage["et"];
+        var backServerUrl = window.localStorage["backServerUrl"];
+        // Url=backServerUrl+"api/book/items/search?barcode_string="+bookbarcode;
+        // Url= backServerUrl + "api/book/items_with_ref?keyword=&author=" + author+"&title=" +bookname+"&isbn="+ISBN+"&publisher=&clc="+ clc+"&publish_year="+publisherdate+"&barcode="+barcode+ "&is_active=true&offset=&limit="+limit+"&hold=false";
+        Url= backServerUrl + "api/book/items_with_ref?is_active=false&offset=0&limit=15";
+        $.ajax({
+            type: "GET",
+            url: Url,
+            dataType: "json",
+            headers: {'Content-Type': 'application/json','Authorization':et},
+            success: function (data) {
+                if(!data.content.length === 0)
+                {
+                    alert("没有注销图书");
+                    return;
+                }else{
+                    // catalogue.alldata = data.result[0].reference_info;
                     //CancelBook.SetBook(data.reference_info);
                     var purl = parseURL(Url);
                     var body = "";
                     if (purl.params.offset === "")
                         purl.params.offset = 0;
-                    // data.content.forEach(function (o, index) {
-                    //     body += "<tr id='bi" + index + "'><td>" + (index + 1 + parseInt(purl.params.offset)) + "</td><td>" + o.ISBN.ISBN + "</td><td>" + o.题名与责任者.正题名 + "</td><td>" + o.责任者.主标目 + "</td><td>" + o.出版发行.出版发行者名称 + "</td><td>" + o.出版发行.出版发行日期 + "</td><td><input type='button' value='选择' onclick='CancelBook.SetBook(CancelBook.catalogue.alldata.content[" + index + "])'></td></tr>";
-                    //     //body += "<tr id='bi" + index + "'><td>" + (index + 1 + parseInt(purl.params.offset)) + "</td><td>" + o.ISBN.ISBN + "</td><td>" + o.题名与责任者.正题名 + "</td><td>" + o.责任者.主标目 + "</td><td>" + o.出版发行.出版发行者名称 + "</td><td>" + o.出版发行.出版发行日期 + "</td><td><input type='button' value='选择'></td></tr>";
-                    // });
-                    // if (data.prev === "" && data.next === "") {
-                    //     body += "<tr><td colspan='6'>共 " + data.count + " 条记录&nbsp;&nbsp;<input id='prev' type='button' value='上一页' disabled='disabled' onclick='CancelBook.ShowPage(\"" + backServerUrl + data.prev.substring(1) + "\")'> " + (purl.params.offset / purl.params.limit + 1) + "/" + (Math.ceil(data.count / purl.params.limit)) + "<input id='next' type='button' value='下一页' disabled='disabled' onclick='CancelBook.ShowPage(\"" + backServerUrl + data.next.substring(1) + "\")'></td><td><input type='button' value='关闭窗口' onclick='$(\"#searchlist\").hide();'></td></tr>";
-                    // } else if (data.prev === "" && data.next !== "") {
-                    //     body += "<tr><td colspan='6'>共 " + data.count + " 条记录&nbsp;&nbsp;<input id='prev' type='button' value='上一页' disabled='disabled' onclick='CancelBook.ShowPage(\"" + backServerUrl + data.prev.substring(1) + "\")'> " + (purl.params.offset / purl.params.limit + 1) + "/" + (Math.ceil(data.count / purl.params.limit)) + "<input id='next' type='button' value='下一页' onclick='CancelBook.ShowPage(\"" + backServerUrl + data.next.substring(1) + "\")'></td><td><input type='button' value='关闭窗口' onclick='$(\"#searchlist\").hide();'></td></tr>";
-                    // } else if (data.prev !== "" && data.next === "") {
-                    //     body += "<tr><td colspan='6'>共 " + data.count + " 条记录&nbsp;&nbsp;<input id='prev' type='button' value='上一页' onclick='CancelBook.ShowPage(\"" + backServerUrl + data.prev.substring(1) + "\")'> " + (purl.params.offset / purl.params.limit + 1) + "/" + (Math.ceil(data.count / purl.params.limit)) + "<input id='next' type='button' value='下一页' disabled='disabled' onclick='CancelBook.ShowPage(\"" + backServerUrl + data.next.substring(1) + "\")'></td><td><input type='button' value='关闭窗口' onclick='$(\"#searchlist\").hide();'></td></tr>";
-                    // } else {
-                    //     body += "<tr><td colspan='6'>共 " + data.count + " 条记录&nbsp;&nbsp;<input id='prev' type='button' value='上一页' onclick='CancelBook.ShowPage(\"" + backServerUrl + data.prev.substring(1) + "\")'> " + (purl.params.offset / purl.params.limit + 1) + "/" + (Math.ceil(data.count / purl.params.limit)) + "<input id='next' type='button' value='下一页' onclick='CancelBook.ShowPage(\"" + backServerUrl + data.next.substring(1) + "\")'></td><td><input type='button' value='关闭窗口' onclick='$(\"#searchlist\").hide();'></td></tr>";
-                    // }
-                    body += "<tr><td>" + 1 + "</td><td>" + data.result[0].reference_info.ISBN.ISBN + "</td><td>" + data.result[0].reference_info.题名与责任者.正题名 + "</td><td>" + data.result[0].reference_info.责任者.主标目 + "</td><td>" + data.result[0].reference_info.出版发行.出版发行者名称 + "</td><td>" + data.result[0].reference_info.出版发行.出版发行日期 + "</td><td><input type='button' value='选择' onclick='CancelBook.SetBook(CancelBook.catalogue.alldata)'></td></tr>";
+                    data.content.forEach(function (o, index) {
+                        body += "<tr id='bi" + index + "'><td>" + (index + 1 + parseInt(purl.params.offset)) + "</td><td>" + o.ISBN.ISBN + "</td><td>" + o.题名与责任者.正题名 + "</td><td>" + o.责任者.主标目 + "</td><td>" + o.出版发行.出版发行者名称 + "</td><td>" + o.出版发行.出版发行日期 + "</td><td><input type='button' value='选择' onclick='CancelBook.SetBook(CancelBook.catalogue.alldata.content[" + index + "])'></td></tr>";
+                        //body += "<tr id='bi" + index + "'><td>" + (index + 1 + parseInt(purl.params.offset)) + "</td><td>" + o.ISBN.ISBN + "</td><td>" + o.题名与责任者.正题名 + "</td><td>" + o.责任者.主标目 + "</td><td>" + o.出版发行.出版发行者名称 + "</td><td>" + o.出版发行.出版发行日期 + "</td><td><input type='button' value='选择'></td></tr>";
+                    });
+                    if (data.prev === "" && data.next === "") {
+                        body += "<tr><td colspan='7'>共 " + data.count + " 条记录&nbsp;&nbsp;<input id='prev' type='button' value='上一页' disabled='disabled' onclick='CancelBook.ShowNoActivePage(\"" + backServerUrl + data.prev.substring(1) + "\")'> " + (purl.params.offset / purl.params.limit + 1) + "/" + (Math.ceil(data.count / purl.params.limit)) + "<input id='next' type='button' value='下一页' disabled='disabled' onclick='CancelBook.ShowNoActivePage(\"" + backServerUrl + data.next.substring(1) + "\")'></td>></tr>";
+                    } else if (data.prev === "" && data.next !== "") {
+                        body += "<tr><td colspan='7'>共 " + data.count + " 条记录&nbsp;&nbsp;<input id='prev' type='button' value='上一页' disabled='disabled' onclick='CancelBook.ShowNoActivePage(\"" + backServerUrl + data.prev.substring(1) + "\")'> " + (purl.params.offset / purl.params.limit + 1) + "/" + (Math.ceil(data.count / purl.params.limit)) + "<input id='next' type='button' value='下一页' onclick='CancelBook.ShowNoActivePage(\"" + backServerUrl + data.next.substring(1) + "\")'></td>></tr>";
+                    } else if (data.prev !== "" && data.next === "") {
+                        body += "<tr><td colspan='7'>共 " + data.count + " 条记录&nbsp;&nbsp;<input id='prev' type='button' value='上一页' onclick='CancelBook.ShowNoActivePage(\"" + backServerUrl + data.prev.substring(1) + "\")'> " + (purl.params.offset / purl.params.limit + 1) + "/" + (Math.ceil(data.count / purl.params.limit)) + "<input id='next' type='button' value='下一页' disabled='disabled' onclick='CancelBook.ShowNoActivePage(\"" + backServerUrl + data.next.substring(1) + "\")'></td></tr>";
+                    } else {
+                        body += "<tr><td colspan='7'>共 " + data.count + " 条记录&nbsp;&nbsp;<input id='prev' type='button' value='上一页' onclick='CancelBook.ShowNoActivePage(\"" + backServerUrl + data.prev.substring(1) + "\")'> " + (purl.params.offset / purl.params.limit + 1) + "/" + (Math.ceil(data.count / purl.params.limit)) + "<input id='next' type='button' value='下一页' onclick='CancelBook.ShowNoActivePage(\"" + backServerUrl + data.next.substring(1) + "\")'></td></tr>";
+                    }
+                    // body += "<tr><td>" + 1 + "</td><td>" + data.result[0].reference_info.ISBN.ISBN + "</td><td>" + data.result[0].reference_info.题名与责任者.正题名 + "</td><td>" + data.result[0].reference_info.责任者.主标目 + "</td><td>" + data.result[0].reference_info.出版发行.出版发行者名称 + "</td><td>" + data.result[0].reference_info.出版发行.出版发行日期 + "</td><td><input type='button' value='选择' onclick='CancelBook.SetBook(CancelBook.catalogue.alldata)'></td></tr>";
                     $("#searchlistbody").html(body);
                     if($("#searchlist").is(":hidden")){
                         $("#searchlist").show();
                     }
                     $("#bi" + keyudnav).css("backgroundColor", "rgba(151, 217, 219, 0.22)");
+                }
+                $("#bookbarcode").focus();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                if(XMLHttpRequest.responseText.indexOf("no record can be found")>0)
+                {
+                    alert("未找到该图书条码！");
+                }
+                else{
+                    alert("查找失败!");
+                }
+            },
+        });
+    }//查询剔旧图书
+
+    function PrintNoacitveBook() {
+        // $("#searchlistbody").find("tr").remove();
+        // $("#searchlist").hide();
+        var Url="";
+        var et = window.localStorage["et"];
+        var backServerUrl = window.localStorage["backServerUrl"];
+        // Url=backServerUrl+"api/book/items/search?barcode_string="+bookbarcode;
+        // Url= backServerUrl + "api/book/items_with_ref?keyword=&author=" + author+"&title=" +bookname+"&isbn="+ISBN+"&publisher=&clc="+ clc+"&publish_year="+publisherdate+"&barcode="+barcode+ "&is_active=true&offset=&limit="+limit+"&hold=false";
+        Url= backServerUrl + "api/book/items_with_ref?is_active=false&offset=0&limit=-1";
+
+
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: Url,
+            dataType: "json",
+            headers: {'Content-Type': 'application/json','Authorization':et},
+            success: function (data) {
+                $("#printlistbody").empty();
+                if(!data.content.length === 0)
+                {
+                    alert("没有注销图书");
+                    return;
+                }else{
+                    // catalogue.alldata = data.result[0].reference_info;
+                    //CancelBook.SetBook(data.reference_info);
+                    var purl = parseURL(Url);
+                    var body = "";
+                    if (purl.params.offset === "")
+                        purl.params.offset = 0;
+                    data.content.forEach(function (o, index) {
+                        body += "<tr id='bi" + index + "'><td>" + (index + 1 + parseInt(purl.params.offset)) + "</td><td>" + o.ISBN.ISBN + "</td><td>" + o.题名与责任者.正题名 + "</td><td>" + o.责任者.主标目 + "</td><td>" + o.出版发行.出版发行者名称 + "</td><td>" + o.出版发行.出版发行日期 + "</td><td><input type='button' value='选择' onclick='CancelBook.SetBook(CancelBook.catalogue.alldata.content[" + index + "])'></td></tr>";
+                        //body += "<tr id='bi" + index + "'><td>" + (index + 1 + parseInt(purl.params.offset)) + "</td><td>" + o.ISBN.ISBN + "</td><td>" + o.题名与责任者.正题名 + "</td><td>" + o.责任者.主标目 + "</td><td>" + o.出版发行.出版发行者名称 + "</td><td>" + o.出版发行.出版发行日期 + "</td><td><input type='button' value='选择'></td></tr>";
+                    });
+                    body += "<tr><td colspan='7'>共 " + data.count + " 条记录</td></tr>";
+                   $("#printlistbody").html(body);
+                    // if($("#searchlist").is(":hidden")){
+                    //     $("#searchlist").show();
+                    // }
+                    // PrintDynamicTable(booklist, "剔旧图书列表",6);
+                    PrintDynamicTable(printlist, "剔旧图书列表",6);
                 }
                 $("#bookbarcode").focus();
             },
@@ -758,6 +897,51 @@ var CancelBook = function () {
         });
     }
 
+    function ShowNoActivePage(surl) {
+        var et = window.localStorage["et"];
+        var backServerUrl = window.localStorage["backServerUrl"];
+        $.ajax({
+            type: "GET",
+            url: surl,
+            dataType: "json",
+            headers: {'Content-Type': 'application/json','Authorization':et},
+            success: function (data) {
+                catalogue.alldata = data;
+                if(data.content.length === 0){
+                    alert("未找到图书！");
+                // }else if(data.content.length === 1){
+                //     CancelBook.SetBook(data.content[0]);
+                }else if(data.content.length > 0) {
+                    // alert("记录大于一条，仅显示第一条！");
+                    var purl = parseURL(surl);
+                    var body = "";
+                    if (purl.params.offset === "")
+                        purl.params.offset = 0;
+                    data.content.forEach(function (o, index) {
+                        body += "<tr id='bi" + index + "'><td>" + (index + 1 + parseInt(purl.params.offset)) + "</td><td>" + o.ISBN.ISBN + "</td><td>" + o.题名与责任者.正题名 + "</td><td>" + o.责任者.主标目 + "</td><td>" + o.出版发行.出版发行者名称 + "</td><td>" + o.出版发行.出版发行日期 + "</td><td><input type='button' value='选择' onclick='CancelBook.SetBook(CancelBook.catalogue.alldata.content[" + index + "])'></td></tr>";
+                        //body += "<tr id='bi" + index + "'><td>" + (index + 1 + parseInt(purl.params.offset)) + "</td><td>" + o.ISBN.ISBN + "</td><td>" + o.题名与责任者.正题名 + "</td><td>" + o.责任者.主标目 + "</td><td>" + o.出版发行.出版发行者名称 + "</td><td>" + o.出版发行.出版发行日期 + "</td><td><input type='button' value='选择'></td></tr>";
+                    });
+                    if (data.prev === "" && data.next === "") {
+                        body += "<tr><td colspan='6'>共 " + data.count + " 条记录&nbsp;&nbsp;<input id='prev' type='button' value='上一页' disabled='disabled' onclick='CancelBook.ShowNoActivePage(\"" + backServerUrl + data.prev.substring(1) + "\")'> " + (purl.params.offset / purl.params.limit + 1) + "/" + (Math.ceil(data.count / purl.params.limit)) + "<input id='next' type='button' value='下一页' disabled='disabled' onclick='CancelBook.ShowNoActivePage(\"" + backServerUrl + data.next.substring(1) + "\")'></td><td><input type='button' value='关闭窗口' onclick='$(\"#searchlist\").hide();'></td></tr>";
+                    } else if (data.prev === "" && data.next !== "") {
+                        body += "<tr><td colspan='6'>共 " + data.count + " 条记录&nbsp;&nbsp;<input id='prev' type='button' value='上一页' disabled='disabled' onclick='CancelBook.ShowNoActivePage(\"" + backServerUrl + data.prev.substring(1) + "\")'> " + (purl.params.offset / purl.params.limit + 1) + "/" + (Math.ceil(data.count / purl.params.limit)) + "<input id='next' type='button' value='下一页' onclick='CancelBook.ShowNoActivePage(\"" + backServerUrl + data.next.substring(1) + "\")'></td><td><input type='button' value='关闭窗口' onclick='$(\"#searchlist\").hide();'></td></tr>";
+                    } else if (data.prev !== "" && data.next === "") {
+                        body += "<tr><td colspan='6'>共 " + data.count + " 条记录&nbsp;&nbsp;<input id='prev' type='button' value='上一页' onclick='CancelBook.ShowNoActivePage(\"" + backServerUrl + data.prev.substring(1) + "\")'> " + (purl.params.offset / purl.params.limit + 1) + "/" + (Math.ceil(data.count / purl.params.limit)) + "<input id='next' type='button' value='下一页' disabled='disabled' onclick='CancelBook.ShowNoActivePage(\"" + backServerUrl + data.next.substring(1) + "\")'></td><td><input type='button' value='关闭窗口' onclick='$(\"#searchlist\").hide();'></td></tr>";
+                    } else {
+                        body += "<tr><td colspan='6'>共 " + data.count + " 条记录&nbsp;&nbsp;<input id='prev' type='button' value='上一页' onclick='CancelBook.ShowNoActivePage(\"" + backServerUrl + data.prev.substring(1) + "\")'> " + (purl.params.offset / purl.params.limit + 1) + "/" + (Math.ceil(data.count / purl.params.limit)) + "<input id='next' type='button' value='下一页' onclick='CancelBook.ShowNoActivePage(\"" + backServerUrl + data.next.substring(1) + "\")'></td><td><input type='button' value='关闭窗口' onclick='$(\"#searchlist\").hide();'></td></tr>";
+                    }
+                    $("#searchlistbody").html(body);
+                    if($("#searchlist").is(":hidden")){
+                        $("#searchlist").show();
+                    }
+                    $("#bi" + keyudnav).css("backgroundColor", "rgba(151, 217, 219, 0.22)");
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    }
+
     function SetBook(recorder) {
         //catalogue.bookbarcode = recorder.barcode;
         catalogue.bookname = recorder.题名与责任者.正题名;
@@ -778,6 +962,9 @@ var CancelBook = function () {
         ReLoadPage:ReLoadPage,
         ShowPage : ShowPage,
         SetBook:SetBook,
+        SearchIsNoacitveBook : SearchIsNoacitveBook,
+        ShowNoActivePage : ShowNoActivePage,
+        PrintNoacitveBook : PrintNoacitveBook
     }
 }();
 

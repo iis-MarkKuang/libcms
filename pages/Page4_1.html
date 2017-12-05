@@ -36,7 +36,7 @@
             <td>条码号
                 <input id="topic" type="text" class="inputcss2">
             </td>
-            <td rowspan="2" style="text-align: center;width: 130px;">
+            <td rowspan="1" style="text-align: center;width: 130px;">
                 <button type="button" id="BookSearch" class="btnsize2" style="margin-left: 10px;background-image: url(../images/Lookup.png);" onclick="SearchBook('','1')"/>
                 <!--<button type="button" id="BookCancel" class="btnsize2" style="margin-left: 10px;background-image: url(../images/Cancel.png);"onclick="SearchBook('','0')"/>-->
                 <!--<button type="button" id="BookPrint" class="btnsize2" style="margin-left: 10px;background-image: url(../images/Print.jpg);"/>-->
@@ -54,9 +54,12 @@
                     <option>小于</option>
                 </select>
             </td>
+            <td>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>注:书架位置文字若为红色表示图书已外借</span>
+            </td>
         </tr>
     </table>
-    <table id="pg41_tb2" class="table_panel2" cellspacing="0" style="table-layout:fixed; width: 1200px;height: auto; margin: auto;">
+    <table id="pg41_tb2" class="table_panel2" cellspacing="0" style="table-layout:fixed; width: 90%;height: auto; margin: auto;">
         <thead style="background-color:cadetblue;text-align: center;color: white; ">
         <th style="width:128px;">ISBN</th>
         <th style="width:128px;">条码号</th>

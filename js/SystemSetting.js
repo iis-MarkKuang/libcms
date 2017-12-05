@@ -145,14 +145,20 @@ function SetSystemDefaultSetting() {
     if(!$.isNumeric($("#scaninterval").val())){
         alert("流通限定时间只能是数字!");
         return;
-    }
-    else if($("#scaninterval").val()<3)
+    }else if($("#scaninterval").val()<3)
     {
         alert("流通限定时间不能小于3秒！");
         return;
     }
     systemDefaultScanInterval = $("#scaninterval").val();
     window.localStorage["systemDefaultScanInterval"] = systemDefaultScanInterval;
+
+    if(!$.isNumeric($("#readeridlength").val())){
+        alert("借书证号长度只能是数字!");
+        return;
+    }
+
+    readerIdLength = $("#readeridlength").val();
     window.localStorage["readerIdLength"] = readerIdLength;
     alert("保存完成!");
 }

@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/css/jquery.edittable.css">
     <link rel="stylesheet" type="text/css" href="/css/page.css">
     <script type="text/javascript" src="/js/UserImport.js"></script>
-    <script type="text/javascript" src="/js/xlsx.full.min.js" ></script>
+    <!--<script type="text/javascript" src="/js/xlsx.full.min.js" ></script>-->
     <script type="text/javascript" src="/js/processEXL.js" ></script>
     <script type="text/javascript" src="/js/jquery.editable.js"></script>
     <script type="text/javascript" src="/js/DocumentManagement.js"></script>
@@ -31,7 +31,7 @@
                     <!--<option>第10行</option>-->
                 <!--</select>-->
                 <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;输入方式<select><option>手工输入</option><option>XLS文件</option></select>&nbsp;&nbsp;-->
-                <input type="file" name="xlfile" id="xlf" />
+                <input type="file" name="xlfile" id="xlf" accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btnsize2" style="margin-top: 15px;background-image: url(../images/DataImport.jpg);" onclick="Dataimport()"/>
                 <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;读者职别-->
                 <!--<select>-->
@@ -113,6 +113,6 @@
     $("#edittable tr th:eq(11)").css("width","100px");
     var X = XLSX;
     var xlf = document.getElementById('xlf');
-    if(xlf.addEventListener) xlf.addEventListener('change', handleFile, false);
+    if(xlf.addEventListener) xlf.addEventListener('change', handleFileWQ, false);
 
 </script>

@@ -6,10 +6,15 @@ var studentSigned = function () {
 
 
     $(document).ready(function () {
-        $(document).keydown(function (evnet) {
+        // $(document).keydown(function (evnet) {
+        $("#barcode").on("keydown", function (evnet) {
             // 回车
             if (evnet.keyCode === 13) {
+                // setTimeout(function(){
+                //     Sign();
+                // },0);
                 Sign();
+                // e.preventDefault ? e.preventDefault() : (e.returnValue = false);
             }
         });
 

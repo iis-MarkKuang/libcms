@@ -8,23 +8,23 @@
     <script type="text/javascript" src="/js/BorrowSearch.js"></script>
 </head>
 <body>
-<div class="div_panel" id="GetuserBorrowed" style="width:96%; height: 100px; margin: 20px auto;">
-    <table class="table_panel" style="margin:auto; width: 100%; font-size:21px;">
-        <caption>图书借阅查询</caption>
+<div class="aadiv_panel" id="GetuserBorrowed" style="width:96%; height: 100px; margin: 20px auto;">
+    <table class="aatable_panel" style="margin:auto; width: 100%; font-size:21px;">
+        <!--<caption>图书借阅查询</caption>-->
     </table>
     <div id="getuser" style="width:100%; height: auto; margin: 20px auto;">
         <table>
             <tr>
                 <td>
                     日期：<input id='starttime' type='text' style='font-size: 20px; width:110px;' onfocus='setday(this,"yyyy-MM-dd","2016-1-1","2017-01-01",1)' readonly='readonly' />&nbsp;&nbsp;&nbsp;至：<input id='endtime' type='text' style='font-size: 20px; width:110px;' onfocus='setday(this,"yyyy-MM-dd","2016-01-01","2017-01-01",1)' readonly='readonly' />
-                    <input type="button" value="按班级查询图书借还" onclick="borrowSearch.GetAllBookByClass();">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="按班级查询未归还图书" onclick="borrowSearch.GetBookByClass();">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="打印" onclick="borrowSearch.PrintCountTable(booklist, '图书借阅名单');">
+                    <input type="button" value="按班级查询图书借还" onclick="borrowSearch.GetAllBookByClass();">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="按班级查询未归还图书" onclick="borrowSearch.GetBookByClass();">(不按时间范围统计)&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="打印" onclick="borrowSearch.PrintCountTable(booklist, '图书借阅名单');">
                 </td>
             </tr>
         </table>
     </div>
     <div id="searchlist" style="margin:auto; width: 100%; position:relative; top:20px;border:solid 0px cadetblue;">
         <table id="booklist" cellspacing='0' border='1px;' style="border:solid 0px cadetblue; width: 100%; border-collapse:collapse; text-align: center;">
-            <thead>
+            <thead style="background-color:rgba(95,158,160,0.87);text-align: center;color: white;">
             <tr>
                 <th>班级</th><th>姓名</th><th>图书名称</th><th>数量</th>
             </tr>

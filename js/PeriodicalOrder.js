@@ -160,7 +160,7 @@ var PeriodicalOrder = function () {
         var reg = /\d+/;
         var w = $("#searchlist").css("width").match(reg)[0];
         $("#searchlist").css("left",(width - w)/2);
-        GetStacks(FillStacks);
+        GetStacks(FillStacksForMoveLib);
         $('#booklist').mousedown(
             function (event) {
                 var isMove = true;

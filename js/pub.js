@@ -165,3 +165,91 @@ function parseURL(url) {
     };
 }
 
+
+function PrintCountTable(tableID,title)
+{
+    var op = window.open();
+    op.document.writeln('<!DOCTYPE html><html><head><style type="text/css" media="print">@page { size: landscape; }</style></head><body>');
+    op.document.writeln("<div style='margin: auto auto 30px; width:90%; font-size: 30px; text-align: center;'>" + title + "</div>");
+    //op.document.writeln("<div style='margin: auto; width:90%;'>起始日期：" + startTime + " 结束日期：" + endTime + "</div>");
+    op.document.writeln(tableID.outerHTML);
+    //op.document.writeln('<script>document.getElementById(\"'+tableID.getAttribute("id")+'\").style.display = ""</script>');
+    op.document.writeln('<script>document.getElementById(\"'+tableID.getAttribute("id")+'\").style.fontSize = "12pt"</script>');
+    op.document.writeln('<script>window.print()</script>');
+    op.document.writeln('</body></html>');
+    op.document.close();
+}
+
+function PrintCountTableByRaw(tableID,title,start,end)
+{
+    var op = window.open();
+    op.document.writeln('<!DOCTYPE html><html><head><style type="text/css" media="print">@page { size: landscape; }</style></head><body>');
+    op.document.writeln("<div style='margin: auto auto 30px; width:90%; font-size: 30px; text-align: center;'>" + title + "</div>");
+    //op.document.writeln("<div style='margin: auto; width:90%;'>起始日期：" + startTime + " 结束日期：" + endTime + "</div>");
+    op.document.writeln(tableID.outerHTML);
+    //op.document.writeln('<script>document.getElementById(\"'+tableID.getAttribute("id")+'\").style.display = ""</script>');
+    op.document.writeln('<script>document.getElementById(\"'+tableID.getAttribute("id")+'\").style.fontSize = "12pt"</script>');
+    op.document.writeln('<script>var rows = edittable.querySelectorAll("tbody tr").length;' +
+        'for(var i=0; i<rows; i++){var txt = edittable.querySelectorAll("tbody tr")[i].querySelector("td").innerText;' +
+        'if(txt < ' + start.value + ' || txt > ' + end.value + ')edittable.querySelectorAll("tbody tr")[i].style.display = "none";}</script>');
+    op.document.writeln('<script>window.print()</script>');
+    op.document.writeln('</body></html>');
+    op.document.close();
+}
+
+function PrintDynamicTable(tableID,title,ec)
+{
+    // GetDynamicTableHtml(tableID);
+    var op = window.open();
+    op.document.writeln('<!DOCTYPE html><html><head><style type="text/css" media="print">@page { size: landscape; }</style></head><body>');
+    op.document.writeln("<div style='margin: auto auto 30px; width:90%; font-size: 30px; text-align: center;'>" + title + "</div>");
+    op.document.writeln(GetDynamicTableHtml(tableID,ec));
+    op.document.writeln('<script>document.getElementById(\"'+tableID.id+'\").style.fontSize = "12pt"</script>');
+    op.document.writeln('<script>window.print()</script>');
+    op.document.writeln('</body></html>');
+    op.document.close();
+}
+
+function GetDynamicTableHtml(tableID, ec) {
+    var table = "<table cellspacing='0' border='1px;' style='border-collapse:collapse;'>";
+    var trobj = "";
+    var tdobj = "";
+
+    if($("#dispcount").text() !== "")
+        table +="<caption style='text-align: left;'>" + $("#dispcount").text() + "</caption>";
+    if($("#dispscount").text() !== "")
+        table +="<caption style='text-align: left;'>" + $("#dispscount").text() + "</caption>";
+    table +="<thead>";
+    $("#"+ tableID.id + " thead tr").each(function (index, o) {
+        tdobj = "";
+        $(o).children('th').each(function (i, ob) {
+            if(i !== ec)
+                tdobj += "<th>" + $(ob).text() + "</th>";
+        });
+        trobj += "<tr>" + tdobj + "</tr>";
+    });
+    table += trobj + "</thead><tbody>";
+
+    trobj = "";
+    $("#"+ tableID.id + " tr").each(function (index, o) {
+        tdobj = "";
+        $(o).children('td').each(function (i, ob) {
+            if(i !== ec){
+                if($(ob).children('input').val() === undefined) {
+                    if($(ob).attr("colspan") === undefined)
+                        tdobj += "<td>" + $(ob).text() + "</td>";
+                    else
+                        tdobj += "<td colspan='" +$(ob).attr("colspan")+ "'>" + $(ob).text() + "</td>";
+                }else{
+                    if($(ob).attr("colspan") === undefined)
+                        tdobj += "<td>" + $(ob).children('input').val() + "</td>";
+                    else
+                        tdobj += "<td colspan='" +$(ob).attr("colspan")+ "'>" + $(ob).children('input').val() + "</td>";
+                }
+            }
+        });
+        trobj += "<tr>" + tdobj + "</tr>";
+    });
+    table += trobj + "</tbody></table>";
+    return table;
+}

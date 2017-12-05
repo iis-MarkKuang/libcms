@@ -15,7 +15,7 @@ function to_csv(workbook) {
     //return result.join("\n");
 }
 
-function process_wb(wb) {
+function process_wbWQ(wb) {
     var output = "";
     output = to_csv(wb);
     goutput = output;
@@ -63,7 +63,7 @@ function fixdata(data) {
 
 var xlf = document.getElementById('xlf');
 
-function handleFile(e) {
+function handleFileWQ(e) {
 //        rABS = document.getElementsByName("userabs")[0].checked;
 //        use_worker = document.getElementsByName("useworker")[0].checked;
     var rABS = false;
@@ -77,7 +77,7 @@ function handleFile(e) {
 //                if(typeof console !== 'undefined') console.log("onload", new Date(), rABS, use_worker);
             var data = e.target.result;
             if(use_worker) {
-                xw(data, process_wb);
+                xw(data, process_wbWQ);
             } else {
                 var wb;
                 if(rABS) {
@@ -86,12 +86,15 @@ function handleFile(e) {
                     var arr = fixdata(data);
                     wb = X.read(btoa(arr), {type: 'base64'});
                 }
-                process_wb(wb);
+                process_wbWQ(wb);
             }
         };
         if(rABS) reader.readAsBinaryString(f);
         else reader.readAsArrayBuffer(f);
+
+        //用于清除当前的文件名称防止系统不处理相同的文件
+        e.target.value=''
     }
 }
 
-if(xlf.addEventListener) xlf.addEventListener('change', handleFile, false);
+if(xlf.addEventListener) xlf.addEventListener('change', handleFileWQ, false);

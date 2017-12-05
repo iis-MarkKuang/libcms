@@ -141,6 +141,19 @@ var UserManage = function () {
     }
 }();
 $(document).ready(function () {
+
+    $("#barcode").on("keydown", function (evnet) {
+        // 回车
+        if (evnet.keyCode === 13) {
+            var barcode=$("#barcode").val().trim();
+            if(barcode.length === 40){
+                barcode = barcode.substring(2,21);
+            }
+            $("#barcode").val(barcode).select();
+            // $("#book_barcode").focus();
+        }
+    });
+
     $("#pg23_tb3").on('change','input',function () {
         var days=$("input[name='days']").val();
         if(days.trim()!="")
@@ -156,7 +169,7 @@ $(document).ready(function () {
             $("input[name='deadline']").prop("readOnly",true);
             $("input[name='deadline']").parent().css("color","darkgray");
         }
-    })
+    });
 
     $("#pg23_tb3").on('change','select',function () {
         $("#pg23_tb3 input").parent().css("color","darkgray");
@@ -267,7 +280,7 @@ $(document).ready(function () {
         }
     });
 
-})
+});
 
 function Manage_confirm() {
     var et = window.localStorage["et"];
@@ -592,7 +605,7 @@ function GetClassInfo1(){
     $("#delclasscheckbox").find("label").remove();
     $.ajax({
         type: "GET",
-        url: backServerUrl + "api/reader/groups",
+        url: backServerUrl + "api/reader/groups?limit=2000",
         dataType: "json",
         headers: {'Content-Type': 'application/json','Authorization':et},
         success: function (data) {
