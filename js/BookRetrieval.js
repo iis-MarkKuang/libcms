@@ -208,6 +208,11 @@ function SearchBook(param,flag) {
             // Url= backServerUrl + "api/book/reference?keyword=&author="+ author+"&title=" +bookname+"&isbn="+ISBN+"&publisher=&clc="+ clc+"&publish_year="+publisherdate+"&topic="+topic+    "&offset="+ param+"&limit="+limit+"&hold=false";
             Url= backServerUrl + "api/book/items_with_ref?keyword=&author="+ author+"&title=" +bookname+"&isbn="+ISBN+"&publisher=&clc="+ clc+"&publish_year="+publisherdate+"&barcode="+barcode+    "&is_active=true&offset="+ (param - 1) * limit +"&limit="+limit+"&hold=false";
             break;
+        case "4":   //和参数为1相同, 只是结果导出到Excel
+            $("#bookpageno span[name='pagenow']").html("1/");
+            // Url= backServerUrl + "api/book/reference?keyword=&author=" + author+"&title=" +bookname+"&isbn="+ISBN+"&publisher=&clc="+ clc+"&publish_year="+publisherdate+"&topic="+topic+ "&offset=&limit="+limit+"&hold=false"; break;//加载时
+            Url= backServerUrl + "api/book/items_with_ref?keyword=&author=" + author+"&title=" +bookname+"&isbn="+ISBN+"&publisher=&clc="+ clc+"&publish_year="+publisherdate+"&barcode="+barcode+ "&is_active=true&offset=&limit=-1&hold=false&ordering=barcode";
+            break;//加载时
     }
     $.ajax({
         type: "GET",
@@ -249,18 +254,21 @@ function SearchBook(param,flag) {
                     //         "<td style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>"+data.content[index].shelf_info_nested.row + "排" + data.content[index].shelf_info_nested.column + "列"+"</td>" +
                     //         "<td style=''overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'> <input type='button' style='width: 60px;' value='删除' onclick='DeleteBookByBarcode(\""+data.content[index].barcode+"\",\""+data.content[index].stack+"\")'></td></tr>";
                     // } else {
-                        str+="<tr><td value='"+data.content[index].reference+"'>"+data.content[index].ISBN.ISBN+"</td>"+
-                            "<td>"+data.content[index].barcode+"</td>"+
-                            "<td title='"+data.content[index].stack+"'>"+data.content[index].stack_name+"</td>"+
-                            "<td style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;' title='"+data.content[index].题名与责任者.正题名+"'>"+data.content[index].题名与责任者.正题名+"</td>"+
-                            "<td style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;' title='"+data.content[index].责任者.主标目+"'>"+data.content[index].责任者.主标目+"</td>"+
-                            "<td style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;' title='"+data.content[index].出版发行.出版发行者名称+"'>"+data.content[index].出版发行.出版发行者名称+"</td>" +
-                            "<td style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>"+data.content[index].出版发行.出版发行日期+"</td>" +
-                            "<td style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'' title='"+data.content[index].clc+"'>"+data.content[index].clc+"</td>" +
-                            "<td style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>"+data.content[index].载体形态.页数或卷册数+"</td>" +
-                            "<td style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>"+data.content[index].ISBN.获得方式和或定价+"</td>" +
-                            "<td style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>"+data.content[index].shelf_info_nested.row + "排" + data.content[index].shelf_info_nested.column + "列"+"</td>" +
-                            "<td style=''overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'> <input type='button' style='width: 60px;' value='书评' onclick='DisplayBookViews(\""+data.content[index].reference+"\",\""+data.content[index].题名与责任者.正题名+"\")'></td></tr>";
+                    var color = "red";
+                    if(data.content[index].is_available)
+                        color = "black";
+                    str+="<tr><td value='"+data.content[index].reference+"'>"+data.content[index].ISBN.ISBN+"</td>"+
+                        "<td>"+data.content[index].barcode+"</td>"+
+                        "<td title='"+data.content[index].stack+"'>"+data.content[index].stack_name+"</td>"+
+                        "<td style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;' title='"+data.content[index].题名与责任者.正题名+"'>"+data.content[index].题名与责任者.正题名+"</td>"+
+                        "<td style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;' title='"+data.content[index].责任者.主标目+"'>"+data.content[index].责任者.主标目+"</td>"+
+                        "<td style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;' title='"+data.content[index].出版发行.出版发行者名称+"'>"+data.content[index].出版发行.出版发行者名称+"</td>" +
+                        "<td style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>"+data.content[index].出版发行.出版发行日期+"</td>" +
+                        "<td style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'' title='"+data.content[index].clc+"'>"+data.content[index].clc+"</td>" +
+                        "<td style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>"+data.content[index].载体形态.页数或卷册数+"</td>" +
+                        "<td style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>"+data.content[index].ISBN.获得方式和或定价+"</td>" +
+                        "<td style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis; color:" + color + "'>"+data.content[index].shelf_info_nested.row + "排" + data.content[index].shelf_info_nested.column + "列"+"</td>" +
+                        "<td style=''overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'> <input type='button' style='width: 60px;' value='书评' onclick='DisplayBookViews(\""+data.content[index].reference+"\",\""+data.content[index].题名与责任者.正题名+"\")'></td></tr>";
                     // }
                 }
             }
@@ -269,6 +277,13 @@ function SearchBook(param,flag) {
             Disabledfirst();
             Disabledlast(Pageall);
             $("#pg41_tb2").append(str);
+            if(flag === "4"){
+                ReportGeneralXLS("图书检索结果", "pg41_tb2");
+                Pageall = 1;
+                $("#bookpageno span[name='pageall']").html("1页");
+                Disabledfirst();
+                Disabledlast(1);
+            }
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             alert(XMLHttpRequest.responseText);
