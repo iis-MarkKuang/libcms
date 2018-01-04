@@ -1,0 +1,43 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>阿法迪图书馆文献管理平台2.0</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <link rel="stylesheet" type="text/css" href="/css/jquery.edittable.css">
+    <!--<script type="text/javascript" src="/js/xlsx.full.min.js" ></script>-->
+    <!--<script type="text/javascript" src="/js/processXLS.js" ></script>-->
+    <!--<script type="text/javascript" src="/js/jquery.easyui.min.js" ></script>-->
+    <!--<script type="text/javascript" src="/js/easyui-lang-zh_CN.js" ></script>-->
+    <script type="text/javascript" src="/js/jquery.edittable.js"></script>
+    <script type="text/javascript" src="/js/DocumentManagement.js"></script>
+    <script type="text/javascript" src="/js/BookPreorder.js"></script>
+    <!--<script type="text/javascript" src="/js/Blob.js"></script>-->
+    <!--<script type="text/javascript" src="/js/FileSaver.js"></script>-->
+</head>
+<body>
+    <div id="functionwindow" class="div_panel1" style="width:96%; height: 660px; margin: 20px auto;">
+        <table class="table_panel1" style="margin:auto; width: 100%; font-size:21px;">
+            <!--<caption>文献预定</caption>-->
+            <tbody>
+            <tr>
+                <td style="width: 700px; height: 30px; vertical-align: middle;">
+                    <!--预定日期<input type="text" id="preorderdate" class="easyui-datebox" value="true" editable="false" style="width: 160px; height: 30px; margin: 10px; ">供应商<select id="supplier"></select>&nbsp;&nbsp;<input type="file" name="xlfile" id="xlf" accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" title="从文件导入预定信息" />-->
+                    预定日期<input id='preorderdate' type='text' style='font-size: 20px; width:110px;' onfocus='setday(this,"yyyy-MM-dd","2016-1-1","2017-01-01",1)' readonly='readonly' />供应商<select id="supplier"></select>&nbsp;&nbsp;<input type="file" name="xlfile" id="xlf" accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" title="从文件导入预定信息" />
+                </td>
+                <td><input id="pubutton" type="button" value="预定" onclick="bookPreorder.SaveDocPreorder(this)">&nbsp;&nbsp;<input type="button" value="打印" onclick="PrintDynamicTable(edittable,'文献预定单',9)">&nbsp;&nbsp;<input type="button" value="导出" onclick="GeneralXLS()"></td>
+                <td><input type="button" value="添加供应商" onclick="bookPreorder.CreateBookSeller()"><input type="button" value="删除当前的供应商" onclick="bookPreorder.DeleteBookSeller()" style="margin-left: 20px;"></td>
+            </tr>
+           </tbody>
+        </table>
+        <div id="datawindow" style="width:100%; height: 500px; margin: 20px auto; overflow:auto;">
+            <table id="edittable" style="width: 99%;">
+                <caption id="dispcount" style="text-align: left;"></caption>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    bookPreorder.InitPage();
+</script>

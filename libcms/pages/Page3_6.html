@@ -1,0 +1,40 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>阿法迪图书馆文献管理平台2.0</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <link rel="stylesheet" type="text/css" href="/css/page.css">
+    <script type="text/javascript" src="/js/DocumentManagement.js"></script>
+</head>
+<body>
+    <div class="div_panel1" style="width:96%; height: auto; margin: 20px auto;">
+        <table class="table_panel1" style="margin:auto; width: 100%; font-size:21px;">
+            <!--<caption>入库管理</caption>-->
+        </table>
+        <div style="width:100%; height: auto; margin: 20px auto;">
+            <table>
+                <tr><td>转入库名<select id="stacks"></select>&nbsp;&nbsp;流水号<input id="recordnumber" type="text" title="长度到11位自动开始处理数据"></td><td style="width:50px;"></td><td>起始序号<input id="startorder" type="text" style="width:30px;">结束序号<input id="endorder" type="text" style="width:30px;">&nbsp;&nbsp;<input type="button" value="打印" onclick="PrintCountTableByRaw(edittable,'入库管理列表',startorder,endorder)"></td></tr>
+            </table>
+        </div>
+        <div id="tablecontainer" style="width:100%; height: 500px; margin: 20px auto; overflow:auto;">
+            <table id="edittable" cellspacing='0' border='1px;' style="border:solid 1px cadetblue; border-collapse:collapse; width:96%; text-align: center;">
+                <thead><tr style="height: 30px; background-color: rgba(151, 217, 219, 0.22);"><th style="text-align: right;">序号</th><th>日期</th><th>流水号</th><th>文献名称</th><th>分类号</th><th>原库名</th><th>转入库</th><th>操作员</th></tr></thead>
+                <tbody id="movelibbody"></tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    GetStacks(FillStacks);
+    $("#tablecontainer").css("height",height - 250);
+    $("#recordnumber").on("keyup",function (event) {
+        console.log("event.KeyCode = " + event.keyCode);
+        if(event.keyCode !== 13) {
+            if ($(this).val().length === 11) {
+                MoveBookFromLibrary();
+            }
+        }
+    });
+</script>

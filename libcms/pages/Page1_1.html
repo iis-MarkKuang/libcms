@@ -1,0 +1,97 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>阿法迪图书馆文献管理平台2.0</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <!--<script type="text/javascript" src="/js/jquery-2.2.0.js" ></script>-->
+    <!--<script type="text/javascript" src="/js/jquery.easyui.min.js" ></script>-->
+    <script type="text/javascript" src="/js/SystemSetting.js"></script>
+    <script type="text/javascript" src="/js/SystemPara.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/page.css?ver=2">
+    <!--<link rel="stylesheet" type="text/css" href="/css/easyui.css">-->
+</head>
+<body>
+    <!--<div class="div_panel1" style="width:1200px; height: 100px; margin: 20px auto;">-->
+        <!--<table class="table_panel1" style="margin:auto; width: 100%; font-size:21px;">-->
+            <!--&lt;!&ndash;<caption>使用单位</caption>&ndash;&gt;-->
+            <!--&lt;!&ndash;<tbody>&ndash;&gt;-->
+            <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+                <!--&lt;!&ndash;<td style="width: auto;">单位名称：无锡市广勤中学&nbsp;&nbsp;单位代码：GQZX&nbsp;&nbsp;单位序号：21</td>&ndash;&gt;-->
+            <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+            <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+                <!--&lt;!&ndash;<td><label><input type="checkbox" value="">启用借书证号映射</label>&nbsp;&nbsp;<label><input type="checkbox" value="">启用流水号映射</label></td>&ndash;&gt;-->
+            <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+            <!--&lt;!&ndash;</tbody>&ndash;&gt;-->
+        <!--</table>-->
+    <!--</div>-->
+    <div style="width:90%; margin: auto;margin-top: 50px;">
+        <div id="branchpanel" class="div_panel" style="width: 44%; z-index: 1; position: absolute; float:left; left:50px; top: 100px;">
+            <table class="table_panel" style="margin:auto; width: 100%; height: auto; font-size:21px; text-align: center;">
+                <caption>图书馆设置</caption>
+                <thead>
+                    <tr style="height: 36px;"><td colspan="4"><input style="margin-left: 0px;" id="branchname" type="text" placeholder="输入图书馆名称"><label><input id="branchisactive" type="checkbox">在用</label><label title="建议系统只设定一个主馆，若设定多个，以查询顺序第一个为主馆"><input id="branchisroot" type="checkbox">主馆</label><input id="createbranchbutton" style="margin-left: 10px;" type="button" value="添加"></td></tr>
+                    <tr><th style='width: 380px;'>图书馆名称</th><th style='width: 60px;'>在用</th><th style='width: 60px;'>主馆</th><th style='width: auto;'>操作</th></tr>
+                </thead>
+                <tbody id="branchdetaillist1">
+                    <tr><td colspan="4"><div style="height: 150px; overflow:auto;"><table id="branchdetaillist" style="width: auto;"></table></div></td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="stackpanel" class="div_panel" style="width: 44%; z-index: 1; position: absolute; left:49%; top: 100px; margin-left: 0px;">
+            <table class="table_panel" style="margin:auto; width: 100%; height: auto; font-size:21px; text-align: center;">
+                <caption>典藏设置</caption>
+                <thead>
+                <tr style="height: 36px;"><td colspan="5"><select id="branchlist" onchange="systemPara.StackChange();"></select><input id="stackname" style="margin-left: 10px;" type="text" placeholder="输入库名"><label><input id="isactive" type="checkbox">流通</label><input style="margin-left: 10px;" type="button" value="添加" onclick="systemPara.CreateStack()"></td></tr>
+                    <tr><th style="width: 120px;">图书馆名称</th><th style="width: 120px;">书库名称</th><th style="width: 80px;">条码长度</th><th style="width: 80px;">流通</th><th style="width: 200px;">操作</th></tr>
+                </thead>
+                <tbody id="stacklist1">
+                    <tr><td colspan="5"><div style="height: 150px; overflow:auto;"><table id="stacklist" style="width: auto;"></table></div></td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="div_panel" style="width: 90%; z-index: 1; position: absolute; left:50px; top: 380px; margin-left: 0px;">
+            <table class="table_panel" style="margin:auto; width: 100%; height: auto; font-size:21px; text-align: center;">
+                <caption id="shelfcaption">书架设置</caption>
+                <thead>
+                <tr style="height: 36px; text-align: left;"><td colspan="9">&nbsp;<input style="margin-left: 0px; width: 130px;" id="shelfname" type="text" placeholder="输入书架名称">&nbsp;<input style="margin-left: 0px; width: 100px;" id="shelfnumber" type="text" placeholder="输入书架编号">&nbsp;<label><input id="shelfisactive" type="checkbox" checked>在用</label>&nbsp;<input style="margin-left: 0px;" id="startindex" type="text" placeholder="起始索书号">&nbsp;<input style="margin-left: 0px;" id="endindex" type="text" placeholder="结束索书号">&nbsp;<input style="margin-left: 0px;" id="shelfwidth" type="text" onkeyup="check('shelfwidth');" placeholder="宽度(mm)" title="仅输入数字类型有效, 单位:mm">&nbsp;<input style="margin-left: 0px; width: 120px;" id="positionx" type="text" onkeyup="check('positionx');" placeholder="排号" title="仅输入数字类型有效">&nbsp;<input style="margin-left: 0px; width: 120px;" id="positiony" type="text" onkeyup="check('positiony');" placeholder="列号" title="仅输入数字类型有效">&nbsp;<input id="createshelfbutton" style="margin-left: 10px;" type="button" value="添加"></td></tr>
+                    <tr><th>书架名称</th><th>书架编号</th><th>在用</th><th>起始索书号</th><th>结束索书号</th><th>宽度(mm)</th><th>排号</th><th>列号</th><th>操作</th></tr>
+                </thead>
+                <tbody id="shelflist">
+
+                </tbody>
+            </table>
+        </div>
+        <!--<div class="div_panel" style="width: 260px; height: 500px; z-index: 1; float:left; left:660px; top: 150px; margin-left: 30px;">-->
+            <!--<table class="table_panel" style="margin:auto; width: 100%; height: auto; font-size:21px;">-->
+                <!--<caption>联机设置</caption>-->
+                <!--<thead>-->
+                <!--<tr><td>是否查询</td><td>Z39.50服务器</td></tr>-->
+                <!--</thead>-->
+                <!--<tbody>-->
+                    <!--<tr><td colspan="2"><label><input type="checkbox" value="0">北京邮电大学</label></td></tr>-->
+                    <!--<tr><td colspan="2"><label><input type="checkbox" value="0">北图联合编目中心</label></td></tr>-->
+                    <!--<tr><td colspan="2"><label><input type="checkbox" value="0">华东师范大学</label></td></tr>-->
+                    <!--<tr><td colspan="2" style="text-align: center"><input type="button" value="保存"></td></tr>-->
+                <!--</tbody>-->
+            <!--</table>-->
+        <!--</div>-->
+        <div class="div_panel" style="width: 90%;height:60px;z-index: 1; position: absolute;; left:50px; top: 10px; margin-left: 0px;">
+            <table class="table_panel" style="margin:auto; width: 100%; height: auto; font-size:21px;">
+                <caption>杂项设置</caption>
+                <thead>
+                </thead>
+                <tbody>
+                <tr><td>流通限定时间<input id="scaninterval" type="number" value="" step="1" min="3" max="15">秒 </td><td>借书证号长度：<input id="readeridlength" type="text" style="width: 50px;"></td><td>采编默认典藏<select id="stacks"></select></td><td style="text-align: center"><input type="button" value="保存" onclick="SetSystemDefaultSetting();"></td></tr>
+                <!--<tr><td>借书证号长度：<input type="text" style="width: 50px;"></td></tr>-->
+                <!--<tr><td>采编默认典藏<select id="stacks"></select></td></tr>-->
+                <!--<tr><td style="text-align: center"><input type="button" value="保存" onclick="SetSystemDefaultSetting();"></td></tr>-->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    systemPara.InitPage();
+</script>

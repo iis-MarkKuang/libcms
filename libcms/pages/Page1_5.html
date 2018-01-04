@@ -1,0 +1,30 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>阿法迪图书馆文献管理平台2.0</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <script type="text/javascript" src="/js/jquery-2.2.0.js" ></script>
+    <script type="text/javascript" src="/js/jquery.easyui.min.js" ></script>
+    <script type="text/javascript" src="/js/SystemSetting.js"></script>
+    <!--<meta http-equiv="Access-Control-Allow-Methods" content="POST">-->
+    <!--<meta http-equiv="Access-Control-Allow-Headers" content="x-requested-with,content-type">-->
+    <!--<meta http-equiv="content-type" content="text/css" />-->
+    <link rel="stylesheet" type="text/css" href="/css/page.css?ver=1.16">
+    <link rel="stylesheet" type="text/css" href="/css/easyui.css">
+</head>
+<body>
+    <div class="div_panel1" style="width:600px; height: 300px; margin: 20px auto;">
+        <table class="table_panel1" style="margin:auto; width: 100%; font-size:21px;">
+            <!--<caption>密码设置</caption>-->
+            <!--<thead><tr><th colspan="2">当前用户：admin</th></tr></thead>-->
+            <tbody>
+                <tr><td style="text-align: right; height: 50px; width: 50%;">旧密码</td><td><input id="oldpass" type="password" style="width: 160px;" value=""></td></tr>
+                <tr><td style="text-align: right; height: 50px;">新密码</td><td><input id="newpass" type="password" style="width: 160px;" value=""></td></tr>
+                <tr><td style="text-align: right; height: 50px;">重复密码</td><td><input id="newpassrepeat" type="password" style="width: 160px;" value=""></td></tr>
+                <tr><td colspan="2" style="text-align: center; height: 50px;"><input type="button" value="确定" onclick="ChangeUserPass();"></td></tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>阿法迪图书馆文献管理平台2.0</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <link rel="stylesheet" type="text/css" href="/css/page.css">
+    <script type="text/javascript" src="../js/BookRetrieval.js"></script>
+    <script type="text/javascript" src="/js/jquery.PrintArea.js"></script>
+</head>
+<body>
+<div style="width: 100%; height: 567px; z-index: 1; top: 0">
+    <table id="pg41_tb1" class="table_panel2">
+        <!--<caption style='text-align: center;font-size: 25px;color:white; background-color: cadetblue'>文献检索</caption>-->
+        <tr>
+            <td>文献名
+                <input id="bookname" type="text" class="inputcss2">
+            </td>
+            <td>分类号
+                <input id="clc" type="text" class="inputcss2">
+            </td>
+            <!--<td style="text-align: center;">查询类型-->
+                <!--<select>-->
+                    <!--<option>全部</option>-->
+                    <!--<option>普通图书</option>-->
+                    <!--<option>期刊</option>-->
+                    <!--<option>古籍</option>-->
+                    <!--<option>非书资料</option>-->
+                <!--</select>-->
+            <!--</td>-->
+        </tr>
+        <tr>
+            <td>著者
+                <input id="author" type="text" class="inputcss2">
+            </td>
+            <td>条码号
+                <input id="topic" type="text" class="inputcss2">
+            </td>
+            <td rowspan="1" style="text-align: center;width: 130px;">
+                <!--<button type="button" id="BookSearch" class="btnsize2" style="margin-left: 10px;background-image: url(../images/Lookup.png);" onclick="SearchBook('','1')"/>-->
+                <input type="button" id="BookSearch" class="" style="margin-left: 10px; width: 100px; height: 50px; font-size: 20px;" value="查询" onclick="SearchBook('','1')"/>
+                <input type="button" id="BookSearchToExcel" class="" style="margin-left: 10px; height: 50px; font-size: 20px;" value="查询结果导出Excel" onclick="SearchBook('','4')"/>
+                <!--<button type="button" id="BookCancel" class="btnsize2" style="margin-left: 10px;background-image: url(../images/Cancel.png);"onclick="SearchBook('','0')"/>-->
+                <!--<button type="button" id="BookPrint" class="btnsize2" style="margin-left: 10px;background-image: url(../images/Print.jpg);"/>-->
+            </td>
+        </tr>
+        <tr>
+            <td>ISBN
+                <input id="ISBN" type="text"class="inputcss2">
+            </td>
+            <td style="padding-right: 90px;">出版期
+                <input id="publisherdate" type="text" class="inputcss2" style="width: 120px;">
+                <select id="daterange" style="width: 65px;">
+                    <option>大于</option>
+                    <option>等于</option>
+                    <option>小于</option>
+                </select>
+            </td>
+            <td>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>注:书架位置文字若为红色表示图书已外借</span>
+            </td>
+        </tr>
+    </table>
+    <table id="pg41_tb2" class="table_panel2" cellspacing="0" style="table-layout:fixed; width: 90%;height: auto; margin: auto;">
+        <thead style="background-color:cadetblue;text-align: center;color: white; ">
+        <th style="width:128px;">ISBN</th>
+        <th style="width:128px;">条码号</th>
+        <th>书库名称</th>
+        <th style="width:200px;">文献名称</th>
+        <th>著者</th>
+        <th style="width:150px;">出版社</th>
+        <th>发行日期</th>
+        <th>分类号</th>
+        <th>页数</th>
+        <th>定价</th>
+        <th>书架位置</th>
+        <th>操作</th>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <table id="pg41_tb3" style="width:1200px; margin: auto;">
+        <tr id='Pagination'>
+            <td>每页行数
+                <select id="bookrows">
+                    <option>10</option>
+                    <option>15</option>
+                    <option selected="selected">20</option>
+                    <option>30</option>
+                </select>
+            </td>
+            <td><button id="Prev" onclick="bookPrev()">上一页</button></td>
+            <td id="bookpageno"><span name="pagenow">1/</span><span name="pageall">1页</span></td>
+            <td><button id="Next" onclick="bookNext()">下一页</button></td>
+            <td style='text-align: right;'>
+                <input name="pageturn" style="width: 50px;"/>
+                <button id="Turnto" onclick="bookTurnto()">跳转</button></td>
+        </tr>
+    </table>
+</div>
+<!--<div class="div_panel" style="position: absolute; left: 68%;top:180px;width: 31%;height: 62%;">-->
+    <!--<table id="pg41_tb4" class="table_panel" style="margin:auto;width: 100%;">-->
+            <!--<caption>打印预览</caption>-->
+            <!--<tbody></tbody>-->
+        <!--</table>-->
+<!--</div>-->
+</body>
+</html>
+<script>
+//    SearchBook("","0");
+</script>

@@ -1,0 +1,66 @@
+/*table[id*="00"]:hover {-moz-box-shadow: 0px 0px 8px #f0f0f0;transition:all .3s ease-out 0s;}*/
+div[id*="00"]:hover {box-shadow: 2px 3px 3px #535353;transition:all .3s ease-out 0s;}
+body{background:#f4f4f4 url(/images/bg.gif) repeat top left; font-family:"微软雅黑";}
+#title{background-color:#5f9d9f ; width:100%; height:42px; font-size: 30px; color:#f1ebe5; position:absolute ; top:0px; left:0px; font-family:"微软雅黑"; text-shadow: 0 1px 1px #c4b59d, 0px -1px 1px #fff;}
+/*#title{background:linear-gradient(to bottom, #7c9f9b,#5f9d9f);width:100%; height:42px; font-size: 30px; color: #a9f1d5; position:absolute ; top:0px; left:0px; font-family:"微软雅黑"; text-shadow: 0 1px 1px #c4b59d, 0px -1px 1px #fff;}*/
+#footer{z-index:10; background-color:#5f9d9f; width:100%; height:26px;  color:white; position:absolute; bottom:0px; left:0px;}
+#logininfo{color: black; background-color: transparent; position:absolute; height:30px; top:43px; text-align: right; left:0px; width:100%; border: 0px solid blue;}
+#local{z-index:10;color: black; background-color: rgba(95, 157, 159, 0.3); position:absolute; height:30px; top:42px; text-align: left; left:0px; width:100%; border-bottom: 0px solid cadetblue;}
+#userinfo{display:inline; position:relative; top: 3px; color:black; border: 0px solid blue;}
+#pagename{display:inline; position:relative; top: 3px; color:black; border: 0px solid blue;}
+#exitdiv{z-index:999; display:inline; position:relative; top:3px; color:white; border: 0px solid red;}
+#searchdiv{position:absolute; height:30px; top:43px; text-align: right; left:0px;}
+#searchinput{font-weight: normal; margin-top:2px; padding-left:8px;padding-right:8px;width:120px; border: 1px solid cadetblue; height:22px; border-radius: 10px; color:cadetblue; background-color:transparent}
+#menuctrl{z-index: 999; background: url("/images/toleft.png") no-repeat left top; background-size: 16px 16px; overflow:auto;color: black; position:absolute; top:74px; left:0px; width:16px; height:16px; border: 0px solid cadetblue;}
+#menuctrl:hover{animation: breath_1;animation-duration: 3s;animation-timing-function: ease-in-out;animation-iteration-count: infinite;}
+#menu input{color: black; background-color: transparent; border: 0px solid blue;transition:all .3s ease-out 0s;}
+#content{overflow:auto;color: black; position:absolute; top:74px; left:0px; width:100%; height:85%; border: 0px solid blue;}
+#menu input:hover{color: blue; font-size: 20px;transition:all .3s ease-out 0s;}
+#exitdiv input{background-color: transparent; border: 0px solid black;transition:all .3s ease-out 0s;}
+#exitdiv input:hover{color:white; background-color: #76b56d; border: 0px solid green; border-radius: 10px; transition:all .3s ease-out 0s;}
+#content div[id^=dev] table input{background-color: transparent; border: 0px solid black;transition:all .3s ease-out 0s;}
+#content div[id^=dev] table input:hover{color:white; background-color: #76b56d; border: 0px solid green; border-radius: 10px; transition:all .3s ease-out 0s;}
+.button_hover:hover{color:white; background-color: #76b56d; border: 0px solid green; border-radius: 10px; transition:all .3s ease-out 0s;}
+#content input[id^=list]{border:0px solid black;transition:all .3s ease-out 0s;}
+#content input[id^=list]:hover{box-shadow: 1px 1px 1px #535353; border:0px solid black;transition:all .3s ease-out 0s;}
+/*#content{overflow:auto;color: black; position:absolute; top:74px; left:0px; width:500px; height:60%; border: 0px solid blue;}*/
+.breath_light {
+    /*width: 50px;                                    /!* 宽度 *!/*/
+    /*height: 4px;                                    /!* 高度 *!/*/
+    opacity: 0.1;                                   /* 不透明度 */
+    overflow: hidden;                               /* 溢出隐藏 */
+    /*background: #99dd33;                            /!* 背景色 *!/*/
+    color: #99dd33;                            /* 背景色 */
+    /*margin: 25% auto;                               /!* 外边距 *!/*/
+
+    /* IE10、Firefox and Opera，IE9以及更早的版本不支持 */
+    animation-name: breath;                         /* 动画名称 */
+    animation-duration: 3s;                         /* 动画时长3秒 */
+    animation-timing-function: ease-in-out;         /* 动画速度曲线：以低速开始和结束 */
+    animation-iteration-count: infinite;            /* 播放次数：无限 */
+
+    /* Safari and Chrome */
+    -webkit-animation-name: breath;                 /* 动画名称 */
+    -webkit-animation-duration: 3s;                 /* 动画时长3秒 */
+    -webkit-animation-timing-function: ease-in-out; /* 动画速度曲线：以低速开始和结束 */
+    -webkit-animation-iteration-count: infinite;    /* 播放次数：无限 */
+}
+
+@keyframes breath {
+    from { opacity: 0.1; }                          /* 动画开始时的不透明度 */
+    50%  { opacity:   1; }                          /* 动画50% 时的不透明度 */
+    to   { opacity: 0.1; }                          /* 动画结束时的不透明度 */
+}
+
+@-webkit-keyframes breath {
+    from { opacity: 0.1; }                          /* 动画开始时的不透明度 */
+    50%  { opacity:   1; }                          /* 动画50% 时的不透明度 */
+    to   { opacity: 0.1; }                          /* 动画结束时的不透明度 */
+}
+
+@keyframes breath_1 {
+    from { opacity:   1; }                          /* 动画开始时的不透明度 */
+    50%  { opacity: 0.5; }                          /* 动画50% 时的不透明度 */
+    to   { opacity:   1; }                          /* 动画结束时的不透明度 */
+}
+

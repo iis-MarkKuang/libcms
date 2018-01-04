@@ -1,0 +1,119 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>阿法迪图书馆文献管理平台2.0</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <link rel="stylesheet" type="text/css" href="/css/page.css">
+    <!--<link rel="stylesheet" type="text/css" href="/css/  easyui.css">-->
+    <!--<script type="text/javascript" src="/js/jquery.easyui.min.js" ></script>-->
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <!--<script src="../js/jquery.min.js"></script>-->
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/BookCirculation.js"></script>
+</head>
+<body>
+<div style="width: 100%; height: 100px;z-index: 1;position: absolute; top: 35px;">
+    <table style="width: 90%;">
+        <tr>
+        <!--<td style="text-align: center;font-weight: bold;font-size: xx-large;color:red; width: 70%;">请输入条码号-->
+            <!--<input type="text" autofocus id="userbook_barcode" title="若为还书请直接输入图书条码号，若为借书请先输入借书证号，再输入图书条码号" style="font-size: 25px;vertical-align: center;height: 30px;width: 280px;">-->
+        <!--</td>-->
+        <td style="text-align: center;font-weight: bold;font-size: xx-large;color:green; width: auto;">请输入读者条码
+            <input type="text" autofocus id="user_barcode" title="" style="font-size: 25px;vertical-align: center;height: 30px;width: 280px;">
+        </td>
+        <td style="text-align: center;font-weight: bold;font-size: xx-large;color:blue; width: auto;">请输入图书条码
+            <input type="text" autofocus id="book_barcode" title="" style="font-size: 25px;vertical-align: center;height: 30px;width: 280px;">
+        </td>
+    <td><button id="update" style="display: inline;">重置</button></td>
+    </tr></table>
+</div>
+<div style="margin: auto;">
+<div style="width: 540px; height: 467px; z-index: 1; position: absolute; left: 0px; top: 120px;">
+    <table id="pg43_tb3" class="table_panel2" style="width: 540px; border-right: 1px solid cadetblue;">
+        <tbody>
+        <tr>
+            <td rowspan="8" align="center" style="width: 200px;">
+                <img src="/images/nopic.png" id="userimage" style="background-color: transparent; margin: 0px; border: 0px solid black;width: 150px;height: 190px;">
+            </td>
+            <td style="text-align: right;">姓名</td><td><input type="text"></td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">性别</td><td><input type="text"></td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">出生</td><td><input type="text"></td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">职别</td><td><input type="text"></td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">班级</td><td><input type="text"></td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">能借文献册数</td>
+            <td style="text-align: center;"><input type="text" style="text-align: right; width: 50px;"/></td>
+        </tr>
+        <tr>
+                <td style="text-align: right;">已借文献册数</td>
+                <td style="text-align: center;"><input type="text" style="text-align: right; width: 50px;"/></td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">借书证号</td>
+            <td><input id="readerbarcode" type="text"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div style="width: 810px; height: 467px; z-index: 1; position: absolute; left:550px; top: 90px;">
+    <table class="table_panel2" id="pg43_tb2" title="借阅情况列表" style="margin-top: 30px;width: 800px; border: 1px solid cadetblue;">
+        <thead style="background-color:rgba(95,158,160,0.87);text-align: center;color: white;">
+        <tr>
+            <td style="border: 1px solid cadetblue;">借书日期</td>
+            <td style="border: 1px solid cadetblue;">应还日期</td>
+            <td style="border: 1px solid cadetblue;">条码号</td>
+            <td style="border: 1px solid cadetblue;">文献名称</td>
+            <td style="border: 1px solid cadetblue;">超期</td>
+            <td style="border: 1px solid cadetblue;">续借</td>
+        </tr>
+        </thead>
+        <!--<tr></tr>-->
+    </table>
+</div>
+</div>
+<!--<style>-->
+        <!--#tishi_content tr,#tishi_content td {-->
+            <!--border:solid 1px cadetblue;-->
+        <!--}-->
+<!--</style>-->
+
+<!--<div class="modal fade" title="提示" id="tishi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
+    <!--<div class="modal-dialog" style="width: 60%">-->
+        <!--<div class="modal-content" style="background-color: white">-->
+            <!--<div class="modal-header">-->
+                <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+                <!--<h4 class="modal-title" id="myModalLabel">提示</h4>-->
+            <!--</div>-->
+            <!--<div class="modal-body" style="text-align:center">-->
+
+                <!--<table id="tishi_content"  style="width: 100%;text-align: center; border:solid 1px cadetblue;margin:0 auto;">-->
+
+               <!--</table>-->
+            <!--</div>-->
+            <!--<div class="modal-footer">-->
+                <!--<button type="button"  class="btn btn-primary"   data-dismiss="modal">确定</button>-->
+                <!--<button type="button"  class="btn btn-danger"   data-dismiss="modal">关闭</button>-->
+            <!--</div>-->
+        <!--</div>&lt;!&ndash; /.modal-content &ndash;&gt;-->
+    <!--</div>&lt;!&ndash; /.modal &ndash;&gt;-->
+<!--</div>-->
+
+
+
+</body>
+<script type="text/javascript">
+    GetClassInfo1();
+    GetUserLevel_3();
+</script>
+</html>
+

@@ -1,0 +1,38 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>阿法迪图书馆文献管理平台2.0</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <script type="text/javascript" src="/js/SystemSetting.js"></script>
+</head>
+<body>
+    <div class="div_panel1" style="width:1200px; height: 600px; margin: 20px auto;">
+        <table class="table_panel1" style="margin:auto; width: 100%; font-size:21px;">
+            <!--<caption>空库生成</caption>-->
+            <tbody>
+            </tbody>
+        </table>
+        <div style="width:1200px; margin: 30px auto; text-align:center;">
+            <div class="div_panel1" style="width: 500px; height: 430px; z-index: 1; margin:auto; top: 150px;">
+                <table class="table_panel1" style="text-align:left; margin:auto; width: 100%; height: auto; font-size:21px;">
+                    <!--<caption>生成范围</caption>-->
+                    <tbody>
+                        <tr><td colspan="2" style="height: 50px; text-align:center; color:#0b17b2;">说明：新购图书在未编目之前入库以便流通</td></tr>
+                        <!--<tr><td style="height: 50px; text-align: right;">文献类型</td><td><select id="booktype"><option value="1">普通图书</option><option value="2">期刊</option><option value="3">古籍</option><option value="4">非书资料</option></select></td></tr>-->
+                        <tr><td style="height: 50px; text-align: right;">文献类型</td><td><select id="booktype"><option value="1">普通图书</option></select></td></tr>
+                        <tr><td style="height: 50px; text-align: right;">初始典藏</td><td><select id="stacks"></select></td></tr>
+                        <tr><td style="height: 50px; text-align: right;">条码数量</td><td><input id="barcodecount" type="text" style="width: 100px;" value=""></td></tr>
+                        <tr><td colspan="2" style="height: 50px; text-align: center;"><input type="button" value="生成条码号" onclick="GenBarcode();"></td></tr>
+                        <tr><td style="height: 50px; text-align: right;">起始流水号</td><td id="startnumber"></td></tr>
+                        <tr><td style="height: 50px; text-align: right;">终止流水号</td><td id="endnumber"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    GetStacks(StacksDisplay);
+</script>

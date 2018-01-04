@@ -1,0 +1,37 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>阿法迪图书馆文献管理平台2.0</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <script type="text/javascript" src="/js/vue.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-2.2.0.js" ></script>
+    <script type="text/javascript" src="/js/jquery.easyui.min.js" ></script>
+    <link rel="stylesheet" type="text/css" href="/css/page.css">
+    <link rel="stylesheet" type="text/css" href="/css/easyui.css">
+</head>
+<body>
+
+
+</body>
+<script type="text/javascript">
+    var a = "00003001";
+    var b = 1;
+    var c = String(parseInt(a) + b);
+    var d = a.split("");
+    var e = [];
+    for(var t in d)
+    {
+        if(d[t]!="0")
+
+            break;
+        else
+            e.push(d[t]);
+    }
+
+
+    e.push(c);
+    alert(e.join(""));
+    </script>
+</html>
+

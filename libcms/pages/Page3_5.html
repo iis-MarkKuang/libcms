@@ -1,0 +1,76 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>阿法迪图书馆文献管理平台2.0</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <link rel="stylesheet" type="text/css" href="/css/page.css">
+    <script type="text/javascript" src="/js/vue.min.js"></script>
+    <script type="text/javascript" src="/js/DocumentManagement.js"></script>
+</head>
+<body>
+    <div class="div_panel1" style="width:96%; height: 660px; margin: 20px auto;">
+        <table id="catalogue" class="table_panel1" style="margin:auto; width: 100%; font-size:21px;">
+            <!--<caption>文献注销</caption>-->
+            <tbody>
+            <tr>
+                <td style="vertical-align: bottom;">文献条码号<input id="bookbarcode" v-model="bookbarcode" type="text" value="" style="font-size: 20px;"></td>
+                <td><input type="button" value="查找" id="searchbutton" v-on:click="searchbook">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="显示注销图书"  onclick="CancelBook.SearchIsNoacitveBook();"></td>
+                <td></td>
+            </tr>
+            <tr><td colspan="3" style="border-top: 1px solid cadetblue;">&nbsp;</td></tr>
+            <tr>
+                <td>文献名<input id="bookname" v-model="bookname" type="text" value=""></td>
+                <td>出版日期<input id="publisherdate" v-model="publisherdate" type="text" value=""></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>ISBN<input id="ISBN" v-model="ISBN" type="text" value=""></td>
+                <td>著者<input id="author" v-model="author" type="text" value=""></td>
+                <td>分类号<input id="clc" v-model="clc" type="text" value=""></td>
+            </tr>
+            <tr>
+                <td id="reason" colspan="3">注销原因<input style="width: 90%" type="text" value="" ></td>
+            </tr>
+            <tr>
+                <td colspan="3">注销结果<input id="inactivenumber" type="text" style="width: 86%" value="" readonly="readonly"><input type="button" value="注销" v-on:click="InactiveBook"></td>
+            </tr>
+            </tbody>
+        </table>
+        <!--<table><tr><td><input type="button" value="打印" onclick="PrintCountTable(booklist, '剔旧图书列表');"></td></tr></table>-->
+        <!--<table id="pg35_tb1" class="table_panel2" cellspacing="0" style="margin-top:30px; width: 100%; font-size:21px;">-->
+            <!--<thead style="text-align: center;background-color: cadetblue;color: white">-->
+            <!--<th>文献名称</th>-->
+            <!--<th>ISBN</th>-->
+            <!--<th>分类号</th>-->
+            <!--<th>著者</th>-->
+            <!--<th>出版社</th>-->
+            <!--<th>出版日期</th>-->
+            <!--</thead>-->
+            <!--<tbody></tbody>-->
+        <!--</table>-->
+        <div id="searchlist" style="display:none;width: 90%; height:auto; position:relative; top:20px; border:solid 1px cadetblue; background-color: cadetblue;">
+            <table style="background-color: white; width: 100%; text-align: right;"><tr><td><input type="button" value="打印" onclick="CancelBook.PrintNoacitveBook();"></td><td style="width: 80px;"><input type='button' value='X' onclick='$("#searchlist").hide();'></td></tr></table>
+            <table id="booklist" cellspacing='0' border='1px;' style="border:solid 1px cadetblue; width: 100%; border-collapse:collapse; text-align: center;"><thead><tr><th style="width: 40px;">序号</th><th style="width: 50px;">ISBN</th><th style="width: auto;">文献名称</th><th style="width: auto;">著者</th><th style="width: 200px;">出版社</th><th style="width: 60px;">出版期</th><th style="width: 40px;">操作</th></tr></thead>
+                <tbody id="searchlistbody" style="background-color: white;"></tbody>
+            </table>
+        </div>
+        <div id="printlist" style="display:none;width: 90%; height:auto; position:relative; top:20px; border:solid 1px cadetblue; background-color: cadetblue;">
+            <table id="printbooklist" cellspacing='0' border='1px;' style="border:solid 1px cadetblue; width: 100%; border-collapse:collapse; text-align: center;"><thead><tr><th style="width: 40px;">序号</th><th style="width: 50px;">ISBN</th><th style="width: auto;">文献名称</th><th style="width: auto;">著者</th><th style="width: 200px;">出版社</th><th style="width: 60px;">出版期</th><th style="width: 40px;">操作</th></tr></thead>
+                <tbody id="printlistbody" style="background-color: white;"></tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    CancelBook.ReLoadPage();
+//    $("#bookbarcode").on("keyup",function (event) {
+//        if(event.keyCode !== 13) {
+//            if ($(this).val().length === 11) {
+//                CancelBook.catalogue.searchbook();
+//            }
+//        }
+//    });
+    $("#bookbarcode").focus();
+</script>

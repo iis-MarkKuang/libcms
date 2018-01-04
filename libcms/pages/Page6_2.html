@@ -1,0 +1,77 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>阿法迪图书馆文献管理平台2.0</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <script type="text/javascript" src="/js/vue.min.js"></script>
+    <!--<script type="text/javascript" src="/js/jquery-2.2.0.js" ></script>-->
+    <script type="text/javascript" src="/js/BookPrint.js"></script>
+    <script type="text/javascript" src="/js/JsBarcode.js"></script>
+    <script type="text/javascript" src="/js/jquery.PrintArea.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/page.css">
+</head>
+<body>
+<div id="BarcodeManage">
+    <div class="aadiv_panel" style="width: 90%;z-index: 1; position: absolute;; left:50px; top: 10px; margin-left: 0px;">
+        <table class="table_panel" style="margin:auto; width: 100%; height: auto; font-size:21px; text-align: center;">
+            <!--<caption>条码参数</caption>-->
+            <thead></thead>
+            <tbody>
+            <tr>
+                <td style="font-size: 16px;padding: 10px;">
+                    前缀<input type="text" v-model="prefix">
+                    标准<select v-model="codestandard">
+                    <option value="CODE128A">CODE128A</option>
+                    <option value="CODE128B">CODE128B</option>
+                    <option value="CODE128C">CODE128C</option>
+                    <option value="CODE39">CODE39</option>
+                </select>
+                    <input type="text" id="codestart" placeholder="起始条码" v-model="codestart">-<input type="text" placeholder="终止条码" v-model="codeend">
+                    <input type="number" id="svgdist" placeholder="条码间距(mm)" v-model="svgdist" v-on:change="changedist" style="width: 100px">
+                    <input type="number" id="codewidth" placeholder="条码宽度(mm)" v-model="codewidth" style="width: 100px">
+                    <input type="number" id="codeheight" placeholder="条码高度(mm)" v-model="codeheight" style="width: 100px">
+                    <input type="button" id="codepreview" value="预览" @click="codepreview" title="请输入条码号">
+                    <input type="button" value="打印" @click="codeprint">
+                </td>
+            </tr>
+            <!--<tr>-->
+                <!--<td style="text-align: right">每页条码行数</td>-->
+                <!--<td><input type="number" style="width: 50px;"></td>-->
+                <!--<td style="text-align: right">每行条码个数</td>-->
+                <!--<td><input type="number" style="width: 50px;"></td>-->
+                <!--<td style="text-align: right">条码列间距</td>-->
+                <!--<td><input type="number" style="width: 50px;"></td>-->
+                <!--<td style="text-align: right">条码行间距</td>-->
+                <!--<td><input type="number" style="width: 50px;"></td>-->
+                <!--<td style="text-align: right">顶距</td>-->
+                <!--<td><input type="number" style="width: 50px;"></td>-->
+                <!--<td style="text-align: right">左边距</td>-->
+                <!--<td><input type="number" style="width: 50px;"></td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td style="text-align: right;padding: 10px;">选中批号</td>-->
+                <!--<td colspan="3"><select name="" id="" style="width: 100%"></select></td>-->
+                <!--<td style="text-align: right">当前条码</td>-->
+                <!--<td colspan="3"><input type="text" style="width: 100%"></td>-->
+                <!--<td style="text-align: right">指定范围</td>-->
+                <!--<td colspan="2"><input type="text" style="width: 100%"></td>-->
+                <!--<td><button>新增条码预览</button></td>-->
+            <!--</tr>-->
+            </tbody>
+        </table>
+    </div>
+    <div id="barcodelist" class="div_panel" style="z-index: 1; position: absolute; top: 100px;width:595.2756pt;height: 841.8898pt;margin: 0 250px;">
+        <div style="width: 100%;height: 100%;">
+            <table style="width: 100%;padding: 10pt 50pt;">
+                <tbody id="QRcodeTB"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    BookPrintAll.InitPage("reader_print");
+</script>
+</html>
+
