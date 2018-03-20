@@ -10,6 +10,10 @@
     <script type="text/javascript" src="/js/DocumentManagement.js"></script>
     <script type="text/javascript" src="/js/pub.js"></script>
     <script type="text/javascript" src="/js/jquery-levelSelect-ajax.js"></script>
+
+    <script type="text/javascript" src="/js/xlsx.full.min.js" ></script>
+    <script type="text/javascript" src="/js/processXLS.js" ></script>
+    <script type="text/javascript" src="/js/FileSaver.js"></script>
 </head>
 <body style="text-align: center;">
     <div id="catalogue" class="div_panel1" style="width:96%; height: 660px; margin: 20px auto;">
@@ -20,7 +24,7 @@
                 <td style="width: auto; height: 60px; vertical-align: middle;">
                     &nbsp;&nbsp;&nbsp;&nbsp;ISBN<input id="isbnfs" type="text" value="" size="15" style="margin-right: 10px;">
                     <!--书名<input id="booknamefs" type="text" value="" style="margin-right: 10px;">著者<input id="authorfs" type="text" value="" size="10" style="margin-right: 10px;">拼音<input id="authorpyfs" type="text" value="" style="margin-right: 10px;"><button id="searchbutton" v-on:click="searchbook"  style="margin-left: 20px;">查找</button><label style="margin-left: 20px;"><input id="isonline" type="checkbox" checked>启用联机服务</label>-->
-                    书名<input id="booknamefs" type="text" value="" style="margin-right: 10px;">著者<input id="authorfs" type="text" value="" size="10" style="margin-right: 10px;"><button id="searchbutton" v-on:click="searchbook"  style="margin-left: 20px;">查找</button><label style="margin-left: 20px;"><input id="isonline" type="checkbox" checked>启用联机服务</label>
+                    书名<input id="booknamefs" type="text" value="" style="margin-right: 10px;">著者<input id="authorfs" type="text" value="" size="10" style="margin-right: 10px;"><button id="searchbutton" v-on:click="searchbook"  style="margin-left: 20px;">查找</button><label style="margin-left: 20px;"><input id="isonline" type="checkbox" checked>启用联机服务</label>&nbsp;&nbsp;&nbsp;&nbsp;<input type="file" id="bookinfoimp" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" title="导入书商图书文件(新科星格式, 文件名称必须是订单号)" />
                     <!--书名<input id="booknamefs" type="text" value="" style="margin-right: 10px;">著者<input id="authorfs" type="text" value="" size="10" style="margin-right: 10px;">拼音<input id="authorpyfs" type="text" value="" style="margin-right: 10px;"><button id="searchbutton" v-on:click="searchbook"  style="margin-left: 20px;">查找</button>-->
                 </td>
                 <td><span class="neon1" style="vertical-align: bottom;">订单号</span><input id="defaultorderno" type="text" style="width: 120px; font-size: 18px;" value="" title="从订单管理中选择默认订单" placeholder="从订单管理中选择默认订单" readonly>&nbsp;<span id="defaultordername" style="vertical-align: bottom;"></span>&nbsp;<input type="button" value="图书列表" onclick="catalogueRW.ListBookByOrder();">&nbsp;<input type="button" value="订单管理" onclick="catalogueRW.OrderManage();"></td>
@@ -54,7 +58,7 @@
         </table>
     </div>
     <div id="ordermanage" style="display:none; margin:auto; width: 96%; height:96%; position:absolute; top:5px; border:solid 1px cadetblue; background-color: white;">
-        <table style="width: 100%; background-color: #5f9ea0;"><tr><td style="text-align: center; color: white">订单管理</td><td style="width: 80px;"><input type="button" value="添加订单" onclick="catalogueRW.AddOrder();"></td><td style="width:30px; text-align: right;"><input type="button" value="X" onclick="$('#ordermanage').hide()"></td></tr></table>
+        <table style="width: 100%; background-color: #5f9ea0;"><tr><td style="text-align: center; color: white">订单管理</td><td style="width: 160px;"><input type="button" value="导出订单" onclick="catalogueRW.ExportOrderToExcel();">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="添加订单" onclick="catalogueRW.AddOrder();"></td><td style="width:30px; text-align: right;"><input type="button" value="X" onclick="$('#ordermanage').hide()"></td></tr></table>
         <table>
             <!--<tr><td><input type="button" value="添加订单" onclick="catalogueRW.AddOrder();"></td></tr>-->
             <tr id="addinvoice" style="display: none;"><td>订单号<input  id="orderno" type="text">书商名称<input id="bookseller" type="text">发票时间<input id='invoiceitime' type='text' style='font-size: 20px; width:110px;' onfocus='setday(this,"yyyy-MM-dd","2016-1-1","2017-01-01",1)' readonly='readonly' />发票号<input id="invoiceno" type="text">发票金额<input id="amount" type="text">&nbsp;&nbsp;<input type="button" value="确定" onclick="catalogueRW.AOUOrder();">&nbsp;&nbsp;<input type="button" value="退出编辑" onclick="$('#addinvoice').hide();"></td></tr>

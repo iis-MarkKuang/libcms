@@ -515,6 +515,7 @@ function BorrowBook(barcode) {
     $.ajax({
         type: "POST",
         // url: backServerUrl + "api/reader/members/"+userid+"/borrow",
+        // async: false,
         url: backServerUrl + "api/reader/members/"+userid+"/borrow_new",
         dataType: "json",
         headers: {'Content-Type': 'application/json','Authorization':et},
@@ -526,6 +527,15 @@ function BorrowBook(barcode) {
             }
             else{
                 alert((data[0].result).substring(0,(data[0].result).length-10));
+            //     str+="<tr>" +
+            //         "<td style='border: 1px solid cadetblue;' title='" + new Date().format("yyyy-MM-dd hh:mm:ss") + "'>"+new Date().format("yyyy-MM-dd")+"</td>"+
+            //         "<td style='border: 1px solid cadetblue;' title='" + (data[0].result).substring(0,(data[0].result).length-10) + "'>"+(data[0].result).substring(0,(data[0].result).length-10)+"</td>"+
+            //         "<td style='border: 1px solid cadetblue;'>"+barcode+"</td>"+
+            //         "<td style='border: 1px solid cadetblue;'>"+"标题"+"</td>"+
+            //         "<td style='border: 1px solid cadetblue;' class='overdue' value='"+(due_date<=datenow)+"' ><input type='checkbox' style='width: 40px;'disabled='disabled'></td>"+
+            //         "<td style='border: 1px solid cadetblue;'><button class='reborrow' value='"+data.content[index].book.barcode+"'>续借</button></td>"+
+            //         "</tr>";
+            //     $("#pg43_tb2").append(str);
             }
             GetBorrowedBook(readerbarcode);
             GetClassInfo1();

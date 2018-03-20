@@ -218,11 +218,16 @@ var catalogueRW = function () {
         //     }
         // });
 
+        var addFlag = 0;
         $("#recordnumber").focus();
         $("#recordnumber").on("keydown",function (event){
             if(event.keyCode === 9){
                 $("#isbnfs").focus();
                 return false;
+            }else if(event.keyCode === 13){
+                // if($(this).val().length > 15) {
+                    $(this).val($(this).val() + ",");
+                // }
             }
         });
 
@@ -416,6 +421,10 @@ var catalogueRW = function () {
         }
     }
 
+    function ExportOrderToExcel() {
+        ReportGeneralXLS("发票信息", "orderlist")
+    }
+
     function ListBookByOrder() {
         var orderno = $("#defaultorderno").val();
         if(orderno.length > 0){
@@ -424,6 +433,81 @@ var catalogueRW = function () {
             alert("订单号不能为空!");
         }
     }
+
+    function ImportBookInfoFromFile() {
+        var et = window.localStorage["et"];
+        var backServerUrl = window.localStorage["backServerUrl"];
+
+        var fd = new FormData();
+        fd.append( 'file', input.files[0] );
+
+        // if(confirm("确定要删除订单号为 " + orderno + " 的记录?")){
+        //     $.ajax({
+        //         type: "POST",
+        //         url: backServerUrl + "api/book/items/stream",
+        //         dataType: "json",
+        //         processData: false,
+        //         headers: {'Content-Type': 'application/json','Authorization':et},
+        //         data:{"book_file": fd},
+        //         success: function (data) {
+        //             if(data.deleted){
+        //                 alert("订单删除成功!");
+        //                 OrderManage();
+        //
+        //             }else{
+        //                 alert("订单删除失败!");
+        //             }
+        //         },
+        //         error: function (XMLHttpRequest, textStatus, errorThrown) {
+        //         }
+        //     });
+        // }
+    }
+    $("#bookinfoimp").on("change",function(){
+        if($(this).length==1){
+            var file=$(this)[0].files[0];
+            console.log(file);
+            var et = window.localStorage["et"];
+            var backServerUrl = window.localStorage["backServerUrl"];
+
+            var fd = new FormData();
+            // fd.append( 'file', input.files[0] );
+            fd.append( 'book_file', $(this)[0].files[0] );
+
+            // if(confirm("确定要删除订单号为 " + orderno + " 的记录?")){
+                $.ajax({
+                    type: "POST",
+                    // async: false,
+                    url: backServerUrl + "api/book/items/stream",
+                    // dataType: "json",
+                    processData: false,
+                    contentType: false,
+                    // headers: {'Content-Type': 'multipart/form-data','Authorization':et},
+                    headers: {'Authorization':et},
+                    beforeSend: function(){
+                        $("#bookinfoimp").addClass("breath_light");
+                    },
+                    complete: function(data){
+                        $("#bookinfoimp").removeClass("breath_light");
+                    },
+                    data:fd,
+                    success: function (data) {
+                        // console.log(data);
+                        if(data.failed.length === 0){
+                            alert("导入厂商图书数据成功! 共" + data.succeed.length + " 条" );
+                        }else{
+                            alert("导入厂商图书数据成功 " + data.succeed.length + " 条  " + "导入厂商图书数据失败 " + data.failed.length + "条  ");
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    }
+                });
+            // }
+        }else{
+            alert("只能上传一个文件");
+            $(this).val("");
+        }
+    });
 
     function GetBookByOrder(orderId) {
         var et = window.localStorage["et"];
@@ -693,7 +777,9 @@ var catalogueRW = function () {
                             headers: {'Content-Type': 'application/json','Authorization':et},
                             success: function (bookinfo) {
                                 console.log(bookinfo);
-                                SetBookInfo(bookinfo);
+                                if(bookinfo.count > 0) {
+                                    SetBookInfo(bookinfo);
+                                }
                                 $("#recordnumber").select();
                             },
                             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -704,7 +790,7 @@ var catalogueRW = function () {
                         });
                     }
                 }else{
-                    ResetCatalogueData(1);
+                    // ResetCatalogueData(1);
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -824,6 +910,9 @@ var catalogueRW = function () {
         }
 
         var barcodes = "";
+        if(catalogue.recordnumber.substring(catalogue.recordnumber.length - 1) === ","){
+            catalogue.recordnumber = catalogue.recordnumber.substring(0, catalogue.recordnumber.length -1);
+        }
         if(copycount === "1"){
             barcodes = catalogue.recordnumber;
         }else{
@@ -918,6 +1007,8 @@ var catalogueRW = function () {
         AOUOrder : AOUOrder,
         DeleteOrder : DeleteOrder,
         EditOrder : EditOrder,
+        ExportOrderToExcel : ExportOrderToExcel,
+        ImportBookInfoFromFile : ImportBookInfoFromFile,
         SetDefaultOrder : SetDefaultOrder,
         GetBookByOrder : GetBookByOrder,
         ListBookByOrder : ListBookByOrder,
