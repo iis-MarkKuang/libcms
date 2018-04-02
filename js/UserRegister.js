@@ -1,4 +1,4 @@
-//# sourceURL=UserRegister.js
+﻿//# sourceURL=UserRegister.js
 var connectfail = 0;
 var userInfo;
 var levelid="";
@@ -459,7 +459,7 @@ function ModifyorUser() {
     var et = window.localStorage["et"];
     var backServerUrl = window.localStorage["backServerUrl"];
     var datenow= new Date();
-    if(readeridentityno.length>0 && readeridentityno.length!=18)  //身份证可以不填
+    if(readeridentityno.length>19)  //身份证可以不填
     {
         alert("二代身份证号应为18位！");
         $("#Saveuser").prop("disabled",true);
@@ -562,7 +562,7 @@ function Continue_User() {
 function Save_User() {
     var readeridentityno=$("#identityno").val().trim();
     var datenow= new Date();
-    if(readeridentityno.length > 0 && readeridentityno.length!=18)  //身份证可以不填
+    if(readeridentityno.length > 19)  //身份证可以不填
     {
         alert("二代身份证号应为18位！");
         $("#Saveuser").prop("disabled",true);

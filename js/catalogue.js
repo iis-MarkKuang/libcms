@@ -746,10 +746,10 @@ var catalogueRW = function () {
         var backServerUrl = window.localStorage["backServerUrl"];
         var copycount = $("#copycount").val();
 
-        if(catalogue.reference === ""){
-            alert("没有图书编目数据!");
-            return;
-        }
+        //if(catalogue.reference === ""){
+            //alert("没有图书编目数据!");
+            //return;
+        //}
 
         // if(!(/(^[1-9]\d*$)/.test(copycount))){
         //     alert("副本数不是正整数!");

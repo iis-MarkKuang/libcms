@@ -1,4 +1,4 @@
-//# sourceURL=BookRetrieval.js
+﻿//# sourceURL=BookRetrieval.js
 var connectfail = 0;
 var userInfo;
 var nexturl="";
@@ -268,7 +268,7 @@ function SearchBook(param,flag) {
                         "<td style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>"+data.content[index].载体形态.页数或卷册数+"</td>" +
                         "<td style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>"+data.content[index].ISBN.获得方式和或定价+"</td>" +
                         "<td style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis; color:" + color + "'>"+data.content[index].shelf_info_nested.row + "排" + data.content[index].shelf_info_nested.column + "列"+"</td>" +
-                        "<td style=''overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'> <input type='button' style='width: 60px;' value='书评' onclick='DisplayBookViews(\""+data.content[index].reference+"\",\""+data.content[index].题名与责任者.正题名+"\")'></td></tr>";
+                        "<td style=''overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'> <input type='button' style='width: 60px;' value='书评' onclick='DisplayBookViews(\""+data.content[index].reference+"\",\""+data.content[index].题名与责任者.正题名+"\")'>&nbsp;&nbsp;<input type='button' style='width: 60px;' value='删除' onclick='DeleteBookByBarcode(\""+data.content[index].barcode+"\",\""+data.content[index].stack+"\")'></td></tr>";
                     // }
                 }
             }
